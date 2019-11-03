@@ -19,7 +19,7 @@
                 <tr>
                   <th style="width: 7%; text-align:center!important">ID</th>
                   <th style="width: 83%; text-align:center!important">Nama Cagarbudaya</th>
-                  <th style="width: 10%; text-align:center!important">Jenis Cagar</th>
+                  <th style="width: 10%; text-align:center!important">Jenis Cagarbudaya</th>
                   <th style="width: 10%; text-align:center!important">Kepemilikan</th>
                   <th style="width: 10%; text-align:center!important">Status Penetapan</th>
                   <th style="width: 10%; text-align:center!important">Action</th>
