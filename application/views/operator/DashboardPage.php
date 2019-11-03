@@ -18,14 +18,14 @@
               <thead>
                 <tr>
                   <th style="width: 7%; text-align:center!important">ID</th>
-                  <th style="width: 83%; text-align:center!important">Nama Cagarbudaya</th>
-                  <th style="width: 10%; text-align:center!important">Jenis Cagarbudaya</th>
-                  <th style="width: 10%; text-align:center!important">Kepemilikan</th>
-                  <th style="width: 10%; text-align:center!important">Status Penetapan</th>
-                  <th style="width: 10%; text-align:center!important">Action</th>
-                  <!-- <th style="width: 10%; text-align:center!important">File</th>
-                  <th style="width: 10%; text-align:center!important">Lokasi</th>
-                  <th style="width: 10%; text-align:center!important">Deskripsi</th> -->
+                  <th style="width: 15%; text-align:center!important">Nama Cagarbudaya</th>
+                  <th style="width: 12%; text-align:center!important">Jenis Cagarbudaya</th>
+                  <th style="width: 12%; text-align:center!important">Kepemilikan</th>
+                  <th style="width: 12%; text-align:center!important">Status Penetapan</th>
+                  <th style="width: 12%; text-align:center!important">File</th>
+                  <th style="width: 12%; text-align:center!important">Lokasi</th>
+                  <th style="width: 10%; text-align:center!important">Deskripsi</th>
+                  <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -54,18 +54,34 @@
             <input type="text" placeholder="Nama Cagarbudaya" class="form-control" id="nama" name="nama" required="required">
           </div>
           <div class="form-group">
-            <label for="jenis">Jenis Cagarbudaya</label> 
+            <label for="jenis">Jenis Cagar budaya</label> 
             <select class="form-control mr-sm-2" id="jenis" name="jenis" required="required">
             </select>
           </div>
           <div class="form-group">
-            <label for="kepemilikan">Kepemilikan Cagarbudaya</label> 
-            <input type="text" placeholder="Kepemilikan Cagarbudaya" class="form-control" id="kepemilikan" name="kepemilikan" required="required">
+            <label for="kepemilikan">Kepemilikan Cagar budaya</label> 
+            <select class="form-control mr-sm-2" id="kepemilikan" name="kepemilikan" required="required">
+            </select>
           </div>
           <div class="form-group">
             <label for="status_penetapan">Status Penetapan</label> 
-            <input type="text" placeholder="Status Cagarbudaya" class="form-control" id="status_penetapan" name="status_penetapan" required="required">
+            <select class="form-control mr-sm-2" id="status_penetapan" name="status_penetapan" required="required">
+            </select>
           </div>
+          <div class="form-group">
+            <label for="file">File</label> 
+            <input type="text" placeholder="File" class="form-control" id="file" name="file" required="required">
+          </div>
+          <div class="form-group">
+            <label for="lokasi">Lokasi</label> 
+            <input type="text" placeholder="Lokasi" class="form-control" id="lokasi" name="lokasi" required="required">
+          </div>
+          <div class="form-group">
+            <label for="deskripsi">Deskripsi</label> 
+            <input type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required">
+          </div>
+
+
 
           <button class="btn btn-success my-1 mr-sm-2" type="submit" id="add_btn" data-loading-text="Loading..." onclick="this.form.target='add'"><strong>Tambah Data</strong></button>
           <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong>Simpan Perubahan</strong></button>
@@ -106,6 +122,9 @@ $(document).ready(function() {
     'jenis': $('#cagarbudaya_modal').find('#jenis'),
     'kepemilikan': $('#cagarbudaya_modal').find('#kepemilikan'),
     'status_penetapan': $('#cagarbudaya_modal').find('#status_penetapan'),
+    'file': $('#cagarbudaya_modal').find('#file'),
+    'lokasi': $('#cagarbudaya_modal').find('#lokasi'),
+    'deskripsi': $('#cagarbudaya_modal').find('#deskripsi'),
   }
 
   var swalSaveConfigure = {
@@ -127,6 +146,8 @@ $(document).ready(function() {
   };
 
   var dataJenis = {};
+  var dataKepemilikan = {};
+  var dataStatusPenetapan = {};
   var dataCagarbudaya = {};
 
   toolbar.form.submit(function(event){
@@ -158,6 +179,40 @@ $(document).ready(function() {
     });
   }
 
+  getAllKepemilikan();  
+  function getAllKepemilikan(){
+    return $.ajax({
+      url: `<?php echo site_url('CagarbudayaController/getAllKepemilikanOption/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataKepemilikan = json['data'];
+        renderKepemilikanSelection(dataKepemilikan);
+      },
+      error: function(e) {}
+    });
+  }
+
+  getAllStatusPenetapan();  
+  function getAllStatusPenetapan(){
+    return $.ajax({
+      url: `<?php echo site_url('CagarbudayaController/getAllStatusPenetapanOption/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataStatusPenetapan = json['data'];
+        renderStatusPenetapanSelection(dataStatusPenetapan);
+      },
+      error: function(e) {}
+    });
+  }
+
   function renderJenisSelection(data){
     CagarbudayaModal.jenis.empty();
     CagarbudayaModal.jenis.append($('<option>', { value: "", text: "-- Pilih Jenis --"}));
@@ -165,6 +220,28 @@ $(document).ready(function() {
       CagarbudayaModal.jenis.append($('<option>', {
         value: d['id_jenis_cagarbudaya'],
         text: d['id_jenis_cagarbudaya'] + ' :: ' + d['nama_jenis_cagarbudaya'],
+      }));
+    });
+  }
+
+   function renderKepemilikanSelection(data){
+    CagarbudayaModal.kepemilikan.empty();
+    CagarbudayaModal.kepemilikan.append($('<option>', { value: "", text: "-- Pilih Kepemilikan --"}));
+    Object.values(data).forEach((d) => {
+      CagarbudayaModal.kepemilikan.append($('<option>', {
+        value: d['id_kepemilikan_cagarbudaya'],
+        text: d['id_kepemilikan_cagarbudaya'] + ' :: ' + d['nama_kepemilikan_cagarbudaya'],
+      }));
+    });
+  }
+
+   function renderStatusPenetapanSelection(data){
+    CagarbudayaModal.status_penetapan.empty();
+    CagarbudayaModal.status_penetapan.append($('<option>', { value: "", text: "-- Pilih Status Penetapan --"}));
+    Object.values(data).forEach((d) => {
+      CagarbudayaModal.status_penetapan.append($('<option>', {
+        value: d['id_status_penetapan_cagarbudaya'],
+        text: d['id_status_penetapan_cagarbudaya'] + ' :: ' + d['nama_status_penetapan_cagarbudaya'],
       }));
     });
   }
@@ -213,7 +290,7 @@ $(document).ready(function() {
           </div>
         </div>
       `;
-      renderData.push([cagarbudaya['id_cagarbudaya'], cagarbudaya['nama'], cagarbudaya['nama_jenis_cagarbudaya'], cagarbudaya['kepemilikan'], cagarbudaya['status_penetapan'], button]);
+      renderData.push([cagarbudaya['id_cagarbudaya'], cagarbudaya['nama'], cagarbudaya['nama_jenis_cagarbudaya'], cagarbudaya['nama_kepemilikan_cagarbudaya'], cagarbudaya['nama_status_penetapan_cagarbudaya'],cagarbudaya['file'],cagarbudaya['lokasi'],cagarbudaya['deskripsi'], button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
@@ -232,6 +309,9 @@ $(document).ready(function() {
     CagarbudayaModal.jenis.val(cagarbudaya['jenis']);
     CagarbudayaModal.kepemilikan.val(cagarbudaya['kepemilikan']);
     CagarbudayaModal.status_penetapan.val(cagarbudaya['status_penetapan']);
+    CagarbudayaModal.file.val(cagarbudaya['file']);
+    CagarbudayaModal.lokasi.val(cagarbudaya['lokasi']);
+    CagarbudayaModal.deskripsi.val(cagarbudaya['deskripsi']);
   });
 
   FDataTable.on('click','.delete', function(){

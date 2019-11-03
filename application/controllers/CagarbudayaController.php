@@ -21,6 +21,27 @@ class CagarbudayaController extends CI_Controller {
     }
   }
 
+  public function getAllKepemilikanOption(){
+    try{
+      $this->SecurityModel->userOnlyGuard(TRUE);
+      $data = $this->CagarbudayaModel->getAllKepemilikanOption($this->input->get());
+      echo json_encode(array('data' => $data));
+    } catch (Exception $e) {
+      ExceptionHandler::handle($e);
+    }
+  }
+
+  
+  public function getAllStatusPenetapanOption(){
+    try{
+      $this->SecurityModel->userOnlyGuard(TRUE);
+      $data = $this->CagarbudayaModel->getAllStatusPenetapanOption($this->input->get());
+      echo json_encode(array('data' => $data));
+    } catch (Exception $e) {
+      ExceptionHandler::handle($e);
+    }
+  }
+
   public function getAllCagarbudaya(){
     try{
       $this->SecurityModel->userOnlyGuard(TRUE);
