@@ -28,10 +28,10 @@ class StatistikCagarbudayaModel extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('jumlah_pengunjung_cagarbudaya as jpc');
 		$this->db->join("cagarbudaya as cb","jpc.id_cagarbudaya = cb.id_cagarbudaya");
-		//if(!empty($filter['id_cagarbudaya'])) $this->db->where('cb.id_cagarbudaya', $filter['id_cagarbudaya']);
+		if(!empty($filter['id_pengunjung'])) $this->db->where('jpc.id_pengunjung', $filter['id_pengunjung']);
 
 	    $res = $this->db->get();
-	    return DataStructure::keyValue($res->result_array(), 'id_cagarbudaya');
+	    return DataStructure::keyValue($res->result_array(), 'id_pengunjung');
 	}
 
 	  public function addStatistikCagarbudaya($data){

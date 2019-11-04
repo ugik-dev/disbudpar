@@ -99,15 +99,13 @@ $(document).ready(function() {
     'form': $('#cagarbudaya_modal').find('#user_form'),
     'addBtn': $('#cagarbudaya_modal').find('#add_btn'),
     'saveEditBtn': $('#cagarbudaya_modal').find('#save_edit_btn'),
-    'id_pengunjung_cagarbudaya': $('#cagarbudaya_modal').find('#id_pengunjung_cagarbudaya'),
+    'id_pengunjung': $('#cagarbudaya_modal').find('#id_pengunjung'),
     'id_cagarbudaya': $('#cagarbudaya_modal').find('#id_cagarbudaya'),
     'nama': $('#cagarbudaya_modal').find('#nama'),
-    'jenis': $('#cagarbudaya_modal').find('#jenis'),
-    'kepemilikan': $('#cagarbudaya_modal').find('#kepemilikan'),
-    'status_penetapan': $('#cagarbudaya_modal').find('#status_penetapan'),
-    'file': $('#cagarbudaya_modal').find('#file'),
-    'lokasi': $('#cagarbudaya_modal').find('#lokasi'),
-    'deskripsi': $('#cagarbudaya_modal').find('#deskripsi'),
+    'mancanegara': $('#cagarbudaya_modal').find('#mancanegara'),
+    'domestik': $('#cagarbudaya_modal').find('#domestik'),
+    'jumlah': $('#cagarbudaya_modal').find('#jumlah'),
+
   }
 
   var swalSaveConfigure = {
@@ -230,12 +228,15 @@ $(document).ready(function() {
     StatistikCagarbudayaModal.addBtn.hide();
     StatistikCagarbudayaModal.saveEditBtn.show();
     var id = $(this).data('id');
-    var pengunjung_cagarbudaya = datapengunjung_Cagarbudaya[id];
+    var statistikcagarbudaya = dataStatistikCagarbudaya[id];
+    StatistikCagarbudayaModal.id_pengunjung.val(statistikcagarbudaya['id_pengunjung']);
     StatistikCagarbudayaModal.id_cagarbudaya.val(statistikcagarbudaya['id_cagarbudaya']);
     StatistikCagarbudayaModal.nama.val(statistikcagarbudaya['nama']);
-    StatistikCagarbudayaModal.jenis.val(statistikcagarbudaya['jenis']);
-    StatistikCagarbudayaModal.kepemilikan.val(statistikcagarbudaya['kepemilikan']);
-    StatistikCagarbudayaModal.status_penetapan.val(statistikcagarbudaya['status_penetapan']);
+    StatistikCagarbudayaModal.tahun.val(statistikcagarbudaya['tahun']);
+    StatistikCagarbudayaModal.domestik.val(statistikcagarbudaya['domestik']);
+    StatistikCagarbudayaModal.mancanegara.val(statistikcagarbudaya['mancanegara']);
+    StatistikCagarbudayaModal.jumlah.val(statistikcagarbudaya['jumlah']);
+
   });
 
   FDataTable.on('click','.delete', function(){
@@ -295,7 +296,7 @@ $(document).ready(function() {
             return;
           }
           var statistikcagarbudaya = json['data']
-          dataStatistikCagarbudaya[statistikcagarbudaya['id_pengunjung_cagarbudaya']] = statistikcagarbudaya;
+          dataStatistikCagarbudaya[statistikcagarbudaya['id_pengunjung']] = statistikcagarbudaya;
           swal("Simpan Berhasil", "", "success");
           renderStatistikCagarbudaya(dataStatistikCagarbudaya);
           StatistikCagarbudayaModal.self.modal('hide');
@@ -320,8 +321,8 @@ $(document).ready(function() {
             swal("Simpan Gagal", json['message'], "error");
             return;
           }
-          var cagarbudaya = json['data']
-          dataCagarbudaya[cagarbudaya['id_cagarbudaya']] = cagarbudaya;
+          var statistikcagarbudaya = json['data']
+          dataStatistikCagarbudaya[statistikcagarbudaya['id_cagarbudaya']] = statistikcagarbudaya;
           swal("Simpan Berhasil", "", "success");
           renderCagarbudaya(dataStatistikCagarbudaya);
           StatistikCagarbudayaModal.self.modal('hide');
