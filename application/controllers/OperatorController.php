@@ -23,11 +23,11 @@ class OperatorController extends CI_Controller {
   }
 
 
-  public function newPage(){
+  public function statistikCagarbudaya(){
     $this->SecurityModel->roleOnlyGuard('operator');
     $pageData = array(
       'title' => 'Beranda',
-      'content' => 'operator/NewPage',
+      'content' => 'operator/StatistikCagarbudaya',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),

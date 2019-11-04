@@ -8,7 +8,7 @@
         <a href="<?=site_url('OperatorController/')?>"><i class="fa fa-home"></i> <span class="nav-label">Beranda</span></a>
       </li>
       <li id="newPage">
-        <a href="<?=site_url('OperatorController/newPage')?>"><i class="fa fa-home"></i> <span class="nav-label">Baru</span></a>
+        <a href="<?=site_url('OperatorController/statistikcagarbudaya')?>"><i class="fa fa-home"></i> <span class="nav-label">Statistik Cagar Budaya</span></a>
       </li>
       <li id="panduan">
         <a href="<?=site_url('AdminController/panduan')?>"><i class="fa fa-question"></i> <span class="nav-label">Panduan</span></a>
