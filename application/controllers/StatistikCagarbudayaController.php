@@ -37,7 +37,7 @@ class StatistikCagarbudayaController extends CI_Controller {
       $this->SecurityModel->userOnlyGuard(TRUE);
       $data = $this->input->post();
       $idStatistikCagarbudaya = $this->StatistikCagarbudayaModel->addStatistikCagarbudaya($data);
-      $data = $this->StatistikCagarbudayaModel->getAllStatistikCagarbudaya($idStatistikCagarbudaya);
+      $data = $this->StatistikCagarbudayaModel->getStatistikCagarbudaya($idStatistikCagarbudaya);
       echo json_encode(array('data' => $data));
     } catch (Exception $e) {
       ExceptionHandler::handle($e);

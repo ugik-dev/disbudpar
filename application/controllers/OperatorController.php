@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class OperatorController extends CI_Controller {
-
+ 
   public function __construct(){
     parent::__construct();
 		$this->load->model(array(''));
@@ -22,11 +22,10 @@ class OperatorController extends CI_Controller {
     $this->load->view('Page', $pageData);
   }
 
-
   public function statistikCagarbudaya(){
     $this->SecurityModel->roleOnlyGuard('operator');
     $pageData = array(
-      'title' => 'Beranda',
+      'title' => 'Statistik Cagar Budaya',
       'content' => 'operator/StatistikCagarbudaya',
       'breadcrumb' => array(
         'Home' => base_url(),
@@ -34,4 +33,29 @@ class OperatorController extends CI_Controller {
     );
     $this->load->view('Page', $pageData);
   }
+  
+  public function Senibudaya(){
+    $this->SecurityModel->roleOnlyGuard('operator');
+    $pageData = array(
+      'title' => 'Seni Budaya',
+      'content' => 'operator/senibudaya',
+      'breadcrumb' => array(
+        'Home' => base_url(),
+      ),
+    );
+    $this->load->view('Page', $pageData);
+  }
+
+  public function Museum(){
+    $this->SecurityModel->roleOnlyGuard('operator');
+    $pageData = array(
+      'title' => 'Museum',
+      'content' => 'operator/Museum',
+      'breadcrumb' => array(
+        'Home' => base_url(),
+      ),
+    );
+    $this->load->view('Page', $pageData);
+  }
+
 }

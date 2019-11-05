@@ -34,6 +34,14 @@ class StatistikCagarbudayaModel extends CI_Model {
 	    return DataStructure::keyValue($res->result_array(), 'id_pengunjung');
 	}
 
+	public function getStatistikCagarbudaya($idStatistikCagarbudaya = NULL){
+		$row = $this->getAllStatistikCagarbudaya(['id_pengunjung' => $idStatistikCagarbudaya]);
+		if (empty($row)){
+			throw new UserException("StatistikCagarbudaya yang kamu cari tidak ditemukan", USER_NOT_FOUND_CODE);
+		}
+		return $row[$idStatistikCagarbudaya];
+	}
+
 	  public function addStatistikCagarbudaya($data){
 	    $dataInsert = DataStructure::slice($data, ['id_cagarbudaya','tahun','domestik','mancanegara']);
 	    $this->db->insert('pengunjung_cagarbudaya', $dataInsert);
