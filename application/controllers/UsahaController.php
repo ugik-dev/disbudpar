@@ -50,10 +50,10 @@ class UsahaController extends CI_Controller {
       $idUsaha = $this->UsahaModel->addUsaha($data);
       $data = $this->UsahaModel->getUsaha($idUsaha);
       echo json_encode(array('data' => $data));
-      if($_POST){
-        checkboxes = $this->input->post('check_list');
-        list_item = implode(",",$checkboxes);
-      }
+      // if($_POST){
+      //   checkboxes = $this->input->post('check_list');
+      //   list_item = implode(",",$checkboxes);
+      // }
     } catch (Exception $e) {
       ExceptionHandler::handle($e);
     }
