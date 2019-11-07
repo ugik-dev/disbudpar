@@ -26,7 +26,7 @@ class MuseumModel extends CI_Model {
 		$this->db->join("museum_kepemilikan as mk", "mk.id_kepemilikan_museum = cb.id_kepemilikan_museum");
 		$this->db->join("museum_status as st", "st.id_status_museum = cb.id_status_museum");
 		//$this->db->join("status_penetapan_museum as sp", "sp.id_status_penetapan_museum = cb.status_penetapan");
-		//if(!empty($filter['id_museum'])) $this->db->where('cb.id_museum', $filter['id_museum']);
+		if(!empty($filter['id_museum'])) $this->db->where('cb.id_museum', $filter['id_museum']);
 
 	    $res = $this->db->get();
 	    return DataStructure::keyValue($res->result_array(), 'id_museum');
