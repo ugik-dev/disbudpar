@@ -26,8 +26,10 @@ class UsahaModel extends CI_Model {
 		$this->db->from('pariwisata_usaha as po');
         $this->db->join("pariwisata_jenis_usaha as jo", "po.id_jenis_usaha = jo.id_jenis_usaha");
         $this->db->join("pariwisata_item_usaha as sb", "po.id_item_usaha = sb.id_item_usaha");
+		$this->db->join("kabupaten as kab", "kab.id_kabupaten = po.id_kabupaten");
+	
 		if(!empty($filter['id_usaha'])) $this->db->where('po.id_usaha', $filter['id_usaha']);
-
+		if(!empty($this->session->userdata('id_kabupaten'))) $this->db->where('po.id_kabupaten', $this->session->userdata('id_kabupaten'));
 	    $res = $this->db->get();
 	    return DataStructure::keyValue($res->result_array(), 'id_usaha');
 	}
@@ -41,14 +43,28 @@ class UsahaModel extends CI_Model {
 	}
 
 	  public function addUsaha($data){
-	    $dataInsert = DataStructure::slice($data, ['nama','id_jenis_usaha','id_item_usaha','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']);
+		$data['id_user_entry'] = $this->session->userdata('id_user');
+		if($this->session->userdata('id_role') == '1'){
+
+		}else{
+		  $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+	  };
+	    $dataInsert = DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_jenis_usaha','id_item_usaha','alamat','lokasi','file','deskripsi']);
 	    $this->db->insert('pariwisata_usaha', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Usaha", "pariwisata_usaha");
 	    return $this->db->insert_id();
 	}
 	
 	public function editUsaha($data){
-		$this->db->set(DataStructure::slice($data, ['nama','id_jenis_usaha','id_item_usaha','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']));
+		$data['id_user_entry'] = $this->session->userdata('id_user');
+		
+		if($this->session->userdata('id_role') == '1'){
+			$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_usaha','id_item_usaha','alamat','lokasi','file','deskripsi']));
+		}else{
+			$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+			$this->db->set(DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_jenis_usaha','id_item_usaha','alamat','lokasi','file','deskripsi']));
+		
+		}
 		$this->db->where('id_usaha', $data['id_usaha']);
 		$this->db->update('pariwisata_usaha');
 

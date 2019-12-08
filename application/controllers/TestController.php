@@ -3,55 +3,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class TestController extends CI_Controller {
 
-  public function __construct(){
-    parent::__construct();
-		$this->load->model(array('TestModel'));
-    $this->load->helper(array('DataStructure', 'Validation'));
-  }
-  
-	public function getAllTest(){
-		try{
-			$this->SecurityModel->userOnlyGuard(TRUE);
-      $test = $this->TestModel->getAllTest();
-			echo json_encode(array('data' => $test));
-		} catch (Exception $e) {
-			ExceptionHandler::handle($e);
-		}
-	}
+  function __construct(){
+		parent::__construct();
+		$this->load->model('TestModel');
+		 
+}
 
-	
-	public function addTest(){
-		try{
-			$this->SecurityModel->userOnlyGuard(TRUE);
-			$data = $this->input->post();
-      $idTest = $this->TestModel->addTest($data);
-      $test = $this->TestModel->getTest($idTest);
-			echo json_encode(array('data' => $test));
-		} catch (Exception $e) {
-			ExceptionHandler::handle($e);
-		}
-	}
+// function index(){
+// 		$this->load->view('v_upload');    
+// }
 
-	public function editTest(){
-		try{
-			$this->SecurityModel->userOnlyGuard(TRUE);
-			$data = $this->input->post();
-      $idTest = $this->TestModel->editTest($data);
-      $test = $this->TestModel->getTest($data['id_test']);
-			echo json_encode(array('data' => $test));
-		} catch (Exception $e) {
-			ExceptionHandler::handle($e);
-		}
-	}
 
-	public function deleteTest(){
-		try{
-			$this->SecurityModel->userOnlyGuard(TRUE);
-			$data = $this->input->post();
-      $this->TestModel->deleteTest($data['id_test']);
-			echo json_encode(array());
-		} catch (Exception $e) {
-			ExceptionHandler::handle($e);
+function do_upload(){
+		$config['upload_path']="./upload/";
+		$config['allowed_types']='gif|jpg|png';
+		$config['encrypt_name'] = TRUE;
+		 var_dump('anjay');
+		$this->load->library('upload',$config);
+		if($this->upload->do_upload("file")){
+				$data = array('upload_data' => $this->upload->data());
+
+				$judul= $this->input->post('judul');
+				$image= $data['upload_data']['file_name']; 
+				 
+				$result= $this->DetailCagarbudayaModel->simpan_upload($image);
+				echo json_decode($result);
 		}
-	}
+
+ }
 }

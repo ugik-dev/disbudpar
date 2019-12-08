@@ -17,12 +17,12 @@
             <table id="FDataTable" class="table table-bordered table-hover" style="padding:0px">
               <thead>
                 <tr>
-                  <th style="width: 7%; text-align:center!important">ID</th>
+             
                   <th style="width: 15%; text-align:center!important">Nama Sarana dan Prasarana</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
-                  <th style="width: 12%; text-align:center!important">File</th>
-                  <th style="width: 12%; text-align:center!important">Lokasi</th>
-                  <th style="width: 10%; text-align:center!important">Deskripsi</th>
+                  <th style="width: 12%; text-align:center!important">Alamat</th>
+                 
+                  <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
               </thead>
@@ -57,8 +57,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="file">File</label> 
-            <input type="text" placeholder="File" class="form-control" id="file" name="file" required="required">
+            <label for="alamat">Alamat</label> 
+            <input type="text" placeholder="Alamat" class="form-control" id="alamat" name="alamat" required="required">
             </select>
           </div>
           <div class="form-group">
@@ -85,6 +85,7 @@
 
 <script>
 $(document).ready(function() {
+  $('#seni_dan_budaya').addClass('active');
   $('#saranaprasarana').addClass('active');
 
   var toolbar = {
@@ -110,7 +111,7 @@ $(document).ready(function() {
     'nama': $('#saranaprasarana_modal').find('#nama'),
     'id_jenis_saranaprasarana': $('#saranaprasarana_modal').find('#id_jenis_saranaprasarana'),
     'nama_jenis': $('#saranaprasarana_modal').find('#nama_jenis'),
-    'file': $('#saranaprasarana_modal').find('#file'),
+    'alamat': $('#saranaprasarana_modal').find('#alamat'),
     'lokasi': $('#saranaprasarana_modal').find('#lokasi'),
     'deskripsi': $('#saranaprasarana_modal').find('#deskripsi'),
   }
@@ -206,6 +207,15 @@ $(document).ready(function() {
     
     var renderData = [];
     Object.values(data).forEach((saranaprasarana) => {
+      var apprv;
+      if(saranaprasarana['id_user_approv']=='0'){
+        apprv= "Belum Di Approv"
+        }else{
+          apprv = "Sudah Di Approv";
+        };
+      var detailButton =`
+      <a class="detail dropdown-item" href='<?=site_url()?>OperatorController/DetailSaranaprasarana?id_saranaprasarana=${saranaprasarana['id_saranaprasarana']}'><i class='fa fa-share'></i> Detail Sarana dan Prasarana</a>
+      `; 
       var editButton = `
         <a class="edit dropdown-item" data-id='${saranaprasarana['id_saranaprasarana']}'><i class='fa fa-pencil'></i> Edit Saranaprasarana</a>
       `;
@@ -216,12 +226,13 @@ $(document).ready(function() {
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
+          ${detailButton}
             ${editButton}
             ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([saranaprasarana['id_saranaprasarana'], saranaprasarana['nama'], saranaprasarana['nama_jenis_saranaprasarana'],saranaprasarana['file'],saranaprasarana['lokasi'],saranaprasarana['deskripsi'], button]);
+      renderData.push([saranaprasarana['nama'], saranaprasarana['nama_jenis_saranaprasarana'],saranaprasarana['alamat'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
@@ -238,7 +249,7 @@ $(document).ready(function() {
     SaranaprasaranaModal.id_saranaprasarana.val(saranaprasarana['id_saranaprasarana']);
     SaranaprasaranaModal.nama.val(saranaprasarana['nama']);
     SaranaprasaranaModal.id_jenis_saranaprasarana.val(saranaprasarana['id_jenis_saranaprasarana']);
-    SaranaprasaranaModal.file.val(saranaprasarana['file']);
+    SaranaprasaranaModal.alamat.val(saranaprasarana['alamat']);
     SaranaprasaranaModal.lokasi.val(saranaprasarana['lokasi']);
     SaranaprasaranaModal.deskripsi.val(saranaprasarana['deskripsi']);
   });

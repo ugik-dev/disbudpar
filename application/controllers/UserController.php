@@ -41,8 +41,8 @@ class UserController extends CI_Controller {
 
 	public function changePassword(){
 		try{
-      $this->SecurityModel->roleOnlyGuard('pengusul', TRUE);
-      $this->SecurityModel->pengusulSubTypeGuard(['dosen_tendik'], TRUE);
+			$this->SecurityModel->userOnlyGuard(TRUE);
+     // $this->SecurityModel->pengusulSubTypeGuard(['dosen_tendik'], TRUE);
 			// Validation::ajaxValidateForm($this->SecurityModel->deleteDosenTendik());
 
 			$CP = $this->input->post();
@@ -56,10 +56,58 @@ class UserController extends CI_Controller {
 			ExceptionHandler::handle($e);
 		}
 	}
+	public function editUser(){
+		try{
+			$this->SecurityModel->userOnlyGuard(TRUE);
+     // $this->SecurityModel->pengusulSubTypeGuard(['dosen_tendik'], TRUE);
+			// Validation::ajaxValidateForm($this->SecurityModel->deleteDosenTendik());
+
+			$data = $this->input->post();
+			if(md5($data['password']) != $this->session->userdata('password')){
+				throw new UserException('Pasword Salah!', 0);
+			}else{
+				$result= $this->UserModel->editUser($data);
+				$this->session->set_userdata('username', $result['username']);
+				$this->session->set_userdata('nama', $result['nama']);
+			}
+			//$this->UserModel->changePassword($CP);
+		
+			echo json_encode($result);
+		} catch (Exception $e) {
+			ExceptionHandler::handle($e);
+		}
+	}
 
 	public function logout(){
 		// $this->SecurityModel->userOnlyGuard();
 		$this->session->sess_destroy();
 		echo json_encode(["error" => FALSE, 'data' => 'Logout berhasil.']);
+	}
+
+	function editPhoto(){
+		try{
+			$this->SecurityModel->userOnlyGuard(TRUE);
+			$config['upload_path']="./upload/profile";
+			$config['allowed_types']='jpg|png';
+			$config['encrypt_name'] = TRUE;
+
+	
+			$this->load->library('upload',$config);
+			if($this->upload->do_upload("photo")){
+				$data = array('upload_data' => $this->upload->data());
+				$id= $this->input->post('id_user');
+				$image= $data['upload_data']['file_name']; 
+				$fileold= $this->input->post('oldphoto');
+				unlink("./upload/profile/".$fileold);
+				$result= $this->UserModel->editPhoto($id,$image);
+				$this->session->set_userdata('photo', $image);
+				echo json_decode($result);
+			}
+		
+		
+			echo json_encode(array());
+		} catch (Exception $e) {
+			ExceptionHandler::handle($e);
+		}
 	}
 }

@@ -17,7 +17,10 @@ class PenginapanModel extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('pariwisata_penginapan as po');
 		$this->db->join("pariwisata_jenis_penginapan as pjo", "po.id_jenis_penginapan = pjo.id_jenis_penginapan");
+		$this->db->join("kabupaten as kab", "po.id_kabupaten = kab.id_kabupaten");
+		
 		if(!empty($filter['id_penginapan'])) $this->db->where('po.id_penginapan', $filter['id_penginapan']);
+		if(!empty($this->session->userdata('id_kabupaten'))) $this->db->where('po.id_kabupaten', $this->session->userdata('id_kabupaten'));
 
 	    $res = $this->db->get();
 	    return DataStructure::keyValue($res->result_array(), 'id_penginapan');
@@ -32,14 +35,30 @@ class PenginapanModel extends CI_Model {
 	}
 
 	  public function addPenginapan($data){
-	    $dataInsert = DataStructure::slice($data, ['nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']);
+		if($this->session->userdata('id_role') == '1'){
+
+		}else{
+		  $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+	  	};
+		$data['id_user_entry'] = $this->session->userdata('id_user');
+	
+		$dataInsert = DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']);
 	    $this->db->insert('pariwisata_penginapan', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Penginapan", "pariwisata_penginapan");
 	    return $this->db->insert_id();
 	}
 	
 	public function editPenginapan($data){
-		$this->db->set(DataStructure::slice($data, ['nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']));
+		
+		$data['id_user_entry'] = $this->session->userdata('id_user');
+		if($this->session->userdata('id_role') == '1'){
+			$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']));
+				
+		}else{
+			$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+			$this->db->set(DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']));
+			
+		};
 		$this->db->where('id_penginapan', $data['id_penginapan']);
 		$this->db->update('pariwisata_penginapan');
 

@@ -7,10 +7,11 @@ class UserModel extends CI_Model {
 		if(isset($filter['isSimple'])){
 			$this->db->select('u.id_user, u.username, u.photo, u.nama, u.id_role');
 		} else {
-			$this->db->select("u.*, r.*");
+			$this->db->select("u.*, r.*, k.*");
 		}
 		$this->db->from('user as u');
 		$this->db->join('role as r', 'r.id_role = u.id_role');
+		$this->db->join('kabupaten as k', 'k.id_kabupaten = u.id_kabupaten','left');
 
 		if(isset($filter['username'])) $this->db->where('u.username', $filter['username']);
 		if(isset($filter['id_user'])) $this->db->where('u.id_user', $filter['id_user']);
@@ -25,6 +26,28 @@ class UserModel extends CI_Model {
 		}
 		return $row[$idUser];
 	}
+	
+	public function editPhoto($idUser,$newPhoto){
+		$this->db->set('photo',$newPhoto);
+		$this->db->where('id_user',$idUser);
+		$this->db->update('user');
+		return $newPhoto;
+	}
+
+	public function editUser($tmpdata){
+		$data = array( 
+			'username' => $tmpdata['username'],
+			'nama' => $tmpdata['nama'],
+			);
+	//	var_dump($data);
+	//	var_dump($tmpdata['id_user']);
+		$this->db->set($data);
+		$this->db->where('id_user',$tmpdata['id_user']);
+		$this->db->update('user');
+		
+		return $tmpdata;
+	}
+
 
 	public function getUserByUsername($username = NULL){
 		$row = $this->getAllUser(['username' => $username]);
@@ -35,6 +58,7 @@ class UserModel extends CI_Model {
 	}
 
   public function login($loginData){
+	  	
 		$user = $this->getUserByUsername($loginData['username']);
 		if(md5($loginData['password']) !== $user['password'])
 			throw new UserException("Password yang kamu masukkan salah.", WRONG_PASSWORD_CODE);

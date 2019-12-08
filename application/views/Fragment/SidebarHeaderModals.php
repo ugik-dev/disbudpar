@@ -35,11 +35,43 @@
   </div>
 </div>
 
+<div class="modal inmodal" id="photo_modal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content animated fadeIn">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Ganti Photo</h4>
+        <span class="infoy"></span>
+      </div>
+      <div class="modal-body" id="modal-body">
+      
+        <form role="form" id="photo_form" onsubmit="return false;" type="multipart" autocomplete="off">
+          <input type="" id="id_usery" name="id_user" hidden>
+          <input type="" id="photoy" name="oldphoto" hidden>
+          <div class="form-group  text-center">
+            <img class="form-group  text-center"id='imgphotoy' src="" style='height: 200px;'>
+          </div>
+          <div class="form-group">          
+            <label for="usernamex"></label> 
+            <input type="file" placeholder="" class="form-control" name="photo" required="required">
+          </div>
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btny" data-loading-text="Loading..."><strong>Simpan Perubahan</strong></button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 $(document).ready(function() {
 
+  var passwordButton = $('#password_btn');
+  var photoButton = $('#photo_btn');
   var profileButton = $('#profile_btn');
-  
+  // ============= TO PROFIL
   var ProfileModal = {
     'self': $('#profile_modal'),
     'info': $('#profile_modal').find('.infox'),
@@ -61,7 +93,7 @@ $(document).ready(function() {
     confirmButtonText: "Ya, Simpan!",
   };
 
-  var user = JSON.parse(`<?=json_encode(DataStructure::slice($this->session->userdata(), ['id_user', 'username', 'nama', 'title_role', 'nama_opd']))?>`);
+  var user = JSON.parse(`<?=json_encode(DataStructure::slice($this->session->userdata(), ['id_user', 'username', 'nama', 'title_role', 'nama_kabupaten','photo']))?>`);
   var profile = {
     'username': $('#header_username'),
     'nama': $('#header_nama'),
@@ -70,9 +102,9 @@ $(document).ready(function() {
 
   renderProfile(user);
   function renderProfile(user){
-    profile.username.html(user['username']);
-    profile.nama.html(user['nama']);
-    var title = user['title_role'] + (user['nama_opd'] ? ' - ' + user['nama_opd'] : '')
+    profile.username.html('<?= $this->session->userdata('username')?>');
+    profile.nama.html('<?= $this->session->userdata('nama') ?>');
+    var title = user['title_role'] + (user['nama_kabupaten'] ? ' - ' + user['nama_kabupaten'] : '')
     profile.title.html(title);
   }
 
@@ -117,15 +149,95 @@ $(document).ready(function() {
         data: ProfileModal.form.serialize(),
         success: function (data){
           buttonIdle(ProfileModal.saveEditBtn);
-          var json = JSON.parse(data);
+
           if(json['error']){
             swal("Simpan Gagal", json['message'], "error");
             return;
           }
-          user = json['data']
-          swal("Simpan Berhasil", "", "success");
-          ProfileModal.self.modal('hide');
-          renderProfile(user);
+
+          swal("Simpan Berhasil", "", "success").then((result) =>{
+            document.location.reload();
+          })
+
+        },
+        error: function(e) {}
+      });
+    });
+  });
+// ============= TO Photo
+var PhotoModal = {
+    'self': $('#photo_modal'),
+    'info': $('#photo_modal').find('.infoy'),
+    'form': $('#photo_modal').find('#photo_form'),
+    'saveEditBtn': $('#photo_modal').find('#save_edit_btny'),
+    'id_user': $('#photo_modal').find('#id_usery'),
+    'imgphoto': $('#photo_modal').find('#imgphotoy'),
+    'photo': $('#photo_modal').find('#photoy'),
+    'username': $('#photo_modal').find('#usernamey'),
+   
+  }
+
+  var swalSaveConfigure = {
+    title: "Konfirmasi simpan",
+    text: "Yakin akan menyimpan data ini?",
+    type: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#18a689",
+    confirmButtonText: "Ya, Simpan!",
+  };
+
+      var photo = {
+    'photo': $('#header_username'),
+    }
+
+  // renderPhoto(user);
+  // function renderPhoto(user){
+  //   photo.username.html(user['username']);
+  //   photo.nama.html(user['nama']);
+  //   var title = user['title_role'] + (user['nama_kabupaten'] ? ' - ' + user['nama_kabupaten'] : '')
+  //   photo.title.html(title);
+  // }
+
+  photoButton.on('click', () => {
+ 
+    PhotoModal.form.trigger('reset');
+    PhotoModal.self.modal('show');
+    PhotoModal.self.modal('show');
+
+    var currentData = user;
+  
+    PhotoModal.id_user.val(currentData['id_user']);
+    PhotoModal.photo.val(currentData['photo']);
+    PhotoModal.imgphoto.prop('src',`<?=base_url('upload/profile/')?>`+currentData['photo']);
+    PhotoModal.username.val(currentData['username']);
+  });
+
+
+
+  PhotoModal.form.submit(function(event) {
+    event.preventDefault();
+    swal(swalSaveConfigure).then((result) => {
+      if(!result.value){ return; }
+      buttonLoading(PhotoModal.saveEditBtn);
+      $.ajax({
+        url: "<?=site_url('UserController/editPhoto')?>", 'type': 'POST',
+        data: new FormData(this),
+        processData:false,
+        contentType:false,
+        cache:false,
+        async:false,
+        success: function (data){
+          buttonIdle(PhotoModal.saveEditBtn);
+
+          if(json['error']){
+            swal("Simpan Gagal", json['message'], "error");
+            return;
+          }
+       
+          swal("Simpan Berhasil", "", "success").then((result) =>{
+            document.location.reload();
+          })
+
         },
         error: function(e) {}
       });

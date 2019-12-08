@@ -17,13 +17,11 @@
             <table id="FDataTable" class="table table-bordered table-hover" style="padding:0px">
               <thead>
                 <tr>
-                  <th style="width: 7%; text-align:center!important">ID</th>
+             
                   <th style="width: 15%; text-align:center!important">Nama Biro / Agen</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
                   <th style="width: 12%; text-align:center!important">Sertifikat</th>
-                  <th style="width: 12%; text-align:center!important">File</th>
-                  <th style="width: 12%; text-align:center!important">Lokasi</th>
-                  <th style="width: 10%; text-align:center!important">Deskripsi</th>
+                  <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
               </thead>
@@ -62,13 +60,14 @@
             <select class="form-control mr-sm-2" id="id_sertifikat_biro" name="id_sertifikat_biro" required="required">
             </select>
           </div>
-          <div class="form-group">
-            <label for="file">File</label> 
-            <input type="text" placeholder="File" class="form-control" id="file" name="file" required="required">
-          </div>
+
           <div class="form-group">
             <label for="lokasi">Lokasi</label> 
             <input type="text" placeholder="Lokasi" class="form-control" id="lokasi" name="lokasi" required="required">
+          </div>
+          <div class="form-group">
+            <label for="alamat">Alamat</label> 
+            <input type="text" placeholder="Alamat" class="form-control" id="alamat" name="alamat" required="required">
           </div>
           <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
@@ -90,6 +89,7 @@
 
 <script>
 $(document).ready(function() {
+  $('#pariwisata').addClass('active');
   $('#biro').addClass('active');
 
   var toolbar = {
@@ -118,6 +118,7 @@ $(document).ready(function() {
     'id_sertifikat_biro': $('#biro_modal').find('#id_sertifikat_biro'),
     'nama_sertifikat_biro': $('#biro_modal').find('#nama_sertifikat_biro'),
     'file': $('#biro_modal').find('#file'),
+    'alamat': $('#biro_modal').find('#alamat'),
     'lokasi': $('#biro_modal').find('#lokasi'),
     'deskripsi': $('#biro_modal').find('#deskripsi'),
   }
@@ -241,6 +242,15 @@ $(document).ready(function() {
     
     var renderData = [];
     Object.values(data).forEach((biro) => {
+      var apprv;
+      if(saranaprasarana['id_user_approv']=='0'){
+        apprv= "Belum Di Approv"
+        }else{
+          apprv = "Sudah Di Approv";
+        };
+      var detailButton =`
+      <a class="detail dropdown-item" href='<?=site_url()?>OperatorController/DetailBiro?id_biro=${biro['id_biro']}'><i class='fa fa-share'></i> Detail Biro</a>
+      `; 
       var editButton = `
         <a class="edit dropdown-item" data-id='${biro['id_biro']}'><i class='fa fa-pencil'></i> Edit Biro</a>
       `;
@@ -251,12 +261,13 @@ $(document).ready(function() {
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
+            ${detailButton}
             ${editButton}
             ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([biro['id_biro'], biro['nama'],biro['nama_jenis_biro'],biro['nama_sertifikat_biro'], biro['file'],biro['lokasi'],biro['deskripsi'], button]);
+      renderData.push([biro['nama'],biro['nama_jenis_biro'],biro['nama_sertifikat_biro'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
@@ -274,6 +285,7 @@ $(document).ready(function() {
     BiroModal.nama.val(biro['nama']);
     BiroModal.id_jenis_biro.val(biro['id_jenis_biro']);
     BiroModal.id_sertifikat_biro.val(biro['id_sertifikat_biro']);
+    BiroModal.alamat.val(biro['alamat']);
     BiroModal.file.val(biro['file']);
     BiroModal.lokasi.val(biro['lokasi']);
     BiroModal.deskripsi.val(biro['deskripsi']);

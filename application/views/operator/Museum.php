@@ -17,13 +17,11 @@
             <table id="FDataTable" class="table table-bordered table-hover" style="padding:0px">
               <thead>
                 <tr>
-                  <th style="width: 7%; text-align:center!important">ID</th>
+        
                   <th style="width: 15%; text-align:center!important">Nama Museum</th>
                   <th style="width: 12%; text-align:center!important">Kepemilikan</th>
                   <th style="width: 12%; text-align:center!important">Status Registrasi</th>
-                  <th style="width: 12%; text-align:center!important">File</th>
-                  <th style="width: 12%; text-align:center!important">Lokasi</th>
-                  <th style="width: 10%; text-align:center!important">Deskripsi</th>
+                  <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
               </thead>
@@ -62,11 +60,7 @@
             <select class="form-control mr-sm-2" id="id_status_museum" name="id_status_museum" required="required">
             </select>
           </div>
-          <div class="form-group">
-            <label for="file">File</label> 
-            <input type="text" placeholder="File" class="form-control" id="file" name="file" required="required">
-            </select>
-          </div>
+
           <div class="form-group">
             <label for="lokasi">Lokasi</label> 
             <input type="text" placeholder="Lokasi" class="form-control" id="lokasi" name="lokasi" required="required">
@@ -115,7 +109,7 @@ $(document).ready(function() {
     'id_museum': $('#museum_modal').find('#id_museum'),
     'nama': $('#museum_modal').find('#nama'),
     'id_kepemilikan_museum': $('#museum_modal').find('#id_kepemilikan_museum'),
-    'nama_kepemilikan': $('#museum_modal').find('#nama_kepemilikan'),
+    'nama_kepemilikan_museum': $('#museum_modal').find('#nama_kepemilikan_museum'),
     'id_status_museum': $('#museum_modal').find('#id_status_museum'),
     'nama_status': $('#museum_modal').find('#nama_status'),
     'file': $('#museum_modal').find('#file'),
@@ -197,7 +191,7 @@ $(document).ready(function() {
     Object.values(data).forEach((d) => {
       MuseumModal.id_kepemilikan_museum.append($('<option>', {
         value: d['id_kepemilikan_museum'],
-        text: d['id_kepemilikan_museum'] + ' :: ' + d['nama_kepemilikan'],
+        text: d['id_kepemilikan_museum'] + ' :: ' + d['nama_kepemilikan_museum'],
       }));
     });
   }
@@ -242,6 +236,15 @@ $(document).ready(function() {
     
     var renderData = [];
     Object.values(data).forEach((museum) => {
+      var apprv;
+      if(museum['id_user_approv']=='0'){
+        apprv= "Belum Di Approv"
+        }else{
+          apprv = "Sudah Di Approv";
+        };
+      var detailButton =`
+      <a class="detail dropdown-item" href='<?=site_url()?>OperatorController/DetailMuseum?id_museum=${museum['id_museum']}'><i class='fa fa-share'></i> Detail Museum</a>
+      `; 
       var editButton = `
         <a class="edit dropdown-item" data-id='${museum['id_museum']}'><i class='fa fa-pencil'></i> Edit Museum</a>
       `;
@@ -252,12 +255,13 @@ $(document).ready(function() {
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
+            ${detailButton}
             ${editButton}
             ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([museum['id_museum'], museum['nama'], museum['nama_kepemilikan'], museum['nama_status'],museum['file'],museum['lokasi'],museum['deskripsi'], button]);
+      renderData.push([ museum['nama'], museum['nama_kepemilikan_museum'], museum['nama_status'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }

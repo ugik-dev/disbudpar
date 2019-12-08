@@ -8,6 +8,7 @@ class ObjekModel extends CI_Model {
 	public function getAllJenisOption($filter = []){
 		$this->db->select('ko.id_jenis_objek, ko.nama_jenis_objek');
 		$this->db->from('pariwisata_jenis_objek as ko');
+		
 		$res=$this->db->get();
 
 		return DataStructure::keyValue($res->result_array(), 'id_jenis_objek');
@@ -17,7 +18,11 @@ class ObjekModel extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('pariwisata_objek as po');
 		$this->db->join("pariwisata_jenis_objek as pjo", "po.id_jenis_objek = pjo.id_jenis_objek");
+		$this->db->join("kabupaten as kab", "kab.id_kabupaten = po.id_kabupaten");
+		
+		
 		if(!empty($filter['id_objek'])) $this->db->where('po.id_objek', $filter['id_objek']);
+		if(!empty($this->session->userdata('id_kabupaten'))) $this->db->where('po.id_kabupaten', $this->session->userdata('id_kabupaten'));
 
 	    $res = $this->db->get();
 	    return DataStructure::keyValue($res->result_array(), 'id_objek');
@@ -32,14 +37,28 @@ class ObjekModel extends CI_Model {
 	}
 
 	  public function addObjek($data){
-	    $dataInsert = DataStructure::slice($data, ['nama','id_jenis_objek','lokasi','file','deskripsi']);
+		$data['id_user_entry'] = $this->session->userdata('id_user');
+		if($this->session->userdata('id_role') == '1'){
+
+		}else{
+		  $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+	  };
+	    $dataInsert = DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_objek','deskripsi','id_user_entry']);
 	    $this->db->insert('pariwisata_objek', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Objek", "pariwisata_objek");
 	    return $this->db->insert_id();
 	}
 	
 	public function editObjek($data){
-		$this->db->set(DataStructure::slice($data, ['nama','id_jenis_objek','lokasi','file','deskripsi']));
+		$data['id_user_entry'] = $this->session->userdata('id_user');
+		if($this->session->userdata('id_role') == '1'){
+			$this->db->set(DataStructure::slice($data, ['nama','id_kabupaten','id_jenis_objek','deskripsi']));
+		
+		}else{
+			$this->db->set(DataStructure::slice($data, ['nama','id_jenis_objek','deskripsi','id_user_entry']));
+		
+		};
+		
 		$this->db->where('id_objek', $data['id_objek']);
 		$this->db->update('pariwisata_objek');
 

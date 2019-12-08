@@ -17,14 +17,13 @@
             <table id="FDataTable" class="table table-bordered table-hover" style="padding:0px">
               <thead>
                 <tr>
-                  <th style="width: 7%; text-align:center!important">ID</th>
+      
                   <th style="width: 15%; text-align:center!important">Nama Penginapan</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
                   <th style="width: 12%; text-align:center!important">Jumlah Kamar</th>
                   <th style="width: 12%; text-align:center!important">Jumlah Tempat Tidur</th>
-                  <th style="width: 12%; text-align:center!important">File</th>
-                  <th style="width: 12%; text-align:center!important">Lokasi</th>
-                  <th style="width: 10%; text-align:center!important">Deskripsi</th>
+                  
+                  <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
               </thead>
@@ -94,6 +93,7 @@
 
 <script>
 $(document).ready(function() {
+  $('#pariwisata').addClass('active');
   $('#penginapan').addClass('active');
 
   var toolbar = {
@@ -217,6 +217,15 @@ $(document).ready(function() {
     
     var renderData = [];
     Object.values(data).forEach((penginapan) => {
+      var apprv;
+      if(penginapan['id_user_approv']=='0'){
+        apprv= "Belum Di Approv"
+        }else{
+          apprv = "Sudah Di Approv";
+        };
+      var detailButton =`
+      <a class="detail dropdown-item" href='<?=site_url()?>OperatorController/DetailPenginapan?id_penginapan=${penginapan['id_penginapan']}'><i class='fa fa-share'></i> Detail Penginapan</a>
+      `; 
       var editButton = `
         <a class="edit dropdown-item" data-id='${penginapan['id_penginapan']}'><i class='fa fa-pencil'></i> Edit Penginapan</a>
       `;
@@ -227,12 +236,13 @@ $(document).ready(function() {
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
+            ${detailButton}
             ${editButton}
             ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([penginapan['id_penginapan'], penginapan['nama'],penginapan['nama_jenis_penginapan'],penginapan['jumlah_kamar'],penginapan['jumlah_tempat_tidur'], penginapan['file'],penginapan['lokasi'],penginapan['deskripsi'], button]);
+      renderData.push([penginapan['nama'],penginapan['nama_jenis_penginapan'],penginapan['jumlah_kamar'],penginapan['jumlah_tempat_tidur'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }

@@ -17,14 +17,12 @@
             <table id="FDataTable" class="table table-bordered table-hover" style="padding:0px">
               <thead>
                 <tr>
-                  <th style="width: 7%; text-align:center!important">ID</th>
+             
                   <th style="width: 15%; text-align:center!important">Nama</th>
                   <th style="width: 12%; text-align:center!important">Jenis Seni Budaya</th>
                   <th style="width: 12%; text-align:center!important">Sub Senis Budaya</th>
                   <th style="width: 12%; text-align:center!important">Jumlah Anggota</th>
-                  <th style="width: 12%; text-align:center!important">File</th>
-                  <th style="width: 12%; text-align:center!important">Lokasi</th>
-                  <th style="width: 10%; text-align:center!important">Deskripsi</th>
+                  <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
               </thead>
@@ -69,11 +67,6 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="file">File</label> 
-            <input type="text" placeholder="File" class="form-control" id="file" name="file" required="required">
-            </select>
-          </div>
-          <div class="form-group">
             <label for="lokasi">Lokasi</label> 
             <input type="text" placeholder="Lokasi" class="form-control" id="lokasi" name="lokasi" required="required">
           </div>
@@ -97,6 +90,7 @@
 
 <script>
 $(document).ready(function() {
+  $('#seni_dan_budaya').addClass('active');
   $('#senibudaya').addClass('active');
 
   var toolbar = {
@@ -192,12 +186,18 @@ $(document).ready(function() {
           return;
         }
         dataJ2 = json['data'];
-        renderJ2Selection(dataJ2);
+        renderJ2Selection(dataJ2,null);
+        registerJSelectionChange();
       },
       error: function(e) {}
     });
   }
 
+  function registerJSelectionChange(){
+    SenibudayaModal.id_j_senibudaya.on('change', function(e){
+      renderJ2Selection(dataJ2, SenibudayaModal.id_j_senibudaya.val());
+    });    
+  }
    function renderJSelection(data){
     SenibudayaModal.id_j_senibudaya.empty();
     SenibudayaModal.id_j_senibudaya.append($('<option>', { value: "", text: "-- Pilih Jenis --"}));
@@ -209,10 +209,10 @@ $(document).ready(function() {
     });
   }
 
-   function renderJ2Selection(data){
+   function renderJ2Selection(data, idj){
     SenibudayaModal.id_j2_senibudaya.empty();
     SenibudayaModal.id_j2_senibudaya.append($('<option>', { value: "", text: "-- Pilih Sub Jenis --"}));
-    Object.values(data).forEach((d) => {
+    Object.values(data).filter((e) => e['id_j_senibudaya'] == idj).forEach((d) => {
       SenibudayaModal.id_j2_senibudaya.append($('<option>', {
         value: d['id_j2_senibudaya'],
         text: d['id_j2_senibudaya'] + ' :: ' + d['nama_j2_senibudaya'],
@@ -249,6 +249,15 @@ $(document).ready(function() {
     
     var renderData = [];
     Object.values(data).forEach((senibudaya) => {
+      var apprv;
+      if(senibudaya['id_user_approv']=='0'){
+        apprv= "Belum Di Approv"
+        }else{
+          apprv = "Sudah Di Approv";
+        };
+      var detailButton =`
+      <a class="detail dropdown-item" href='<?=site_url()?>OperatorController/DetailSenibudaya?id_senibudaya=${senibudaya['id_senibudaya']}'><i class='fa fa-share'></i> Detail Seni Budaya</a>
+      `; 
       var editButton = `
         <a class="edit dropdown-item" data-id='${senibudaya['id_senibudaya']}'><i class='fa fa-pencil'></i> Edit Seni Budaya</a>
       `;
@@ -259,12 +268,13 @@ $(document).ready(function() {
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
+          ${detailButton}
             ${editButton}
             ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([senibudaya['id_senibudaya'], senibudaya['nama'], senibudaya['nama_j_senibudaya'], senibudaya['nama_j2_senibudaya'],senibudaya['jumlahanggota'],senibudaya['file'],senibudaya['lokasi'],senibudaya['deskripsi'], button]);
+      renderData.push([ senibudaya['nama'], senibudaya['nama_j_senibudaya'], senibudaya['nama_j2_senibudaya'],senibudaya['jumlahanggota'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }

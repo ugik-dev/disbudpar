@@ -17,13 +17,12 @@
             <table id="FDataTable" class="table table-bordered table-hover" style="padding:0px">
               <thead>
                 <tr>
-                  <th style="width: 7%; text-align:center!important">ID</th>
+
                   <th style="width: 15%; text-align:center!important">Nama Usaha dan Restoran</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
                   <th style="width: 12%; text-align:center!important">Item</th>
-                  <th style="width: 12%; text-align:center!important">File</th>
-                  <th style="width: 12%; text-align:center!important">Lokasi</th>
-                  <th style="width: 10%; text-align:center!important">Deskripsi</th>
+
+                  <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
               </thead>
@@ -57,12 +56,16 @@
             <select class="form-control mr-sm-2" id="id_jenis_usaha" name="id_jenis_usaha" required="required">
             </select>
           </div>
-          <div class="form-group  mr-sm-2" for="id_item_usaha" type="checkbox" id="id_item_usaha" name="id_item_usaha" required="required" >
-
-          </div>
           <div class="form-group">
-            <label for="file">File</label> 
-            <input type="text" placeholder="File" class="form-control" id="file" name="file" required="required">
+            <label for="id_item_usaha">Item</label> 
+            <select class="form-control mr-sm-2" id="id_item_usaha" name="id_item_usaha" required="required">
+            </select>
+          </div>
+          <!-- <div class="form-group  mr-sm-2" for="id_item_usaha" type="checkbox" id="id_item_usaha" name="id_item_usaha" required="required" >
+          </div> -->
+          <div class="form-group">
+            <label for="alamat">Alamat</label> 
+            <input type="text" placeholder="Alamat" class="form-control" id="alamat" name="alamat" required="required">
           </div>
           <div class="form-group">
             <label for="lokasi">Lokasi</label> 
@@ -88,6 +91,7 @@
 
 <script>
 $(document).ready(function() {
+  $('#pariwisata').addClass('active');
   $('#usaha').addClass('active');
 
   var toolbar = {
@@ -115,7 +119,7 @@ $(document).ready(function() {
     'nama_jenis_usaha': $('#usaha_modal').find('#nama_jenis_usaha'),
     'id_item_usaha': $('#usaha_modal').find('#id_item_usaha'),
     'nama_item_usaha': $('#usaha_modal').find('#nama_item_usaha'),
-    'file': $('#usaha_modal').find('#file'),
+    'alamat': $('#usaha_modal').find('#alamat'),
     'lokasi': $('#usaha_modal').find('#lokasi'),
     'deskripsi': $('#usaha_modal').find('#deskripsi'),
   }
@@ -201,12 +205,19 @@ $(document).ready(function() {
 
     function renderItemSelection(data){
     UsahaModal.id_item_usaha.empty();
-    UsahaModal.id_item_usaha.append($('<label for="id_jenis_usaha">Item</label> <br>'));
+    //UsahaModal.id_item_usaha.append($('<label for="id_jenis_usaha">Item</label> <br>'));
+    UsahaModal.id_item_usaha.append($('<option>', { value: "", text: "-- Pilih Item --"}));
+    // Object.values(data).forEach((d) => {
+    //   UsahaModal.id_item_usaha.append($('<input name="check_lisk[]" type="checkbox">', {
+    //     value: d['id_jenis_usaha'],}),
+    //   $("<label width=100px >  "+d['nama_item_usaha']+"  ::</label>"),
+    //    );
+
     Object.values(data).forEach((d) => {
-      UsahaModal.id_item_usaha.append($('<input name="check_lisk[]" type="checkbox">', {
-        value: d['id_jenis_usaha'],}),
-      $("<label width=100px >  "+d['nama_item_usaha']+"  ::</label>"),
-       );
+      UsahaModal.id_item_usaha.append($('<option>', {
+        value: d['id_item_usaha'],
+        text: d['id_item_usaha'] + ' :: ' + d['nama_item_usaha'],
+      }));
     });
     }
   
@@ -239,6 +250,15 @@ $(document).ready(function() {
     
     var renderData = [];
     Object.values(data).forEach((usaha) => {
+      var apprv;
+      if(usaha['id_user_approv']=='0'){
+        apprv= "Belum Di Approv"
+        }else{
+          apprv = "Sudah Di Approv";
+        };
+      var detailButton =`
+      <a class="detail dropdown-item" href='<?=site_url()?>OperatorController/DetailUsaha?id_usaha=${usaha['id_usaha']}'><i class='fa fa-share'></i> Detail Usaha</a>
+      `; 
       var editButton = `
         <a class="edit dropdown-item" data-id='${usaha['id_usaha']}'><i class='fa fa-pencil'></i> Edit Usaha</a>
       `;
@@ -249,12 +269,13 @@ $(document).ready(function() {
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
+            ${detailButton}
             ${editButton}
             ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([usaha['id_usaha'], usaha['nama'],usaha['nama_jenis_usaha'],usaha['nama_item_usaha'], usaha['file'],usaha['lokasi'],usaha['deskripsi'], button]);
+      renderData.push([usaha['nama'],usaha['nama_jenis_usaha'],usaha['nama_item_usaha'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
@@ -272,7 +293,7 @@ $(document).ready(function() {
     UsahaModal.nama.val(usaha['nama']);
     UsahaModal.id_jenis_usaha.val(usaha['id_jenis_usaha']);
     UsahaModal.id_item_usaha.val(usaha['id_item_usaha']);
-    UsahaModal.file.val(usaha['file']);
+    UsahaModal.alamat.val(usaha['alamat']);
     UsahaModal.lokasi.val(usaha['lokasi']);
     UsahaModal.deskripsi.val(usaha['deskripsi']);
   });

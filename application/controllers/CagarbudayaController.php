@@ -10,6 +10,10 @@ class CagarbudayaController extends CI_Controller {
 
   }
 
+    public function detail(){
+      $data = ['id_cagar_budaya' => $this->input->get()];
+      $this->load->view('DetailCagarPage', $data);
+    }
 
   public function getAllJenisOption(){
     try{
@@ -46,6 +50,17 @@ class CagarbudayaController extends CI_Controller {
     try{
       $this->SecurityModel->userOnlyGuard(TRUE);
       $data = $this->CagarbudayaModel->getAllCagarbudaya();
+     
+      echo json_encode(array('data' => $data));
+    } catch (Exception $e) {
+      ExceptionHandler::handle($e);
+    }
+  }
+
+  public function getAllStatistikCagarbudaya(){
+    try{
+      $this->SecurityModel->userOnlyGuard(TRUE);
+      $data = $this->CagarbudayaModel->getAllStatistikCagarbudaya();
       echo json_encode(array('data' => $data));
     } catch (Exception $e) {
       ExceptionHandler::handle($e);
@@ -68,6 +83,8 @@ class CagarbudayaController extends CI_Controller {
   public function editCagarbudaya(){
     try{
       $this->SecurityModel->userOnlyGuard(TRUE);
+
+  
       $data = $this->input->post();
       $idCagarbudaya = $this->CagarbudayaModel->editCagarbudaya($data);
       $data = $this->CagarbudayaModel->getCagarbudaya($idCagarbudaya);

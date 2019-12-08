@@ -17,12 +17,11 @@
             <table id="FDataTable" class="table table-bordered table-hover" style="padding:0px">
               <thead>
                 <tr>
-                  <th style="width: 7%; text-align:center!important">ID</th>
+         
                   <th style="width: 15%; text-align:center!important">Nama Objek</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
-                  <th style="width: 12%; text-align:center!important">File</th>
-                  <th style="width: 12%; text-align:center!important">Lokasi</th>
-                  <th style="width: 10%; text-align:center!important">Deskripsi</th>
+                  
+                  <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
               </thead>
@@ -56,15 +55,7 @@
             <select class="form-control mr-sm-2" id="id_jenis_objek" name="id_jenis_objek" required="required">
             </select>
           </div>
-          <div class="form-group">
-            <label for="file">File</label> 
-            <input type="text" placeholder="File" class="form-control" id="file" name="file" required="required">
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="lokasi">Lokasi</label> 
-            <input type="text" placeholder="Lokasi" class="form-control" id="lokasi" name="lokasi" required="required">
-          </div>
+
           <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
             <input type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required">
@@ -85,7 +76,9 @@
 
 <script>
 $(document).ready(function() {
+  $('#pariwisata').addClass('active');
   $('#objek').addClass('active');
+
 
   var toolbar = {
     'form': $('#toolbar_form'),
@@ -206,6 +199,15 @@ $(document).ready(function() {
     
     var renderData = [];
     Object.values(data).forEach((objek) => {
+      var apprv;
+      if(objek['id_user_approv']=='0'){
+        apprv= "Belum Di Approv"
+        }else{
+          apprv = "Sudah Di Approv";
+        };
+      var detailButton =`
+      <a class="detail dropdown-item" href='<?=site_url()?>OperatorController/DetailObjek?id_objek=${objek['id_objek']}'><i class='fa fa-share'></i> Detail Objek Wisata</a>
+      `; 
       var editButton = `
         <a class="edit dropdown-item" data-id='${objek['id_objek']}'><i class='fa fa-pencil'></i> Edit Objek</a>
       `;
@@ -216,12 +218,13 @@ $(document).ready(function() {
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
+            ${detailButton}
             ${editButton}
             ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([objek['id_objek'], objek['nama'], objek['nama_jenis_objek'],objek['file'],objek['lokasi'],objek['deskripsi'], button]);
+      renderData.push([objek['nama'], objek['nama_jenis_objek'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
