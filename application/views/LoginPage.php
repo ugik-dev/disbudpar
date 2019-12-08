@@ -24,9 +24,9 @@
         
       </div>     
       <div class="col-md-4">
-        <div class="ibox-content">
+        <div class="ibox-content" style="background-color:#ffffff61">
           <form id="loginForm"  class="m-t" role="form">
-            <h3>Masuk</h3>
+            <h3>Login / Masuk</h3>
             <div class="form-group">
               <input type="text" class="form-control" name="username" placeholder="Username" required="required">
             </div>
@@ -36,7 +36,7 @@
             <button type="submit" id="loginBtn" class="btn btn-primary block full-width m-b" data-loading-text="Loging In...">Login</button>
           </form>
           <p class="m-t">
-            <small>DINAS KEBUDAYAAN DAN PARIWISATA</small>
+            <small>DINAS KEBUDAYAAN DAN PARIWISATA KEP. BANGKA BELITUNG</small>
           </p>
         </div>
       </div>
