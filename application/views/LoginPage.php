@@ -4,9 +4,15 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-          <h1 class="display-4">DINAS KEBUDAYAAN PARIWISATA</h1>
-          <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-          <hr class="my-4">
+          <div class="row">
+            <img class="col-md-3" src="<?php echo base_url('assets/img/logo-babel.png');?>" >
+            <div class="col-md-9">
+              <h1 class="display-4 shadowed">DINAS KEBUDAYAAN DAN PARIWISATA</h1>
+              <p class="lead shadowed">Provinsi Kepulauan Bangka Belitung</p>
+            </div>
+          </div>
+          <img class="col-md-3" src="<?php echo base_url('assets/img/logo-comeexplore.png');?>" >
+          <img class="col-md-3" src="<?php echo base_url('assets/img/logo-pesona-indonesia.png');?>" >
             <!-- <div class="row">
               <div class="col-md-6">
                   Pemerintah Provinsi Kepulauan Bangka Belitung
@@ -38,13 +44,6 @@
      
     </div>
     <br>
-    <div class="col-md-12">
-      <div class="row">
-        <img class="col-md-2" src="<?php echo base_url('assets/img/logo-babel.png');?>" >
-        <img class="col-md-2" src="<?php echo base_url('assets/img/logo-comeexplore.png');?>" >
-        <img class="col-md-2" src="<?php echo base_url('assets/img/logo-pesona-indonesia.png');?>" >
-      </div>
-      </div> 
   </div>
   </div>
 
@@ -81,11 +80,15 @@
 </script>
 <style> body { background-color: #f3f3f4!important; }
 .jumbotron {
-  /* background-image: url('../assets/img/walp1.jpg'); */
+  background-image: url('../assets/img/walp1.jpg');
   background-size: cover;
   height: 750px;
   border-radius: 0px;
   padding: 130px;
+}
+
+.shadowed {
+  text-shadow: 2px 2px 1px #ffffff;
 }
 
 .logo-logo {
