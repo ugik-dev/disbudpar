@@ -1,6 +1,6 @@
 <?php $this->load->view('Fragment/HeaderFragment',['title' => $title]); ?>
-<div class="jumbotron" style="height: 95%">
- 
+<div class="jumbotron " style="height: 95%" >
+  <div class="background_login" id="login_page"></div>
   <div class="container">
     <div class="row">
       <div class="col-md-8">
@@ -26,7 +26,7 @@
       <div class="col-md-4">
         <div class="ibox-content" style="background-color:#ffffff61">
           <form id="loginForm"  class="m-t" role="form">
-            <h3>Login / Masuk</h3>
+            <h3 style="color: black;">Login / Masuk</h3>
             <div class="form-group">
               <input type="text" class="form-control" name="username" placeholder="Username" required="required">
             </div>
@@ -36,7 +36,7 @@
             <button type="submit" id="loginBtn" class="btn btn-primary block full-width m-b" data-loading-text="Loging In...">Login</button>
           </form>
           <p class="m-t">
-            <small>DINAS KEBUDAYAAN DAN PARIWISATA KEP. BANGKA BELITUNG</small>
+            <small style="color: black;">DINAS KEBUDAYAAN DAN PARIWISATA KEP. BANGKA BELITUNG</small>
           </p>
         </div>
       </div>
@@ -53,6 +53,7 @@
 
     var loginForm = $('#loginForm');
     var submitBtn = loginForm.find('#loginBtn');
+    var login_page = $('#login_page');
 
     loginForm.on('submit', (ev) => {
       ev.preventDefault();
@@ -76,19 +77,73 @@
       });
     });
 
+    var counter = Math.floor(Math.random() * 100) + 1;
+    var image_count = 28;
+    login_page.addClass(`img_${counter % image_count}`);
+    window.setInterval(function(){
+      counter += 1;
+      var prevIdx = (counter - 1) % image_count;
+      var currIdx = counter % image_count;
+      login_page.fadeOut('400', function(){
+        login_page.removeClass(`img_${prevIdx}`);
+        login_page.addClass(`img_${currIdx}`);
+        login_page.fadeIn('400', function(){
+        })
+      });
+    }, 15000);
   });
 </script>
 <style> body { background-color: #f3f3f4!important; }
+.img_0 {background-image: url('../assets/img/background/1-Lomba-Foto-Babar-2017_Menangkis-Tantangan_Lintang-Tatang.jpg');}
+.img_1 {background-image: url('../assets/img/background/1-Sardy_Pesanggrahan-Menumbing.jpg');}
+.img_2 {background-image: url('../assets/img/background/2-Agus-Ramdhany_Batu-penunggu-pantai.jpg');}
+.img_3 {background-image: url('../assets/img/background/2--Lomba-Foto-Babar-2017_Dendang-Rampak_Guzairi-Linggarjati.jpg');}
+.img_4 {background-image: url('../assets/img/background/3--Lomba-Foto-Babar-2017_3000-obor_Aswandi.jpg');}
+.img_5 {background-image: url('../assets/img/background/5-Media-Nusantara_Pelabuhan-Tanjung-Kalian.jpg');}
+.img_6 {background-image: url('../assets/img/background/6-Lomba-Foto-Babar_Dwi-Hardiansyah_-Perang-Ketupat.jpg');}
+.img_7 {background-image: url('../assets/img/background/6-Rizky-Saputra_MTI-Muntok.jpg');}
+.img_8 {background-image: url('../assets/img/background/Batu-Berlayar---Kabupaten-Belitung-by-Jeffry-Surianto.jpg');}
+.img_9 {background-image: url('../assets/img/background/De-Locomotief-5.jpg');}
+.img_10 {background-image: url('../assets/img/background/Dermaga-Pulau-Buku-Limau---Kabupaten-Belitung-Timur-by-Mina-Arvah.jpg');}
+.img_11 {background-image: url('../assets/img/background/DSC_0900.jpg');}
+.img_12 {background-image: url('../assets/img/background/GERBANG-LIKUR,-Deni-Syafutra-,jl.jpg');}
+.img_13 {background-image: url('../assets/img/background/KEMBANG-LIKUR,GINDA-HUWAYAN-PULUNGAN,-SUNGAILIAT,-085379290989,-DESA-MANCUNG-KECAMATAN-KELAPA-BAN.jpg');}
+.img_14 {background-image: url('../assets/img/background/landscape.jpg');}
+.img_15 {background-image: url('../assets/img/background/Landscape-Kaolin_Pelangi-IG-ok.jpg');}
+.img_16 {background-image: url('../assets/img/background/Museum-Timah---Lastriazi2017-(3).jpg');}
+.img_17 {background-image: url('../assets/img/background/PAHLAWAN-KECIL,-ADITTIYA-SAPUTRA,-JL.jpg');}
+.img_18 {background-image: url('../assets/img/background/PantaiBatuKapur-.jpg');}
+.img_19 {background-image: url('../assets/img/background/Pantai-Pasir-Padi---Kota-Pangkalpinang-by-Muttaqin.jpg');}
+.img_20 {background-image: url('../assets/img/background/Pesanggrahan-Muntok---Kabupaten-Bangka-Barat.jpg');}
+.img_21 {background-image: url('../assets/img/background/Pulau-Dapur---Kabupaten-Bangka-Selatan.jpg');}
+.img_22 {background-image: url('../assets/img/background/Pulau-Lengkuas---Belitung.jpg');}
+.img_23 {background-image: url('../assets/img/background/RANGGAM_TAUFIQHIDAYAT_08127171822.jpg');}
+.img_24 {background-image: url('../assets/img/background/Tanjung-Berikat---Bangka-Tengah-by-Setiadi--Darmawan.jpg');}
+.img_25 {background-image: url('../assets/img/background/tanjung-labu.jpg');}
+.img_26 {background-image: url('../assets/img/background/Tarsius-Bancanus-Saltator.jpg');}
+.img_27 {background-image: url('../assets/img/background/Teluk-Limau---Kabupaten-Bangka-by-Iksander.jpg');}
+
 .jumbotron {
-  background-image: url('../assets/img/walp1.jpg');
   background-size: cover;
   height: 750px;
   border-radius: 0px;
   padding: 130px;
 }
 
+.background_login{
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
 .shadowed {
-  text-shadow: 2px 2px 1px #ffffff;
+  text-shadow: 2px 2px 1px #000000;
+  color: #fff;
 }
 
 .logo-logo {
