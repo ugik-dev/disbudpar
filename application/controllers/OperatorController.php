@@ -5,7 +5,7 @@ class OperatorController extends CI_Controller {
 
   public function __construct(){
     parent::__construct();
-    $this->load->model(array('OperatorModel'));
+
     $this->load->model(array('DesawisataModel'));
     $this->load->model(array('DetailDesawisataModel'));
     $this->load->model(array('ObjekModel'));
