@@ -68,8 +68,8 @@ $tmpdate = explode('-',$today);
 $pdf->Cell(250,7,$kabupaten.', '.$tmpdate[1].' '.getBulan($tmpdate[2]).' '.$tmpdate[3],0,1,'C'); 
 $pdf->Cell(250,3,'Approval',0,1,'C'); 
 $pdf->Cell(250,50,'( '.$approv.' )',0,1,'C');
-$url = 'upload\file/'.$dataProfil['file'];
-$pdf->Image($url,43,190,130,50); 
+// $url = 'upload\file/'.$dataProfil['file'];
+// $pdf->Image($url,43,190,130,50); 
 
 // $pdf->SetFont('Arial','B',10);
 // $pdf->Cell(10,6,'NO',1,0);

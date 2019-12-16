@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class LaporanModel extends CI_Model {
 
+    
     public function getTahun(){
         $this->db->select('*');
         $this->db->from('tb_tahun');
@@ -50,6 +51,1564 @@ class LaporanModel extends CI_Model {
 
         return $data;
 		//return DataStructure::keyValue($res->result_array(), 'id_kepemilikan_museum');
+    }
+
+
+
+
+     
+    public function p1($tahun){
+   
+        //cagarbudaya
+       // $tahun = '2019' ;
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val');        
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[0]=$res[0]['val'];
+
+    
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','1');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[1]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','2');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[2]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','3');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[3]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','4');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[4]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','5');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[5]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','6');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[6]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','7');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[7]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','8');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[8]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','9');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[9]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','10');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[10]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','11');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[11]=$res[0]['val'];
+
+        $this->db->from('pariwisata_objek');
+        $this->db->select('count( id_objek ) as val'); 
+        $this->db->where('id_jenis_objek ','12');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[12]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+       // $this->db->where('id_jenis_objek ','12');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[13]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+       // $this->db->where('id_jenis_objek ','12');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[14]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+       // $this->db->where('id_jenis_objek ','12');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[15]=$res[0]['val'];
+        $row[16]=" ";
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','1');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[17]=$res[0]['val'];
+
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','1');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[18]=$res[0]['val'];
+
+        
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','1');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[19]=$res[0]['val'];
+
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','2');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[20]=$res[0]['val'];
+
+        
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','2');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[21]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','2');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[22]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','3');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[23]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','3');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[24]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','3');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[25]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','4');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[26]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','4');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[27]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','4');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[28]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','5');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[29]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','5');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[30]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','5');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[31]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','6');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[32]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','6');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[33]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','6');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[34]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','7');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[35]=$res[0]['val'];
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','7');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[36]=$res[0]['val'];
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','7');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[37]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','8');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[38]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','8');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[39]=$res[0]['val'];
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','8');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[40]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','9');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[41]=$res[0]['val'];
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','9');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[42]=$res[0]['val'];
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','9');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[43]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','10');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[44]=$res[0]['val'];
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','10');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[45]=$res[0]['val'];
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','10');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[46]=$res[0]['val'];
+
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','11');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[47]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','11');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[48]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','11');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[49]=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( jumlah ) as val'); 
+        $this->db->where('id_jenis_objek ','12');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[50]=$res[0]['val'];
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( domestik_l+domestik_p ) as val'); 
+        $this->db->where('id_jenis_objek ','12');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[51]=$res[0]['val'];
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( mancanegara_l+mancanegara_p ) as val'); 
+        $this->db->where('id_jenis_objek ','12');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[52]=$res[0]['val'];
+
+        $this->db->from('approv_rec_penginapan');
+        $this->db->select('sum( jumlah_durasi ) as val'); 
+       // $this->db->where('id_jenis_penginapan ','11');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[53]=$res[0]['val'];
+
+        $this->db->from('approv_rec_penginapan');
+        $this->db->select('sum( domestik_durasi ) as val'); 
+       // $this->db->where('id_jenis_penginapan ','11');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[54]=$res[0]['val'];
+
+        $this->db->from('approv_rec_penginapan');
+        $this->db->select('sum( mancanegara_durasi ) as val'); 
+       // $this->db->where('id_jenis_penginapan ','11');       
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[55]=$res[0]['val'];
+
+        $row[56]=" ";
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','1');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[57]=$res[0]['val'];
+        $row[58]=$res[0]['val2'];
+        $row[59]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','2');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[60]=$res[0]['val'];
+        $row[61]=$res[0]['val2'];
+        $row[62]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','3');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[63]=$res[0]['val'];
+        $row[64]=$res[0]['val2'];
+        $row[65]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','4');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[66]=$res[0]['val'];
+        $row[67]=$res[0]['val2'];
+        $row[68]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','5');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[69]=$res[0]['val'];
+        $row[70]=$res[0]['val2'];
+        $row[71]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','6');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[72]=$res[0]['val'];
+        $row[73]=$res[0]['val2'];
+        $row[74]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','7');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[75]=$res[0]['val'];
+        $row[76]=$res[0]['val2'];
+        $row[77]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','8');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[78]=$res[0]['val'];
+        $row[79]=$res[0]['val2'];
+        $row[80]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','9');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[81]=$res[0]['val'];
+        $row[82]=$res[0]['val2'];
+        $row[83]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','10');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[84]=$res[0]['val'];
+        $row[85]=$res[0]['val2'];
+        $row[86]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','11');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[87]=$res[0]['val'];
+        $row[88]=$res[0]['val2'];
+        $row[89]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','12');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[90]=$res[0]['val'];
+        $row[91]=$res[0]['val2'];
+        $row[92]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','13');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[93]=$res[0]['val'];
+        $row[94]=$res[0]['val2'];
+        $row[95]=$res[0]['val3'];
+
+        $this->db->from('pariwisata_penginapan');
+        $this->db->select('count( id_penginapan ) as val,sum(jumlah_kamar) as val2,sum(jumlah_tempat_tidur) as val3 '); 
+        $this->db->where('id_jenis_penginapan','14');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[96]=$res[0]['val'];
+        $row[97]=$res[0]['val2'];
+        $row[98]=$res[0]['val3'];
+
+        $row[99]=" ";
+
+        $this->db->from('pariwisata_biro');
+        $this->db->select('count( id_biro ) as val'); 
+        $this->db->where('id_jenis_biro','1');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[100]=$res[0]['val'];
+
+        $this->db->from('pariwisata_biro');
+        $this->db->select('count( id_biro ) as val'); 
+        $this->db->where('id_jenis_biro','2');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[101]=$res[0]['val'];
+        $row[102]=" ";
+
+
+        $this->db->from('pariwisata_biro');
+        $this->db->select('count( id_biro ) as val'); 
+        $this->db->where('id_sertifikat_biro','1');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[103]=$res[0]['val'];
+
+        $this->db->from('pariwisata_biro');
+        $this->db->select('count( id_biro ) as val'); 
+        $this->db->where('id_sertifikat_biro','2');       
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[104]=$res[0]['val'];
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_jenis_usaha != 7'); 
+        $this->db->where('id_jenis_usaha != 8'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[105]=$res[0]['val'];
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_jenis_usaha = 1'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[106]=$res[0]['val'];
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_jenis_usaha = 2'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[107]=$res[0]['val'];
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_jenis_usaha = 3'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[108]=$res[0]['val'];
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_jenis_usaha = 4'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[109]=$res[0]['val'];
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_jenis_usaha = 5'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[110]=$res[0]['val'];
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_jenis_usaha = 6'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[111]=$res[0]['val'];
+        $row[112]=" ";
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 1'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[113]=$res[0]['val'];
+ 
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha','2'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[114]=$res[0]['val'];
+     
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 3'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[115]=$res[0]['val'];
+ 
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 4'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[116]=$res[0]['val'];
+ 
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 5'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[117]=$res[0]['val'];
+ 
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 6'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[118]=$res[0]['val'];
+ 
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 7'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[119]=$res[0]['val'];
+  
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 8'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[120]=$res[0]['val'];
+  
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 9'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[121]=$res[0]['val'];
+  
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 10'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[122]=$res[0]['val'];
+
+         
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 11'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[123]=$res[0]['val'];
+ 
+         
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 12'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[124]=$res[0]['val'];
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_item_usaha = 14'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[125]=$res[0]['val'];
+        $row[126]=" ";
+ 
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_jenis_usaha = 7'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[127]=$res[0]['val'];
+
+        $this->db->from('pariwisata_usaha');
+        $this->db->select('count( id_usaha ) as val'); 
+        $this->db->where('id_jenis_usaha = 8'); 
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[128]=$res[0]['val'];
+ 
+        $row[129]=" ";
+
+        $this->db->from('approv_rec_penginapan');
+        $this->db->select('sum( pajak ) as val'); 
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();      
+        $tmp1=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( pajak ) as val'); 
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();      
+        $tmp2=$res[0]['val'];
+
+        $this->db->from('approv_rec_cagarbudaya');
+        $this->db->select('sum( pajak ) as val'); 
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();      
+        $tmp3=$res[0]['val'];
+
+        $this->db->from('approv_rec_museum');
+        $this->db->select('sum( pajak ) as val'); 
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();      
+        $tmp4=$res[0]['val'];
+
+        $tmp=$tmp1+$tmp2+$tmp3+$tmp4;
+
+        $row[130]= "Rp " . number_format($tmp,2,',','.');
+
+
+        $this->db->from('approv_rec_penginapan');
+        $this->db->select('sum( retribusi ) as val'); 
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();      
+        $tmp1=$res[0]['val'];
+
+        $this->db->from('approv_rec_objek');
+        $this->db->select('sum( retribusi ) as val'); 
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();      
+        $tmp2=$res[0]['val'];
+
+        $this->db->from('approv_rec_cagarbudaya');
+        $this->db->select('sum( retribusi ) as val'); 
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();      
+        $tmp3=$res[0]['val'];
+
+        $this->db->from('approv_rec_museum');
+        $this->db->select('sum( retribusi ) as val'); 
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();      
+        $tmp4=$res[0]['val'];
+
+        $tmp=$tmp1+$tmp2+$tmp3+$tmp4;
+
+        $row[131]= "Rp " . number_format($tmp,2,',','.');
+
+        return $row;
+
+    }
+
+    
+     
+    public function p2($tahun){
+   
+        //cagarbudaya
+       // $tahun = '2019' ;
+        $this->db->from('senibudaya_saranaprasarana');
+        $this->db->select('count( id_saranaprasarana ) as val');        
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[0]=$res[0]['val'];
+
+        $this->db->from('senibudaya_saranaprasarana');
+        $this->db->select('count( id_saranaprasarana ) as val');    
+        $this->db->where('id_jenis_saranaprasarana','1');    
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[1]=$res[0]['val'];
+
+        $this->db->from('senibudaya_saranaprasarana');
+        $this->db->select('count( id_saranaprasarana ) as val');    
+        $this->db->where('id_jenis_saranaprasarana','2');    
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[2]=$res[0]['val'];
+
+        $this->db->from('senibudaya_saranaprasarana');
+        $this->db->select('count( id_saranaprasarana ) as val');    
+        $this->db->where('id_jenis_saranaprasarana','3');    
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[3]=$res[0]['val'];
+
+        $this->db->from('museum');
+        $this->db->select('count( id_museum ) as val');    
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[4]=$res[0]['val'];
+
+        
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');    
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[5]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j_senibudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[6]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j2_senibudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[7]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j2_senibudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[8]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j2_senibudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[9]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j2_senibudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[10]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j2_senibudaya','3');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[11]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j2_senibudaya','3');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[12]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j2_senibudaya','4');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[13]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j2_senibudaya','4');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[14]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j2_senibudaya','5');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[15]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j2_senibudaya','5');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[16]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j_senibudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[17]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j2_senibudaya','5');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[18]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j2_senibudaya','5');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[19]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j2_senibudaya','6');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[20]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j2_senibudaya','6');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[21]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j2_senibudaya','7');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[22]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j2_senibudaya','7');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[23]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j2_senibudaya','8');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[24]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j2_senibudaya','8');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[25]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j_senibudaya','3');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[26]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j2_senibudaya','9');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[27]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j2_senibudaya','9');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[28]=$res[0]['val'];
+       // $row[28]="jumlah agg poin 9";
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j_senibudaya','4');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[29]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j_senibudaya','4');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[30]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j_senibudaya','4');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[31]=$res[0]['val'];
+      
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j_senibudaya','5');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[32]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j_senibudaya','5');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[33]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j_senibudaya','5');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[34]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j_senibudaya','6');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[35]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('count( id_senibudaya ) as val');   
+        $this->db->where('id_j_senibudaya','6');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[36]=$res[0]['val'];
+
+        $this->db->from('senibudaya');
+        $this->db->select('sum( jumlahanggota ) as val');   
+        $this->db->where('id_j_senibudaya','6');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[37]=$res[0]['val'];
+
+        $row[38]="  ";
+
+        $this->db->from('senibudaya_pagelaranpameran');
+        $this->db->select('count( id_pagelaran ) as val');   
+        $this->db->where('id_jenis_pagelaran','1');
+        $this->db->where('YEAR(tanggal_kegiatan) ',$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[39]=$res[0]['val'];
+
+        $this->db->from('senibudaya_pagelaranpameran');
+        $this->db->select('sum( jumlah_penonton ) as val');   
+        $this->db->where('id_jenis_pagelaran','1');
+        $this->db->where('YEAR(tanggal_kegiatan)',$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[40]=$res[0]['val'];
+
+        
+        $this->db->from('senibudaya_pagelaranpameran');
+        $this->db->select('count( id_pagelaran ) as val');   
+        $this->db->where('id_jenis_pagelaran','2');
+        $this->db->where('YEAR(tanggal_kegiatan)',$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[41]=$res[0]['val'];
+
+        $this->db->from('senibudaya_pagelaranpameran');
+        $this->db->select('sum( jumlah_penonton ) as val');   
+        $this->db->where('id_jenis_pagelaran','2');
+        $this->db->where('YEAR(tanggal_kegiatan)',$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[42]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        //$this->db->where('id_jenis_pagelaran','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[43]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[44]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','1');
+        $this->db->where('id_kepemilikan_cagarbudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+
+        $row[45]=$res[0]['val'];
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','1');
+        $this->db->where('id_kepemilikan_cagarbudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[46]=$res[0]['val'];
+
+        $this->db->from('approv_rec_cagarbudaya');
+        $this->db->select('sum( jumlah ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','1');
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[47]=$res[0]['val'];
+
+        //    -
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[48]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','2');
+        $this->db->where('id_kepemilikan_cagarbudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+
+        $row[49]=$res[0]['val'];
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','2');
+        $this->db->where('id_kepemilikan_cagarbudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[50]=$res[0]['val'];
+
+        $this->db->from('approv_rec_cagarbudaya');
+        $this->db->select('sum( jumlah ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','2');
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[51]=$res[0]['val'];
+
+   
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','3');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[52]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','3');
+        $this->db->where('id_kepemilikan_cagarbudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+
+        $row[53]=$res[0]['val'];
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','3');
+        $this->db->where('id_kepemilikan_cagarbudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[54]=$res[0]['val'];
+
+        $this->db->from('approv_rec_cagarbudaya');
+        $this->db->select('sum( jumlah ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','3');
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[55]=$res[0]['val'];
+        //          -
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','4');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[56]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','4');
+        $this->db->where('id_kepemilikan_cagarbudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+
+        $row[57]=$res[0]['val'];
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','4');
+        $this->db->where('id_kepemilikan_cagarbudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $this->db->where(' `id_user_approv` != 0');
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[58]=$res[0]['val'];
+
+        $this->db->from('approv_rec_cagarbudaya');
+        $this->db->select('sum( jumlah ) as val');   
+        $this->db->where('id_jenis_cagarbudaya','4');
+        $this->db->where('tahun',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[59]=$res[0]['val'];
+        $row[60]=" ";
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_kepemilikan_cagarbudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[61]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_kepemilikan_cagarbudaya','1');
+        $this->db->where('id_status_penetapan_cagarbudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[62]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_kepemilikan_cagarbudaya','1');
+        $this->db->where('id_status_penetapan_cagarbudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[63]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_kepemilikan_cagarbudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[64]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_kepemilikan_cagarbudaya','2');
+        $this->db->where('id_status_penetapan_cagarbudaya','1');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[65]=$res[0]['val'];
+
+        $this->db->from('cagarbudaya');
+        $this->db->select('count( id_cagarbudaya ) as val');   
+        $this->db->where('id_kepemilikan_cagarbudaya','2');
+        $this->db->where('id_status_penetapan_cagarbudaya','2');
+        $this->db->where('YEAR(tanggal_approv) <= '.$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[66]=$res[0]['val'];
+        $row[67]=" ";
+        $row[68]=" ";
+        $this->db->from('cagarbudaya_pemugaran as cp');
+        $this->db->join('cagarbudaya as c','c.id_cagarbudaya = cp.id_cagarbudaya');
+        $this->db->select('count( cp.id_cagarbudaya ) as val');   
+        $this->db->where('id_kepemilikan_cagarbudaya','1');
+        $this->db->where('YEAR(tanggal_kegiatan)',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[69]=$res[0]['val'];
+        //var_dump($row[61]);
+        //var_dump($row[69]);
+        $row[70]=$row[61]-$row[69];
+
+  
+        $row[71]=" ";
+        $this->db->from('cagarbudaya_pemugaran as cp');
+        $this->db->join('cagarbudaya as c','c.id_cagarbudaya = cp.id_cagarbudaya');
+        $this->db->select('count( cp.id_cagarbudaya ) as val');   
+        $this->db->where('id_kepemilikan_cagarbudaya','2');
+        $this->db->where('YEAR(tanggal_kegiatan)',$tahun);
+        $res=$this->db->get();
+        $res=$res->result_array();
+        $row[72]=$res[0]['val'];
+        $row[73]=$row[64]-$row[72];
+
+        
+
+        //var_dump($row);
+        return $row;
+
     }
 
     public function getPoint1(){

@@ -5,6 +5,8 @@
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
         <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -21,7 +23,7 @@
                   <th style="width: 15%; text-align:center!important">Nama Penginapan</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
                   <th style="width: 12%; text-align:center!important">Jumlah Kamar</th>
-                  <th style="width: 12%; text-align:center!important">Jumlah Tempat Tidur</th>
+                  
                   
                   <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
@@ -42,7 +44,7 @@
     <div class="modal-content animated fadeIn">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Kelola Sarana dan Prasarana</h4>
+        <h4 class="modal-title">Kelola Penginapan</h4>
         <span class="info"></span>
       </div>
       <div class="modal-body" id="modal-body">              
@@ -52,6 +54,7 @@
             <label for="nama">Nama Penginapan</label> 
             <input type="text" placeholder="Nama Penginapan" class="form-control" id="nama" name="nama" required="required">
           </div>
+         
           <div class="form-group">
             <label for="id_jenis_penginapan">Jenis</label> 
             <select class="form-control mr-sm-2" id="id_jenis_penginapan" name="id_jenis_penginapan" required="required">
@@ -124,6 +127,7 @@ $(document).ready(function() {
     'file': $('#penginapan_modal').find('#file'),
     'lokasi': $('#penginapan_modal').find('#lokasi'),
     'deskripsi': $('#penginapan_modal').find('#deskripsi'),
+   
   }
 
   var swalSaveConfigure = {
@@ -207,8 +211,7 @@ $(document).ready(function() {
       error: function(e) {}
     });
   }
-
-  function renderPenginapan(data){
+    function renderPenginapan(data){
     if(data == null || typeof data != "object"){
       console.log("User::UNKNOWN DATA");
       return;
@@ -242,7 +245,7 @@ $(document).ready(function() {
           </div>
         </div>
       `;
-      renderData.push([penginapan['nama'],penginapan['nama_jenis_penginapan'],penginapan['jumlah_kamar'],penginapan['jumlah_tempat_tidur'],apprv, button]);
+      renderData.push([penginapan['nama'],penginapan['nama_jenis_penginapan'],penginapan['jumlah_kamar'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
@@ -264,7 +267,11 @@ $(document).ready(function() {
     PenginapanModal.file.val(penginapan['file']);
     PenginapanModal.lokasi.val(penginapan['lokasi']);
     PenginapanModal.deskripsi.val(penginapan['deskripsi']);
+
   });
+  
+  document.getElementById("export_btn").href = '<?= site_url('OperatorController/PdfAllPenginapan')?>';
+
 
   FDataTable.on('click','.delete', function(){
     event.preventDefault();

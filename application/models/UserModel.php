@@ -33,14 +33,19 @@ class UserModel extends CI_Model {
 		$this->db->update('user');
 		return $newPhoto;
 	}
-
+	
+	public function changePassword($data){
+		$this->db->set('password',md5($data['password']));
+		$this->db->where('id_user',$data['id_user']);
+		$this->db->update('user');
+		return 'succes';
+	}
 	public function editUser($tmpdata){
 		$data = array( 
 			'username' => $tmpdata['username'],
 			'nama' => $tmpdata['nama'],
 			);
-	//	var_dump($data);
-	//	var_dump($tmpdata['id_user']);
+
 		$this->db->set($data);
 		$this->db->where('id_user',$tmpdata['id_user']);
 		$this->db->update('user');

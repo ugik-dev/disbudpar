@@ -190,6 +190,16 @@ class DashboardController extends CI_Controller {
     }
   }
     // pajak
+    public function getAllPajak(){
+      try{
+        $this->SecurityModel->userOnlyGuard(TRUE);
+        $data = $this->DashboardModel->getAllPajak($this->input->get());
+         echo json_encode(array("data" => $data, "error" => false));
+  
+      } catch (Exception $e) {
+        ExceptionHandler::handle($e);
+      }
+    }
     public function getPajakObjek(){
       try{
         $this->SecurityModel->userOnlyGuard(TRUE);

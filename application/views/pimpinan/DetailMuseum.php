@@ -1,6 +1,27 @@
+<style>
+.zoom {
+  padding: 0;
+  background-color: transparent;
+  transition: transform .2s; /* Animation */
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
 
+.zoom:hover {
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+</style>
 <div class="wrapper wrapper-content animated fadeInRight">
-  <div class="row">
+<div class="tabs-container">
+            <ul class="nav nav-tabs" role="tablist">
+                <li><a class="nav-link active" data-toggle="tab" href="#tab-11">Data Profil</a></li>
+                <li><a class="nav-link" data-toggle="tab" href="#tab-22">Data Pengunjung</a></li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel"  id="tab-11" class="tab-pane active">
+                <div class="panel-body">
+          <div class="row">
     <div class="col-lg-6">
       <div class="ibox">
         <div class="ibox-content">
@@ -46,12 +67,59 @@
                 <textarea class="form-control" id="deskripsi" rows="4" disabled></textarea>
               </div>
             </form>
-            <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button>        
-            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="approv_btn" onclick="ApprovFunction()" data-loading-text="Loading..."><strong>Approv Data</strong></button>
-          </div><!-- profil -->
+            <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button>
+            <button hidden class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button>
+            <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv</strong></button>
+            <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
+     </div><!-- profil -->
           </div><!-- ibox content -->
       </div> <!-- ibox -->
-  
+      <div class="ibox">
+        <div class="ibox-content">
+              <label for="formGroupExampleInput">Photo Header</label>
+              <div class="form-row">
+                <form class="form-row col-md-12" id="form_upload1" onsubmit="return false;" >
+                  <div class="form-group" style="width : 60%;">
+                          <input type="text" class="form-control" id="file" name="fileold" hidden>
+                          <input type="text" class="form-control" id="id_museumtoupload1" name="id_museum" hidden>
+                          <input type="file" name="file" id="fileupload">
+                  </div>
+                  <div class="form-group" style="width : 40%;">
+                          <button type="submit" class="btn btn-success my-1 mr-sm-2" data-loading-text="Loading..." style="width : 100%;" >Tambahkan Header</button>
+                  </div>
+                </form>               
+              </div>  
+              <label for="formGroupExampleInput">Photo</label>
+              <div class="form-row">
+                <form class="form-row col-md-12" id="form_upload2" onsubmit="return false;">
+                  <div class="form-group" style="width : 60%;">
+                        <input type="text" id="file2" name="fileold" hidden>
+                        <input type="text" class="form-control" id="id_museumtoupload2" name="id_museum" hidden >
+                        <input type="file" name="file2" id="fileupload2">
+                  </div>
+                  <div class="form-group" style="width : 40%;">
+                    <button type="submit" class="btn btn-success my-1 mr-sm-2" data-loading-text="Loading..." style="width : 100%;">Tambahkan Photo</button>
+                  </div>
+                </form>               
+              </div>
+              <label for="formGroupExampleInput">Dokumen</label>
+              <div class="form-row">
+                  <form class="form-row col-md-12" id="form_uploaddokumen" onsubmit="return false;">
+                    <div class="form-group" bordered='1px solid' style="width : 100%;">             
+                      <input type="text" class="form-control" id="dokumen" name="namadokumen" readonly>
+                    </div>
+                        
+                    <div class="form-group" style="width : 60%;">
+                            <input type="text" class="form-control" id="id_museumtoupload4" name="id_museum" hidden>
+                            <input type="file" name="dokumen" id="dokumenupload">
+                    </div>
+                    <div class="form-group" style="width : 40%;">
+                      <button type="submit" class="btn btn-success my-1 mr-sm-2" data-loading-text="Loading..." style="width : 100%;"> Upload</button>
+                    </div>
+                   </form> 
+              </div>     
+        </div><!-- ibox content -->
+      </div> <!-- ibox -->
     </div> <!-- cl -->
 
     <div class="col-lg-6">
@@ -73,9 +141,12 @@
                       <div class="ibox-content">
                         <div class="form-group col-md-12" >
                           <label for="formGroupExampleInput">Photo</label>
+                          <div class="btn alert-primary" role="alert" id="show_photo">
+                            Lihat Foto
+                          </div>
                         </div>
                           <div class="form-group col-md-12">
-                            <img src="" class="img-fluid" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -93,10 +164,17 @@
               </div>
           </div>
         </div>
-<div class="col-lg-12">
+        </div>
+
+
+                  
+                  </div>
+              </div>
+              <div role="tabpanel" id="tab-22" class="tab-pane">
+                 <div class="panel-body" >
    <div class="ibox">
     <div class="ibox-content" id="input_modal">
-    <div class="form-inline">
+      <div class="form-inline">
         <div class="form-group mb-2">
           <select class="dropdown-item" id="tahun_input" name="tahun_input" required="required"></select>
         </div>
@@ -111,34 +189,60 @@
       </form>
     </div>
     </div>
+    </div>
+              </div>
+    </div>
+</div>
+
   
-
-
-<div class="modal inmodal" id="message_modal" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal" id="edit_modal" tabindex="-1" role="dialog"  aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content animated fadeIn">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Kirim Pesan</h4>
+        <h4 class="modal-title">Kelola Museum</h4>
         <span class="info"></span>
       </div>
       <div class="modal-body" id="modal-body">              
         <form role="form" id="user_form" onsubmit="return false;" type="multipart" autocomplete="off">
-          <input type="text" id="id_operator" name="id_user_reciver" hidden>
+          <input type="text" id="edit_id_museum" name="id_museum" hidden>
           <div class="form-group">
-            <label for="nama">Ke : </label> 
-            <input type="text" placeholder="Nama" class="form-control" id="nama_operator" name="" required="required">
+            <label for="nama">Nama Museum</label> 
+            <input type="text" placeholder="Nama Museum" class="form-control" id="edit_nama" name="nama" required="required">
           </div>
-          
+
           <div class="form-group">
-            <label for="deskripsi">Pesan</label> 
-            <textarea rows="5" type="text" placeholder="" class="form-control" id="" name="message" required="required"></textarea>
+            <label for="kepemilikan">Kepemilikan  Museum</label> 
+            <select class="form-control mr-sm-2" id="edit_id_kepemilikan" name="id_kepemilikan_museum" required="required">
+            </select>
+          </div>
+         
+          <div class="form-group">
+            <label for="status">Status Registrasi</label> 
+            <select class="form-control mr-sm-2" id="edit_id_status" name="id_status_museum" required="required">
+            </select>
+          </div>
+          <!-- <div class="form-group">
+            <label for="file">File</label> 
+            <input type="file" placeholder="File" class="form-control" id="file" name="file" required="required">
+          </div> -->
+          <div class="form-group">
+            <label for="alamat">Alamat</label> 
+            <input type="text" placeholder="Alamat" class="form-control" id="edit_alamat" name="alamat" required="required">
           </div>
           <div class="form-group">
-           
-            <textarea rows="5" type="text" placeholder="" class="form-control" id="format_message" name="format_message" required="required" hidden></textarea>
+            <label for="lokasi">Lokasi</label> 
+            <input type="text" placeholder="Lokasi" class="form-control" id="edit_lokasi" name="lokasi" required="required">
           </div>
-          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="send_btn" data-loading-text="Loading..." onclick="this.form.target='send'"><strong>Kirim</strong></button>       
+          <div class="form-group">
+            <label for="deskripsi">Deskripsi</label> 
+            <textarea type="text" placeholder="Deskripsi" class="form-control" id="edit_deskripsi" name="deskripsi" required="required" rows="4"></textarea>
+          </div>
+
+
+
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="add_btn" data-loading-text="Loading..." onclick="this.form.target='add'"><strong>Tambah Data</strong></button>
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong>Simpan Perubahan</strong></button>
         </form>
       </div>
       <div class="modal-footer">
@@ -171,8 +275,42 @@
   </div>
 </div>
 
+<div class="modal inmodal" id="message_modal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content animated fadeIn">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Kirim Pesan</h4>
+        <span class="info"></span>
+      </div>
+      <div class="modal-body" id="modal-body">              
+        <form role="form" id="user_form" onsubmit="return false;" type="multipart" autocomplete="off">
+          <input hidden type="text" id="id_operator" name="id_user_reciver" >
+          <div class="form-group">
+            <label for="nama">Ke : </label> 
+            <input type="text" placeholder="Nama" class="form-control" id="nama_operator" name="" required="required" readonly>
+          </div>
+          
+          <div class="form-group">
+            <label for="deskripsi">Pesan</label> 
+            <textarea rows="5" type="text" placeholder="" class="form-control" id="" name="message" required="required"></textarea>
+          </div>
+          <div class="form-group">
+            
+            <textarea hidden rows="5" type="text" placeholder="" class="form-control" id="format_message" name="format_message" required="required"></textarea>
+          </div>
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="send_btn" data-loading-text="Loading..." onclick="this.form.target='send'"><strong>Kirim</strong></button>       
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-	
+
+
 <script>
 $(document).ready(function() {
   $('#museum').addClass('active');
@@ -182,6 +320,116 @@ $(document).ready(function() {
   var dataTahun
 
   getProfil();
+
+
+document.getElementById("export_btn").href = '<?= site_url('PimpinanController/Pdfmuseum?id_museum=')?>'+id_museum;
+var Photo2Modal = {
+    'self': $('#photo2_modal'),
+    'info': $('#photo2_modal').find('.infoy'),
+    'images': $('#photo2_modal').find('.carousel-inner'),
+    'indicators': $('#photo2_modal').find('.carousel-indicators'),
+  };
+  var MessageModal = {
+    'self': $('#message_modal'),
+    'info': $('#message_modal').find('.info'),
+    'form': $('#message_modal').find('#user_form'),
+    'sendBtn': $('#message_modal').find('#send_btn'),
+    'saveEditBtn': $('#message_modal').find('#save_edit_btn'),
+    'edit_id_desawisata': $('#message_modal').find('#edit_id_desawisata'),
+    'id_data_desawisata': $('#message_modal').find('#id_data_desawisata'),
+    'id_operator': $('#message_modal').find('#id_operator'),
+    'nama_operator': $('#message_modal').find('#nama_operator'),
+    'message': $('#message_modal').find('#message'),
+    'format_message': $('#message_modal').find('#format_message'),
+  }
+ 
+function renderPhotoModal(){
+  var ph = dataProfil['file2'];
+  var ph1  = ph.split(",");
+ 
+  if(dataProfil['file']==""){
+    indicatorsHTML = ``;
+    img2HTML = ``;
+  }else{
+    tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+    indicatorsHTML = `<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>`;
+    img2HTML = `
+            <div class="carousel-item active">
+                <img src="${tmp}" class="d-block w-100" alt="...">
+              </div>
+        `;     
+  }  
+ 
+  var i = 0;
+ // tmp2 =`active`;
+    ph1.forEach((d) => {
+    console.log(d);
+    tmp = `<?= base_url('upload/file2/')?>`+d;
+    if (dataProfil['file2'] != ""){
+    indicatorsHTML +=`<li data-target="#carouselExampleIndicators" data-slide-to="${i+1}" class=""></li>`
+    img2HTML +=`
+              <div class="carousel-item">
+                <img src="${tmp}" class="d-block w-100" alt="...">
+              </div>
+          `;
+
+   
+    tmp2=``;
+    i++;
+    };
+    });
+    
+
+  Photo2Modal.indicators.html(indicatorsHTML);
+  Photo2Modal.images.html(img2HTML);
+    
+  }
+  document.getElementById("show_photo").onclick = function() {
+    showPhotoModal()
+    };
+  function showPhotoModal(){
+  Photo2Modal.self.modal('show');
+  }
+
+  document.getElementById("message_btn").onclick = function() {MessageFunction()}
+  function MessageFunction() {
+    console.log('cok');
+    MessageModal.nama_operator.val(nama_user_entry.value);
+    MessageModal.id_operator.val(dataProfil['id_user_entry']);
+    formatMessage = `Pada Museum - `+dataProfil['nama']+`
+`;
+    MessageModal.format_message.val(formatMessage);
+    MessageModal.self.modal('show'); 
+  }
+
+  MessageModal.form.submit(function(event){
+    event.preventDefault();
+    switch(MessageModal.form[0].target){
+      case 'send':
+        sendMessage();
+        break;
+    }
+  });
+  function sendMessage(){
+    buttonLoading(MessageModal.sendBtn);
+    console.log(toolbar.form.serialize());
+    $.ajax({
+      url: `<?=site_url('MessageController/sendMessage')?>`, 'type': 'GET',
+      data: MessageModal.form.serialize(),
+      success: function (data){
+        buttonIdle(MessageModal.sendBtn);
+        var json = JSON.parse(data);
+        if(json['error']){
+          swal("Simpan Gagal", json['message'], "error");
+          return;
+        }
+        swal("Pesan Terkirim", "", "success");
+        MessageModal.form.trigger('reset'); 
+        MessageModal.self.modal('hide'); 
+      },
+      error: function(e) {}
+    });
+  }
 
 
 
@@ -313,13 +561,7 @@ var map;
   }
   InputModal.id_museum.val(id_museum);
 
-	
-  var Photo2Modal = {
-    'self': $('#photo2_modal'),
-    'info': $('#photo2_modal').find('.infoy'),
-    'images': $('#photo2_modal').find('.carousel-inner'),
-    'indicators': $('#photo2_modal').find('.carousel-indicators'),
-  }
+
   var EditModal = {
     'self': $('#edit_modal'),
     'info': $('#edit_modal').find('.info'),
@@ -332,7 +574,7 @@ var map;
     'edit_alamat': $('#edit_modal').find('#edit_alamat'),
     'edit_lokasi': $('#edit_modal').find('#edit_lokasi'),
     'edit_deskripsi': $('#edit_modal').find('#edit_deskripsi'),
-  
+    
     'edit_id_kepemilikan': $('#edit_modal').find('#edit_id_kepemilikan'),
     'edit_id_status': $('#edit_modal').find('#edit_id_status'),
   }
@@ -342,95 +584,30 @@ var map;
   // EditModal.edit_alamat.val(dataProfil['alamat']);
   // EditModal.edit_deskripsi.val(dataProfil['deskripsi']);
 
-
-document.getElementById("approv_btn").onclick = function() {ApprovFunction()};
-function ApprovFunction() {
+document.getElementById("edit_profil_btn").onclick = function() {myFunction()};
+function myFunction() {
   console.log('cok');
-  swal(swalSaveConfigure).then((result) => {
-      if(!result.value){ return; }
-      
-      $.ajax({
-        url: `<?=site_url('DetailMuseumController/approv')?>`, 'type': 'GET',
-        data: {id_museum: dataProfil['id_museum']},
-        success: function (data){
-         
-          //var dataPengunjung = json['data']
-          //dataDetailMuseum[detailMuseum['nomor']] = detailMuseum;
-          
-          getProfil();
-          // DetailMuseumModal.self.modal('hide');
-        },
-        error: function(e) {}
-      });
-    });
-  
+    EditModal.self.modal('show');
+    EditModal.addBtn.hide();
+    EditModal.saveEditBtn.show();
+    EditModal.edit_id_museum.val(id_museum);
+    EditModal.edit_nama.val(dataProfil['nama']);
+    EditModal.edit_alamat.val(dataProfil['alamat']);
+    EditModal.edit_lokasi.val(dataProfil['lokasi']);
+    EditModal.edit_deskripsi.val(dataProfil['deskripsi']);
+    EditModal.edit_id_kepemilikan.val(dataProfil['id_kepemilikan_museum']);
+    EditModal.edit_id_status.val(dataProfil['id_status_museum']); 
    
-};
-
-var MessageModal = {
-    'self': $('#message_modal'),
-    'info': $('#message_modal').find('.info'),
-    'form': $('#message_modal').find('#user_form'),
-    'sendBtn': $('#message_modal').find('#send_btn'),
-    'saveEditBtn': $('#message_modal').find('#save_edit_btn'),
-    'edit_id_museum': $('#message_modal').find('#edit_id_museum'),
-    'id_data_museum': $('#message_modal').find('#id_data_museum'),
-    'id_operator': $('#message_modal').find('#id_operator'),
-    'nama_operator': $('#message_modal').find('#nama_operator'),
-    'message': $('#message_modal').find('#message'),
-    'format_message': $('#message_modal').find('#format_message'),
-  }
- 
-  document.getElementById("message_btn").onclick = function() {MessageFunction()}
-  function MessageFunction() {
-    console.log('cok');
-    MessageModal.nama_operator.val(nama_user_entry.value);
-    MessageModal.id_operator.val(dataProfil['id_user_entry']);
-    formatMessage = `Pada Museum - `+dataProfil['nama']+`
-`;
-    MessageModal.format_message.val(formatMessage);
-    MessageModal.self.modal('show'); 
-  }
-
-  MessageModal.form.submit(function(event){
-    event.preventDefault();
-    switch(MessageModal.form[0].target){
-      case 'send':
-        console.log("pesan dikirim")
-        sendMessage();
-        break;
-    }
-  });
-  function sendMessage(){
-    buttonLoading(MessageModal.sendBtn);
-    console.log(toolbar.form.serialize());
-    $.ajax({
-      url: `<?=site_url('MessageController/sendMessage')?>`, 'type': 'GET',
-      data: MessageModal.form.serialize(),
-      success: function (data){
-        buttonIdle(MessageModal.sendBtn);
-        var json = JSON.parse(data);
-        if(json['error']){
-          swal("Simpan Gagal", json['message'], "error");
-          return;
-        }
-        swal("Pesan Terkirim", "", "success");
-        MessageModal.self.modal('hide'); 
-        MessageModal.form.trigger('reset'); 
-      },
-      error: function(e) {}
-    });
-  }
-
+}
 
 
   var swalSaveConfigure = {
-    title: "Konfirmasi Approv",
-    text: "Yakin akan Approv data ini?",
+    title: "Konfirmasi simpan",
+    text: "Yakin akan menyimpan data ini?",
     type: "info",
     showCancelButton: true,
     confirmButtonColor: "#18a689",
-    confirmButtonText: "Ya, Approv!",
+    confirmButtonText: "Ya, Simpan!",
   };
   var swalNotApprov = {
     title: "Konfirmasi simpan",
@@ -477,11 +654,17 @@ var MessageModal = {
         var fil2 = document.getElementById("file2");
         var file2img = document.getElementById("file2img");
         var dokumen = document.getElementById("dokumen");
-        
+        var id_upload1 = document.getElementById("id_museumtoupload1");
+        var id_upload2 = document.getElementById("id_museumtoupload2");
+      
+        var id_upload4 = document.getElementById("id_museumtoupload4");
         var nama_user_entry = document.getElementById("nama_user_entry");
       //  var edit_profil_btn = document.getElementById("edit_profil_btn");
-     
-      
+        nama_user_entry
+        id_upload1.value = id_museum;
+        id_upload2.value = id_museum;
+       
+        id_upload4.value = id_museum;
         nama.value = dataProfil['nama'];
         alamat.value = dataProfil['alamat'];
         
@@ -500,10 +683,14 @@ var MessageModal = {
           nama_user_entry.value = getUserEntry(dataProfil['id_user_entry']);
         };
         kordinat.value = dataProfil['lokasi'];
-       
+        file.value = dataProfil['file'];
         fileimg.src = `<?= base_url('upload/file/')?>`+dataProfil['file'];
-       
+        file2.value = dataProfil['file2'];
+       // file2img.src = `<?= base_url('upload/file2/')?>`+dataProfil['file2'];
+      
+        dokumen.value = dataProfil['dokumen'];
         renderPhoto();
+        renderPhotoModal();
         renderPdf();
         //console.log(dataProfil)
         //renderDetailMuseum(dataDetailMuseum);
@@ -511,6 +698,28 @@ var MessageModal = {
       error: function(e) {}
     });
   }
+  document.getElementById("approv_profil_btn").onclick = function() {ApprovProfil()};
+function ApprovProfil() {
+    swal(swalApprovConfigure).then((result) => {
+      if(!result.value){ return; }
+      $.ajax({
+        url: `<?=site_url('DetailMuseumController/approvMuseum')?>`, 'type': 'get',
+        data: {id_museum : id_museum} ,
+        success: function (data){
+        getProfil();
+        },
+        error: function(e) {}
+      });
+    });
+}
+var swalApprovConfigure = {
+    title: "Konfirmasi Approv",
+    text: "Yakin akan Approv data profil ini?",
+    type: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#18a689",
+    confirmButtonText: "Ya, Approv!",
+    };
 
   function renderPdf(){
     if(!empty(dataProfil['dokumen'])){
@@ -528,19 +737,7 @@ var MessageModal = {
   function renderPhoto(){
     var ph = dataProfil['file2'];
     var ph1  = ph.split(",");
-  
-    if(dataProfil['file']==""){
-      indicatorsHTML = ``;
-      img2HTML = ``;
-    }else{
-      tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
-      indicatorsHTML = `<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>`;
-      img2HTML = `
-              <div class="carousel-item active">
-                  <img src="${tmp}" class="d-block w-100" alt="...">
-                </div>
-          `;     
-    }
+    console.log('banyak foto',ph1.length);
     imgHTML = `<div class="row">`;
     var i = 0;
     
@@ -548,17 +745,10 @@ var MessageModal = {
       console.log(d);
       tmp = `<?= base_url('upload/file2/')?>`+d;
       if (dataProfil['file2'] != ""){
-        
-      indicatorsHTML +=`<li data-target="#carouselExampleIndicators" data-slide-to="${i+1}" class=""></li>`
-      img2HTML +=`
-                <div class="carousel-item">
-                  <img src="${tmp}" class="d-block w-100" alt="...">
-                </div>
-            `;
       imgHTML +=`
                 <div class='form-group col-md-6'>
                   <a type="submit" id="del_photo${i}" >             
-                  <img src="${tmp}" class="img-fluid" id='file2img' alt="Responsive image" style='height: 200px;'>            
+                  <img src="${tmp}" class="zoom" id='file2img' alt="Responsive image" style='height: 200px;'>            
                   </a>
                 </div>
                 `;
@@ -567,8 +757,6 @@ var MessageModal = {
       });
     var photo = document.getElementById("photo");  
     imgHTML +=`</div>`;
-    Photo2Modal.indicators.html(indicatorsHTML);
-    Photo2Modal.images.html(img2HTML);
     photo.innerHTML = imgHTML;
     i=0;
     if (dataProfil['file2'] != ""){
@@ -584,7 +772,22 @@ var MessageModal = {
     }
 
   function delPhoto(photo){
-    Photo2Modal.self.modal('show');
+    swal(swalDelPhoto).then((result) => {
+      if(!result.value){ return; }
+      $.ajax({
+        url: `<?=site_url('DetailMuseumController/delPhoto')?>`, 'type': 'POST',
+        data: {id_museum : id_museum, hapus : photo, file2 : dataProfil['file2']} ,
+        success: function (data){
+        getProfil();
+          //var dataPengunjung = json['data']
+          //dataDetailMuseum[detailmuseum['nomor']] = detailmuseum;
+          
+         // getInputPengunjung();
+          // DetailMuseumModal.self.modal('hide');
+        },
+        error: function(e) {}
+      });
+    });
     }
 
     var swalDelPhoto = {
@@ -675,6 +878,7 @@ function renderInputPengunjung(data){
     var tmpmp = 0;
     var tmpjumlah = 0;
     var tmppajak = 0;
+    var tmpretribusi = 0;
     var intputhtml = `<div class="form-row">
           <div class="col-2">
           <label>Bulan </label>
@@ -697,7 +901,9 @@ function renderInputPengunjung(data){
           <div class="col">
           <label>Pajak</label>
           </div>
-
+          <div class="col">
+          <label>Retribusi</label>
+          </div>
         </div>`;
     Object.values(data).forEach((d) => {
       tmpdl += Number(d['domestik_l']);
@@ -706,6 +912,7 @@ function renderInputPengunjung(data){
       tmpmp += Number(d['mancanegara_p']);
       tmpjumlah += Number(d['jumlah']);
       tmppajak += Number(d['pajak']);
+      tmpretribusi += Number(d['retribusi']);
        intputhtml +=`
       <div class="form-row">
           <div class="col-2">
@@ -731,6 +938,9 @@ function renderInputPengunjung(data){
           </div>
           <div class="col">
             <input type="number" class="form-control" name="pajak${i}" placeholder=""  value="${d['pajak']}" disabled>
+          </div>
+          <div class="col">
+            <input type="number" class="form-control" name="retribusi${i}" placeholder=""  value="${d['retribusi']}" disabled>
           </div>
         </div>
       `;
@@ -760,19 +970,21 @@ function renderInputPengunjung(data){
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${tmppajak}" disabled>
           </div>
+          <div class="col">
+            <input type="number" class="form-control" placeholder="0"  value="${tmpretribusi}" disabled>
+          </div>
         </div>
       `;
-      intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Approv Data</button> `;
+    intputhtml +=`  <button hidden type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> 
+    <button type="submit" class="btn btn-info my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='approv'"><i class="fal fa-save"></i> Approv Data</button>`;
       var input_data_pengunjung = document.getElementById("input_data_pengunjung");  
-      input_data_pengunjung.innerHTML = intputhtml;
-      
-      var header_approv = document.getElementById("header_approv");  
+        input_data_pengunjung.innerHTML = intputhtml;
+        var header_approv = document.getElementById("header_approv");  
       if(data[tmpapprov]['approv'] == '0' || data[tmpapprov]['approv'] == null  ){
         header_approv.innerHTML = `<h5><span class="badge badge-warning">Data Belum di Approv</span></h5>`;
       }else{
         header_approv.innerHTML = `<h5><span class="badge badge-info">Data Sudah Approv</span></h5>`;  
       };
-
   }
 
     InputModal.form.submit(function(event){
@@ -782,9 +994,35 @@ function renderInputPengunjung(data){
         console.log('tombol save')
         saveInputPengunjung();
         break;
+      case 'approv':
+        approvInputPengunjung();
+        break;
      
     }
   });
+
+
+  function approvInputPengunjung(){
+    swal(swalApprovConfigure).then((result) => {
+      if(!result.value){ return; }
+      buttonLoading(InputModal.save_pengunjung);
+      $.ajax({
+        url: `<?=site_url('DetailMuseumController/approvPengunjung')?>`, 'type': 'POST',
+        data: InputModal.form.serialize(),
+        success: function (data){
+          buttonIdle(InputModal.save_pengunjung);
+          var json = JSON.parse(data);
+          if(json['error']){
+            swal("Simpan Gagal", json['message'], "error");
+            return;
+          }
+          swal("Approv Berhasil", "", "success");
+            getInputPengunjung();
+        },
+        error: function(e) {}
+      });
+    });
+    }
 
 
   function saveInputPengunjung(){
@@ -911,7 +1149,9 @@ function renderInputPengunjung(data){
         value: d['tahun'],
         text: d['tahun'],
       }));  
+      InputModal.tahun.val(d['tahun']); 
     });
+    getInputPengunjung();
    }
 
 

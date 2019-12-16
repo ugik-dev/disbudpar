@@ -11,7 +11,7 @@
         <a href="<?=site_url('AdminController/kelolahuser')?>"><i class="icon-shield"></i><span class="nav-label">Kelolah User</span></a>
       </li>
       <li id="laporan">
-        <a href="<?=site_url('AdminController/laporanpariwisata')?>"><i class="fa fa-archive"></i> <span class="nav-label">Data</span></a>
+        <a href="<?=site_url('AdminController/laporanpariwisata')?>"><i class="fa fa-archive"></i> <span class="nav-label">Laporan</span></a>
       </li>
       <li id="kalender">
         <a href="<?=site_url('AdminController/kalender')?>"><i class="fas fa-calendar-alt"></i> <span class="nav-label">Event</span></a>
@@ -55,7 +55,7 @@
       </li>
       
       <li id="cagar_dan_budaya">
-        <a href="#"><i class="fas fa-dove"></i><span class="nav-label">Cagar Dan Budaya</span><span class="fa arrow"></span></a>
+        <a href="#"><i class="fas fa-camera-retro"></i><span class="nav-label">Cagar Dan Budaya</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" aria-expanded="false">   
           <li id="cagarbudaya">
             <a href="<?=site_url('AdminController/cagarbudaya')?>"> <span class="nav-label">Cagar Budaya</span></a>

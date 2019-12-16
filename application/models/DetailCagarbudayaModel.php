@@ -6,7 +6,7 @@ class DetailCagarbudayaModel extends CI_Model {
 	
 	public function getProfil($filter){
 		//var_dump($filter);
-		$this->db->select('*');
+		$this->db->select('cb.*,js.*,ko.*,sp.*,kab.nama_kabupaten');
 		$this->db->from('cagarbudaya as cb');
 		$this->db->where("id_cagarbudaya",$filter['id_cagarbudaya']);
 		$this->db->join("jenis_cagarbudaya as js", "js.id_jenis_cagarbudaya = cb.id_jenis_cagarbudaya");
@@ -34,8 +34,9 @@ class DetailCagarbudayaModel extends CI_Model {
 
 	
 		public function approvCagarbudaya($data){
+			$data['tanggal_approv'] = date('Y-m-d');
 			$data['id_user_approv'] = $this->session->userdata('id_user');
-			$this->db->set(DataStructure::slice($data, ['id_user_approv']));
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
 			$this->db->where('id_cagarbudaya', $data['id_cagarbudaya']);
 			$this->db->update('cagarbudaya');
 			echo $data['id_user_approv'];
@@ -79,8 +80,9 @@ class DetailCagarbudayaModel extends CI_Model {
 		
 		
 		public function approv($data){
+			$data['tanggal_approv'] = date('Y-m-d');
 			$data['id_user_approv'] = $this->session->userdata('id_user');
-			$this->db->set(DataStructure::slice($data, ['id_user_approv']));
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
 			$this->db->where('id_cagarbudaya', $data['id_cagarbudaya']);
 			$this->db->update('cagarbudaya');
 	
@@ -105,7 +107,7 @@ class DetailCagarbudayaModel extends CI_Model {
 			//return $data['nomor'];
 		}
 
-		public function saveTambah($id_cagarbudaya,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak){
+		public function saveTambah($id_cagarbudaya,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_cagarbudaya' => $id_cagarbudaya,
@@ -116,6 +118,7 @@ class DetailCagarbudayaModel extends CI_Model {
 					'mancanegara_l' => $ml,
 					'mancanegara_p' => $mp,
 					'pajak' => $pajak,
+					'retribusi' => $retribusi,
 					'approv' => '0'
 					);
 			
@@ -124,7 +127,7 @@ class DetailCagarbudayaModel extends CI_Model {
 			//return $data['nomor'];
 		}
 
-		public function saveEdit($id_data,$id_cagarbudaya,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak){
+		public function saveEdit($id_data,$id_cagarbudaya,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_data_cagarbudaya' => $id_data,
@@ -136,6 +139,7 @@ class DetailCagarbudayaModel extends CI_Model {
 					'mancanegara_l' => $ml,
 					'mancanegara_p' => $mp,
 					'pajak' => $pajak,
+					'retribusi' => $retribusi,
 					'approv' => '0'
 
 					);
@@ -149,7 +153,8 @@ class DetailCagarbudayaModel extends CI_Model {
 		public function approv_pengunjung($id_data){
 			$idapprov = $this->session->userdata('id_user');
 			$data = array( 
-					'approv' => $idapprov
+					'approv' => $idapprov,
+					'tanggal_approv_data' => date('Y-m-d')
 					);
 			
 					$this->db->set($data);

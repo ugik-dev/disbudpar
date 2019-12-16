@@ -6,12 +6,13 @@ class DetailBiroModel extends CI_Model {
 	
 	public function getProfil($filter){
 	
-		$this->db->select('*');
+		$this->db->select('sp.*,jp.*,sb.*,kab.nama_kabupaten');
 		$this->db->from('pariwisata_biro as sp');
 		$this->db->where("id_biro",$filter['id_biro']);
         $this->db->join("pariwisata_jenis_biro as jp", "jp.id_jenis_biro = sp.id_jenis_biro");
         $this->db->join("pariwisata_sertifikat_biro as sb", "sb.id_sertifikat_biro = sp.id_sertifikat_biro");
-		
+		$this->db->join("kabupaten as kab", "kab.id_kabupaten = sp.id_kabupaten");
+	
 	//	$this->db->join("j_biro as js", "js.id_j_biro = cb.id_j_biro");
 	//	$this->db->join("j2_biro as j2s", "j2s.id_j2_biro = cb.id_j2_biro");	
 		$res = $this->db->get();
@@ -20,9 +21,23 @@ class DetailBiroModel extends CI_Model {
 		}
 
 	
-		public function approv($data){
+		public function approvBiro($data){
+			$data['tanggal_approv'] = date('Y-m-d');
 			$data['id_user_approv'] = $this->session->userdata('id_user');
-			$this->db->set(DataStructure::slice($data, ['id_user_approv']));
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
+			$this->db->where('id_biro', $data['id_biro']);
+			$this->db->update('pariwisata_biro');
+			echo $data['id_user_approv'];
+			echo $data['id_biro'];
+			
+			ExceptionHandler::handleDBError($this->db->error(), "Ubah Biro", "biro");	
+			return $data['id_biro'];
+	
+		}
+		public function approv($data){
+			$data['tanggal_approv'] = date('Y-m-d');
+			$data['id_user_approv'] = $this->session->userdata('id_user');
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
 			$this->db->where('id_biro', $data['id_biro']);
 			$this->db->update('pariwisata_biro');
 			echo $data['id_user_approv'];
@@ -57,7 +72,7 @@ class DetailBiroModel extends CI_Model {
 				ExceptionHandler::handleDBError($this->db->error(), "Upload File1", "id_biro");	
 		}
 		
-		public function saveTambah($id_biro,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak){
+		public function saveTambah($id_biro,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_biro' => $id_biro,
@@ -67,15 +82,29 @@ class DetailBiroModel extends CI_Model {
 					'domestik_p' => $dp,
 					'mancanegara_l' => $ml,
 					'mancanegara_p' => $mp,
-					'pajak' => $pajak
+					'pajak' => $pajak,
+					'retribusi' => $retribusi,
+					'approv' => '0'
 					);
 			
 			$this->db->insert('data_biro', $data);
 			ExceptionHandler::handleDBError($this->db->error(), "Insert DetailBiro", "data_biro");
 			//return $data['nomor'];
 		}
+		public function approv_pengunjung($id_data){
+			$idapprov = $this->session->userdata('id_user');
+			$data = array( 
+					'approv' => $idapprov,
+					'tanggal_approv_data' => date('Y-m-d')
+					);
+			
+					$this->db->set($data);
+					$this->db->where('id_data_biro', $id_data);
+					$this->db->update('data_biro');
 
-		public function saveEdit($id_data,$id_biro,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak){
+		}
+
+		public function saveEdit($id_data,$id_biro,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_data_biro' => $id_data,
@@ -86,7 +115,9 @@ class DetailBiroModel extends CI_Model {
 					'domestik_p' => $dp,
 					'mancanegara_l' => $ml,
 					'mancanegara_p' => $mp,
-					'pajak' => $pajak
+					'pajak' => $pajak,
+					'retribusi' => $retribusi,
+					'approv' => '0'
 
 					);
 			
@@ -95,6 +126,7 @@ class DetailBiroModel extends CI_Model {
 					$this->db->update('data_biro');
 			//return $data['nomor'];
 		}
+
 
 		public function delPhoto($id_biro,$file2){
 			
@@ -120,6 +152,7 @@ class DetailBiroModel extends CI_Model {
 		   // $res = DataStructure::keyValue($res->result_array());
 			return $res;
 		}
+		
   public function getAllDetailBiro($filter){
 	
     $this->db->select('*');
@@ -147,8 +180,7 @@ class DetailBiroModel extends CI_Model {
 
 	public function editDetailBiro($data){
         $data['id_user_entry'] = $this->session->userdata('id_user');
-        $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
-		$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_biro','id_sertifikat_biro','lokasi','deskripsi','alamat','id_user_entry']));
+       	$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_biro','id_sertifikat_biro','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_biro', $data['id_biro']);
 		$this->db->update('pariwisata_biro');
 

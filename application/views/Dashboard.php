@@ -1,5 +1,67 @@
 
 <div class="wrapper wrapper-content animated fadeInRight" id="periodeContainer">
+<div class="row">
+                    <div class="col-lg-3">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <div class="ibox-tools">
+                                    <span class="label label-success float-right">Tahun Terakhir</span>
+                                </div>
+                                <h5>Pajak</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins" id="allpajak"></h1>
+                                <div class="stat-percent font-bold text-success">100% <i class="fa fa-bolt"></i></div>
+                                <small>Total Pajak</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <div class="ibox-tools">
+                                    <span class="label label-info float-right">Tahun Terakhir</span>
+                                </div>
+                                <h5>Retribusi</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins" id="allretribusi"></h1>
+                                <div class="stat-percent font-bold text-info">100% <i class="fa fa-level-up"></i></div>
+                                <small>Total Retribusi</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <div class="ibox-tools">
+                                    <span class="label label-primary float-right">Tahun Terakhir</span>
+                                </div>
+                                <h5>Visit Domestik</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins" id="alldomestik"></h1>
+                                <div class="stat-percent font-bold text-navy">100% <i class="fa fa-level-up"></i></div>
+                                <small>New visits</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <div class="ibox-tools">
+                                    <span class="label label-danger float-right"> Tahun Terakhir</span>
+                                </div>
+                                <h5>Visit Mancanegara</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins" id="allmancanegara"></h1>
+                                <div class="stat-percent font-bold text-danger">100% <i class="fa fa-level-down"></i></div>
+                                <small>New Visit</small>
+                            </div>
+                        </div>
+            </div>
+        </div>
   <div class="row">
     <div class="col-lg-9">
       <div class="ibox">
@@ -98,6 +160,7 @@
 
 </div> -->
   <!--  -->
+  
   <div class="row">
     <div class="col-lg-12">
       <div class="ibox">
@@ -200,7 +263,7 @@
 
 
   <div class="row">
-    <div class="col-lg-6 col-xl-3">
+    <!-- <div class="col-lg-6 col-xl-3">
       <div class="ibox">
         <div class="ibox-content" style="height: 300px">
           <h5>Pajak<span class="tahun_label"></span></h5>
@@ -224,8 +287,8 @@
       
           </div>
       </div>
-    </div>
-    <div class="col-lg-6 col-xl-3">
+    </div> -->
+    <!-- <div class="col-lg-6 col-xl-3">
       <div class="ibox">
         <div class="ibox-content" style="height: 300px">
           <h5>Total Daya Tarik Wisata <span class="tahun_label"></span></h5>
@@ -244,12 +307,11 @@
           <h2 class="no-margins"><span id="totalpengunjung_objekwisata"></span></h2>
           <div class="stat-percent font-bold text-navy">-</div>
           <small>-</small>
-          <!-- <div><a class="" href='<?=site_url()?>OperatorController/Objek'><i class='fa fa-share'></i>More</a> -->
-          <!-- </div> -->
+          
         </div>
       </div>
-    </div>
-    <div class="col-lg-6 col-xl-6">
+    </div> -->
+    <div class="col-lg-12 col-xl-12">
       <div class="ibox">
         <!-- <div class="ibox-content" style="height: 300px"> -->
           <div class="ibox-content inspinia-timeline" style="height: 300px">
@@ -638,7 +700,29 @@ var map;
       });    
     }
     // PAJAK document.getElementById('map')
-    getPajakCagarbudaya();
+    getAllPajak();
+    function getAllPajak(){
+    $.ajax({
+              url: `<?=site_url('DashboardController/getAllPajak')?>`, 'type': 'GET',
+              data: {},
+              success: function (data){
+                var json = JSON.parse(data);
+                if(json['error']){
+                  swal("Simpan Gagal", json['message'], "error");
+                  return;
+                }
+                data = json['data'];
+                console.log(data);
+                document.getElementById('allpajak').innerHTML = 'Rp. '+convertToRupiah(data['pajak']);
+                document.getElementById('allretribusi').innerHTML = 'Rp. '+ convertToRupiah(data['retribusi']);
+                document.getElementById('alldomestik').innerHTML = data['domestik'];
+                document.getElementById('allmancanegara').innerHTML = data['mancanegara'];
+               // StatistikPajak(dataPajakPenginapan,"green");
+              },
+             error: function(e) {}
+      });    
+    }
+   // getPajakCagarbudaya();
     function getPajakCagarbudaya(){
     $.ajax({
               url: `<?=site_url('DashboardController/getPajakCagarbudaya')?>`, 'type': 'GET',
@@ -657,7 +741,7 @@ var map;
              error: function(e) {}
       });    
     }
-    getPajakPenginapan();
+   // getPajakPenginapan();
     function getPajakPenginapan(){
     $.ajax({
               url: `<?=site_url('DashboardController/getPajakPenginapan')?>`, 'type': 'GET',
@@ -760,7 +844,7 @@ var map;
              error: function(e) {}
       });    
     }    
-    getPajakObjek();
+    //getPajakObjek();
     function getPajakObjek(){
     $.ajax({
               url: `<?=site_url('DashboardController/getPajakObjek')?>`, 'type': 'GET',
@@ -1123,8 +1207,9 @@ var map;
         value: d['tahun'],
         text: d['tahun'],
       }));  
+      Chart1Modal.tahun.val(d['tahun']);
     });
-    Chart1Modal.tahun.val('2018');
+   
    }
 
      function renderChart2TahunSelection(data){
@@ -1647,13 +1732,13 @@ var map;
 
         $('#kegiatan').html(v_pagelaran);
         renderStruktur("#struktur_pagelaran", [
-          [v_pagelaran[0]['nama_kabupaten'],v_pagelaran[0]['value']],
-          [v_pagelaran[1]['nama_kabupaten'],v_pagelaran[1]['value']],
-          [v_pagelaran[2]['nama_kabupaten'],v_pagelaran[2]['value']],
-          [v_pagelaran[3]['nama_kabupaten'],v_pagelaran[3]['value']],
-          [v_pagelaran[4]['nama_kabupaten'],v_pagelaran[4]['value']],
-          [v_pagelaran[5]['nama_kabupaten'],v_pagelaran[5]['value']],
-          [v_pagelaran[6]['nama_kabupaten'],v_pagelaran[6]['value']],
+          [v_pagelaran[0]['nama_kabupaten'],v_pagelaran[0]['val']],
+          [v_pagelaran[1]['nama_kabupaten'],v_pagelaran[1]['val']],
+          [v_pagelaran[2]['nama_kabupaten'],v_pagelaran[2]['val']],
+          [v_pagelaran[3]['nama_kabupaten'],v_pagelaran[3]['val']],
+          [v_pagelaran[4]['nama_kabupaten'],v_pagelaran[4]['val']],
+          [v_pagelaran[5]['nama_kabupaten'],v_pagelaran[5]['val']],
+          [v_pagelaran[6]['nama_kabupaten'],v_pagelaran[6]['val']],
           ]);
       },
       error: function(e) {}

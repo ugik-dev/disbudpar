@@ -5,6 +5,8 @@
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
         <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -21,6 +23,7 @@
                   <th style="width: 15%; text-align:center!important">Nama Museum</th>
                   <th style="width: 12%; text-align:center!important">Kepemilikan</th>
                   <th style="width: 12%; text-align:center!important">Status Registrasi</th>
+                 
                   <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
@@ -50,6 +53,8 @@
             <label for="nama">Nama Museum</label> 
             <input type="text" placeholder="Nama Museum" class="form-control" id="nama" name="nama" required="required">
           </div>
+          
+
           <div class="form-group">
             <label for="id_kepemilikan_museum">Kepemilikan</label> 
             <select class="form-control mr-sm-2" id="id_kepemilikan_museum" name="id_kepemilikan_museum" required="required">
@@ -67,7 +72,7 @@
           </div>
           <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
-            <input type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required">
+            <textarea rows="4" type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required"></textarea>
           </div>
 
 
@@ -115,6 +120,7 @@ $(document).ready(function() {
     'file': $('#museum_modal').find('#file'),
     'lokasi': $('#museum_modal').find('#lokasi'),
     'deskripsi': $('#museum_modal').find('#deskripsi'),
+    
   }
 
   var swalSaveConfigure = {
@@ -282,6 +288,7 @@ $(document).ready(function() {
     MuseumModal.file.val(museum['file']);
     MuseumModal.lokasi.val(museum['lokasi']);
     MuseumModal.deskripsi.val(museum['deskripsi']);
+
   });
 
   FDataTable.on('click','.delete', function(){
@@ -306,6 +313,8 @@ $(document).ready(function() {
       });
     });
   });
+  document.getElementById("export_btn").href = '<?= site_url('OperatorController/Pdfallmuseum?id_museum=')?>'+id_museum;
+
 
   function showMuseumModal(){
     MuseumModal.self.modal('show');
@@ -351,8 +360,7 @@ $(document).ready(function() {
     });
   }
 
-  
-  function editMuseum(){
+    function editMuseum(){
     swal(swalSaveConfigure).then((result) => {
       if(!result.value){ return; }
       buttonLoading(MuseumModal.saveEditBtn);

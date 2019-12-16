@@ -4,7 +4,9 @@
       <form class="form-inline" id="toolbar_form" onsubmit="return false;">
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
-        <!-- <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button> -->
+        <button hidden type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -21,6 +23,7 @@
                   <th style="width: 15%; text-align:center!important">Nama Biro / Agen</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
                   <th style="width: 12%; text-align:center!important">Sertifikat</th>
+                 
                   <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
@@ -50,6 +53,7 @@
             <label for="nama">Nama Biro</label> 
             <input type="text" placeholder="Nama Biro" class="form-control" id="nama" name="nama" required="required">
           </div>
+
           <div class="form-group">
             <label for="id_jenis_biro">Jenis</label> 
             <select class="form-control mr-sm-2" id="id_jenis_biro" name="id_jenis_biro" required="required">
@@ -121,6 +125,7 @@ $(document).ready(function() {
     'alamat': $('#biro_modal').find('#alamat'),
     'lokasi': $('#biro_modal').find('#lokasi'),
     'deskripsi': $('#biro_modal').find('#deskripsi'),
+   
   }
 
   var swalSaveConfigure = {
@@ -232,6 +237,7 @@ $(document).ready(function() {
       error: function(e) {}
     });
   }
+  document.getElementById("export_btn").href = '<?= site_url('PimpinanController/PdfAllBiro')?>';
 
   function renderBiro(data){
     if(data == null || typeof data != "object"){
@@ -252,17 +258,18 @@ $(document).ready(function() {
       <a class="detail dropdown-item" href='<?=site_url()?>PimpinanController/DetailBiro?id_biro=${biro['id_biro']}'><i class='fa fa-share'></i> Detail Biro</a>
       `; 
       var editButton = `
-        <a class="edit dropdown-item" data-id='${biro['id_biro']}'><i class='fa fa-pencil'></i> Edit Biro</a>
+        <a hidden class="edit dropdown-item" data-id='${biro['id_biro']}'><i class='fa fa-pencil'></i> Edit Biro</a>
       `;
       var deleteButton = `
-        <a class="delete dropdown-item" data-id='${biro['id_biro']}'><i class='fa fa-trash'></i> Hapus Biro</a>
+        <a hidden class="delete dropdown-item" data-id='${biro['id_biro']}'><i class='fa fa-trash'></i> Hapus Biro</a>
       `;
       var button = `
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
             ${detailButton}
-          
+            ${editButton}
+            ${deleteButton}
           </div>
         </div>
       `;
@@ -288,6 +295,7 @@ $(document).ready(function() {
     BiroModal.file.val(biro['file']);
     BiroModal.lokasi.val(biro['lokasi']);
     BiroModal.deskripsi.val(biro['deskripsi']);
+   
   });
 
   FDataTable.on('click','.delete', function(){
@@ -357,7 +365,6 @@ $(document).ready(function() {
     });
   }
 
-  
   function editBiro(){
     swal(swalSaveConfigure).then((result) => {
       if(!result.value){ return; }

@@ -4,6 +4,9 @@
       <form class="form-inline" id="toolbar_form" onsubmit="return false;">
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
+        <button hidden type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -19,7 +22,7 @@
              
                   <th style="width: 15%; text-align:center!important">Nama Sarana dan Prasarana</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
-                  <th style="width: 12%; text-align:center!important">Alamat</th>
+                  
                  
                   <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
@@ -50,6 +53,7 @@
             <label for="nama">Nama Sarana dan Prasarana</label> 
             <input type="text" placeholder="Nama Saranaprasarana" class="form-control" id="nama" name="nama" required="required">
           </div>
+         
           <div class="form-group">
             <label for="id_jenis_saranaprasarana">Jenis</label> 
             <select class="form-control mr-sm-2" id="id_jenis_saranaprasarana" name="id_jenis_saranaprasarana" required="required">
@@ -71,6 +75,8 @@
 
 
 
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="add_btn" data-loading-text="Loading..." onclick="this.form.target='add'"><strong>Tambah Data</strong></button>
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong>Simpan Perubahan</strong></button>
         </form>
       </div>
       <div class="modal-footer">
@@ -111,6 +117,7 @@ $(document).ready(function() {
     'alamat': $('#saranaprasarana_modal').find('#alamat'),
     'lokasi': $('#saranaprasarana_modal').find('#lokasi'),
     'deskripsi': $('#saranaprasarana_modal').find('#deskripsi'),
+    
   }
 
   var swalSaveConfigure = {
@@ -194,6 +201,7 @@ $(document).ready(function() {
       error: function(e) {}
     });
   }
+  document.getElementById("export_btn").href = '<?= site_url('PimpinanController/PdfAllSaranaprasarana')?>';
 
   function renderSaranaprasarana(data){
     if(data == null || typeof data != "object"){
@@ -213,22 +221,67 @@ $(document).ready(function() {
       var detailButton =`
       <a class="detail dropdown-item" href='<?=site_url()?>PimpinanController/DetailSaranaprasarana?id_saranaprasarana=${saranaprasarana['id_saranaprasarana']}'><i class='fa fa-share'></i> Detail Sarana dan Prasarana</a>
       `; 
-     
+      var editButton = `
+        <a hidden class="edit dropdown-item" data-id='${saranaprasarana['id_saranaprasarana']}'><i class='fa fa-pencil'></i> Edit Saranaprasarana</a>
+      `;
+      var deleteButton = `
+        <a hidden class="delete dropdown-item" data-id='${saranaprasarana['id_saranaprasarana']}'><i class='fa fa-trash'></i> Hapus Saranaprasarana</a>
+      `;
       var button = `
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
           ${detailButton}
-           
+            ${editButton}
+            ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([saranaprasarana['nama'], saranaprasarana['nama_jenis_saranaprasarana'],saranaprasarana['alamat'],apprv, button]);
+      renderData.push([saranaprasarana['nama'], saranaprasarana['nama_jenis_saranaprasarana'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
 
   
+  FDataTable.on('click','.edit', function(){
+    event.preventDefault();
+    SaranaprasaranaModal.form.trigger('reset');
+    SaranaprasaranaModal.self.modal('show');
+    SaranaprasaranaModal.addBtn.hide();
+    SaranaprasaranaModal.saveEditBtn.show();
+    var id = $(this).data('id');
+    var saranaprasarana = dataSaranaprasarana[id];
+    SaranaprasaranaModal.id_saranaprasarana.val(saranaprasarana['id_saranaprasarana']);
+    SaranaprasaranaModal.nama.val(saranaprasarana['nama']);
+    SaranaprasaranaModal.id_jenis_saranaprasarana.val(saranaprasarana['id_jenis_saranaprasarana']);
+    SaranaprasaranaModal.alamat.val(saranaprasarana['alamat']);
+    SaranaprasaranaModal.lokasi.val(saranaprasarana['lokasi']);
+    SaranaprasaranaModal.deskripsi.val(saranaprasarana['deskripsi']);
+  });
+
+  FDataTable.on('click','.delete', function(){
+    event.preventDefault();
+    var id = $(this).data('id');
+    swal(swalDeleteConfigure).then((result) => {
+      if(!result.value){ return; }
+      $.ajax({
+        url: "<?=site_url('SaranaprasaranaController/deleteSaranaprasarana')?>", 'type': 'POST',
+        data: {'id_saranaprasarana': id},
+        success: function (data){
+          var json = JSON.parse(data);
+          if(json['error']){
+            swal("Delete Gagal", json['message'], "error");
+            return;
+          }
+          delete dataSaranaprasarana[id];
+          swal("Delete Berhasil", "", "success");
+          renderSaranaprasarana(dataSaranaprasarana);
+        },
+        error: function(e) {}
+      });
+    });
+  });
+
   function showSaranaprasaranaModal(){
     SaranaprasaranaModal.self.modal('show');
     SaranaprasaranaModal.addBtn.show();
@@ -247,7 +300,6 @@ $(document).ready(function() {
         break;
     }
   });
-
   function addSaranaprasarana(){
     swal(swalSaveConfigure).then((result) => {
       if(!result.value){ return; }

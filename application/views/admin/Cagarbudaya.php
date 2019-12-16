@@ -21,9 +21,10 @@
               <thead>
                 <tr>
 
-                  <th style="width: 20%; text-align:center!important">Nama Cagarbudaya</th>
+                  <th style="width: 20%; text-align:center!important">Nama Cagar Budaya</th>
+                  
+                  <th style="width: 12%; text-align:center!important">Jenis Cagar Budaya</th>
                   <th style="width: 20%; text-align:center!important">Kabupaten</th>
-                  <th style="width: 12%; text-align:center!important">Jenis Cagarbudaya</th>
                   <th style="width: 12%; text-align:center!important">Kepemilikan</th>
                   <th style="width: 12%; text-align:center!important">Status Penetapan</th>
                   <th style="width: 12%; text-align:center!important">Approval</th>
@@ -72,7 +73,7 @@
     <div class="modal-content animated fadeIn">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Kelola Cagarbudaya</h4>
+        <h4 class="modal-title">Kelola Cagar Budaya</h4>
         <span class="info"></span>
       </div>
       <div class="modal-body" id="modal-body">              
@@ -324,7 +325,7 @@ $(document).ready(function() {
     });
   }
   
-  document.getElementById("export_btn").href = '<?= site_url('OperatorController/PdfAllCagarbudaya')?>';
+  document.getElementById("export_btn").href = '<?= site_url('AdminController/Pdfallcagarbudaya?id_cagarbudaya=')?>'+id_cagarbudaya;
 
 
   function getCagarbudaya(){

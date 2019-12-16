@@ -2,13 +2,35 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class PimpinanController extends CI_Controller {
- 
+
   public function __construct(){
     parent::__construct();
-    $this->load->model(array(''));
-    $this->load->model(array('LaporanModel'));
-    $this->load->helper(array('DataStructure', 'Validation'));
 
+    $this->load->model(array('DesawisataModel'));
+    $this->load->model(array('DetailDesawisataModel'));
+    $this->load->model(array('ObjekModel'));
+    $this->load->model(array('DetailObjekModel'));
+    $this->load->model(array('PenginapanModel'));
+    $this->load->model(array('DetailPenginapanModel'));
+    $this->load->model(array('SenibudayaModel'));
+    $this->load->model(array('DetailSenibudayaModel'));
+    $this->load->model(array('PagelaranModel'));
+    $this->load->model(array('DetailPagelaranModel'));
+    $this->load->model(array('SaranaprasaranaModel'));
+    $this->load->model(array('DetailSaranaprasaranaModel'));
+    $this->load->model(array('CagarbudayaModel'));
+    $this->load->model(array('DetailCagarbudayaModel'));
+    $this->load->model(array('PemugaranModel'));
+    $this->load->model(array('DetailPemugaranModel'));
+    $this->load->model(array('MuseumModel'));
+    $this->load->model(array('DetailMuseumModel'));
+    $this->load->model(array('BiroModel'));
+    $this->load->model(array('DetailBiroModel'));
+    $this->load->model(array('UsahaModel'));
+    $this->load->model(array('DetailUsahaModel'));
+    $this->load->model(array('LaporanModel'));
+    $this->load->model(array('PengunjungModel'));
+    $this->load->helper(array('DataStructure', 'Validation'));
   }
   
   public function index(){
@@ -22,12 +44,34 @@ class PimpinanController extends CI_Controller {
 		);
     $this->load->view('Page', $pageData);
   }
-
-  public function Gmap(){
+    
+  public function panduan(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
 		$pageData = array(
-			'title' => 'Beranda',
-      'content' => 'pimpinan/Gmap',
+			'title' => 'Panduan',
+      'content' => 'pimpinan/PanduanPage',
+      'breadcrumb' => array(
+        'Home' => base_url(),
+      ),
+			'contentData' => array(),
+		);
+    $this->load->view('Page', $pageData);
+  }
+
+  public function getAllKabupaten(){
+    try{
+      $this->SecurityModel->userOnlyGuard(TRUE);
+      $data = $this->PimpinanModel->getAllKabupaten($this->input->get());
+      echo json_encode(array('data' => $data));
+    } catch (Exception $e) {
+      ExceptionHandler::handle($e);
+    }
+  }
+  public function Message(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+		$pageData = array(
+			'title' => 'Mail Box',
+      'content' => 'pimpinan/Message',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -35,17 +79,112 @@ class PimpinanController extends CI_Controller {
     $this->load->view('Page', $pageData);
   }
 
-  public function export(){
+
+  public function Tenagakerja(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
 		$pageData = array(
-			'title' => 'Beranda',
-      'content' => 'pimpinan/Dashboard',
+			'title' => 'Tenaga Kerja',
+      'content' => 'pimpinan/Tenagakerja',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
 		);
     $this->load->view('Page', $pageData);
   }
+  public function Kelolahuser(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+		$pageData = array(
+			'title' => 'Kelolah User',
+      'content' => 'pimpinan/Kelolahuser',
+      'breadcrumb' => array(
+        'Home' => base_url(),
+      ),
+		);
+    $this->load->view('Page', $pageData);
+  }
+  public function ExportPengunjung(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $getdata = $this->input->get();
+  
+
+
+    if($getdata['tb']=='objek'){
+    $filter['id_objek']=$getdata['id_data'];
+    $data_profil=$this->DetailObjekModel->getProfil($filter);
+    $header_pdf = 'Daya Tarik Wisata';
+    }else if($getdata['tb']=='penginapan'){
+      $filter['id_penginapan']=$getdata['id_data'];
+      $data_profil=$this->DetailPenginapanModel->getProfil($filter);
+      $header_pdf = 'Penginapan';
+    }else if($getdata['tb']=='cagarbudaya'){
+      $filter['id_cagarbudaya']=$getdata['id_data'];
+      $data_profil=$this->DetailCagarbudayaModel->getProfil($filter);
+      $header_pdf = 'Cagar dan Budaya';
+    }else if($getdata['tb']=='museum'){
+      $filter['id_museum']=$getdata['id_data'];
+      $data_profil=$this->DetailMuseumModel->getProfil($filter);
+      $header_pdf = 'Museum';
+    }else if($getdata['tb']=='desawisata'){
+      $filter['id_desawisata']=$getdata['id_data'];
+      $data_profil=$this->DetailDesawisataModel->getProfil($filter);
+      $header_pdf = 'Desa Wisata';
+    }else if($getdata['tb']=='biro'){
+      $filter['id_biro']=$getdata['id_data'];
+      $data_profil=$this->DetailBiroModel->getProfil($filter);
+      $header_pdf = 'Biro dan Agen Wisata';
+    }else if($getdata['tb']=='usaha'){
+      $filter['id_usaha']=$getdata['id_data'];
+      $data_profil=$this->DetailUsahaModel->getProfil($filter);
+      $header_pdf = 'Usaha dan Jasa';
+    };
+    
+    $filter['id_user']=$data_profil['id_user_entry'];
+    $entry=$this->DetailCagarbudayaModel->getUser($filter);
+    //var_dump($approv);
+    if($data_profil['id_user_approv']=='0'){ 
+      $approv['nama'] = 'Data Belum Approv';
+    }else{
+      $filter['id_user']=$data_profil['id_user_approv'];
+      $approv=$this->DetailCagarbudayaModel->getUser($filter);
+    };
+   
+
+    $pageData = array(
+      'getdata' => $getdata,
+       'data' => $this->PengunjungModel->getPengunjung($getdata),
+       'data_profil' => $data_profil,
+       'header' => $header_pdf,
+      'nama_approv' => $approv['nama'],
+      'nama_entry' => $entry['nama'],
+      'tahun' => $getdata['tahun']
+     );
+    $this->load->view('PdfPengunjung', $pageData);
+  }
+
+  public function Desawisata(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+		$pageData = array(
+			'title' => 'Desa Wisata',
+      'content' => 'pimpinan/Desawisata',
+      'breadcrumb' => array(
+        'Home' => base_url(),
+      ),
+		);
+    $this->load->view('Page', $pageData);
+  }
+  public function DetailDesawisata(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $pageData = array(
+      'title' => 'Desa Wisata - '.$this->input->get()['nama_desawisata'],
+      'content' => 'pimpinan/DetailDesawisata',
+      'breadcrumb' => array(
+        'Home' => base_url(),
+      ),
+      'contentData' => ['id_desawisata'=> $this->input->get()['id_desawisata']]
+    );
+    $this->load->view('Page', $pageData);
+  }
+
   public function cagarbudaya(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
 		$pageData = array(
@@ -120,6 +259,18 @@ class PimpinanController extends CI_Controller {
     $this->load->view('Page', $pageData);
   }
 
+  public function DetailMessage(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $pageData = array(
+      'title' => 'Mail Box',
+      'content' => 'pimpinan/DetailMessage',
+      'breadcrumb' => array(
+        'Home' => base_url(),
+      ),
+      'contentData' => ['id_message'=> $this->input->get()['id_message']]
+    );
+    $this->load->view('Page', $pageData);
+  }
   
   public function DetailPagelaran(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -273,18 +424,329 @@ class PimpinanController extends CI_Controller {
     $this->load->view('Page', $pageData);
   }
 
-  public function Laporan(){
+  public function LaporanPariwisata(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $tahun=$this->LaporanModel->getTahun();
+
+    //var_dump($tahun);
+    $vp;
+    $vb;
+    $i=0;
+    foreach($tahun as $th){
+      $vp[$th['tahun']]=$this->LaporanModel->p1($th['tahun']);
+      $vb[$th['tahun']]=$this->LaporanModel->p2($th['tahun']);
+      $i++;
+    };
     $pageData = array(
       'datapariwisata' => $this->LaporanModel->getFormat(),
       'datakebudayaan' => $this->LaporanModel->getFormat2(),
       'tahun' => $this->LaporanModel->getTahun(),
-      
+      'vp' => $vp,
+      'vb' => $vb,
+      'title' => 'Laporan',
+      'content' => 'admin/LaporanPariwisata',
+      'breadcrumb' => array(
+        'Home' => base_url(),
+      ),
     );
-    $this->load->view('operator/laporan', $pageData);
+    $this->load->view('Page', $pageData);
   }
 
+  public function Laporan(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+
+    $tahun=$this->LaporanModel->getTahun();
+
+    //var_dump($tahun);
+    $vp;
+    $vb;
+    $i=0;
+    foreach($tahun as $th){
+      $vp[$th['tahun']]=$this->LaporanModel->p1($th['tahun']);
+      $vb[$th['tahun']]=$this->LaporanModel->p2($th['tahun']);
+      $i++;
+    };
+    $pageData = array(
+      'datapariwisata' => $this->LaporanModel->getFormat(),
+      'datakebudayaan' => $this->LaporanModel->getFormat2(),
+      'tahun' => $this->LaporanModel->getTahun(),
+      'vp' => $vp,
+      'vb' => $vb,
+      
+    );
+    //var_dump($vb);
+    $this->load->view('admin/laporan', $pageData);
+  }
+
+
+  public function PdfCagarbudaya(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $id = $this->input->get();
+    $dataProfil = $this->DetailCagarbudayaModel->getProfil($id);
+    $tmp['id_user'] = $dataProfil['id_user_approv'];
+    $approv = $this->DetailCagarbudayaModel->getUser($tmp);
+    $tmp['id_user'] = $dataProfil['id_user_entry'];
+    $entry = $this->DetailCagarbudayaModel->getUser($tmp);
+    $kabupaten = $this->DetailCagarbudayaModel->getKabupaten($dataProfil['id_kabupaten']);
+    $pageData = array(
+    'dataProfil' => $dataProfil,
+    'approv' => $approv['nama'],
+    'entry' => $entry['nama'],
+    'kabupaten' => $kabupaten
+    );
+    $this->load->view('pimpinan/pdfcagarbudaya', $pageData);
+  }
+  public function PdfSaranaprasarana(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $id = $this->input->get();
+    $dataProfil = $this->DetailSaranaprasaranaModel->getProfil($id);
+ 
+    $tmp['id_user'] = $dataProfil['id_user_approv'];
+    $approv = $this->DetailDesawisataModel->getUser($tmp);
+    $tmp['id_user'] = $dataProfil['id_user_entry'];
+    $entry = $this->DetailDesawisataModel->getUser($tmp);
+    $pageData = array(
+    'dataProfil' => $dataProfil,
+    'approv' => $approv['nama'],
+    'entry' => $entry['nama'],
+    );
+    $this->load->view('pimpinan/pdfsaranaprasarana', $pageData);
+  }
+  public function PdfDesawisata(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $id = $this->input->get();
+    $dataProfil = $this->DetailDesawisataModel->getProfil($id);
+    $tmp['id_user'] = $dataProfil['id_user_approv'];
+    $approv = $this->DetailDesawisataModel->getUser($tmp);
+    $tmp['id_user'] = $dataProfil['id_user_entry'];
+    $entry = $this->DetailDesawisataModel->getUser($tmp);
+   
+    $pageData = array(
+    'dataProfil' => $dataProfil,
+    'approv' => $approv['nama'],
+    'entry' => $entry['nama'],
+    );
+    $this->load->view('pimpinan/pdfdesawisata', $pageData);
+  } 
+  public function PdfMuseum(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $id = $this->input->get();
+    $dataProfil = $this->DetailMuseumModel->getProfil($id);
+    $tmp['id_user'] = $dataProfil['id_user_approv'];
+    $approv = $this->DetailDesawisataModel->getUser($tmp);
+    $tmp['id_user'] = $dataProfil['id_user_entry'];
+    $entry = $this->DetailDesawisataModel->getUser($tmp);
+   
+    $pageData = array(
+    'dataProfil' => $dataProfil,
+    'approv' => $approv['nama'],
+    'entry' => $entry['nama'],
+    );
+    $this->load->view('pimpinan/pdfmuseum', $pageData);
+  } 
+  public function PdfPenginapan(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $id = $this->input->get();
+    $dataProfil = $this->DetailPenginapanModel->getProfil($id);
+    $tmp['id_user'] = $dataProfil['id_user_approv'];
+    $approv = $this->DetailDesawisataModel->getUser($tmp);
+    $tmp['id_user'] = $dataProfil['id_user_entry'];
+    $entry = $this->DetailDesawisataModel->getUser($tmp);
+   
+    $pageData = array(
+    'dataProfil' => $dataProfil,
+    'approv' => $approv['nama'],
+    'entry' => $entry['nama'],
+    );
+    $this->load->view('pimpinan/pdfpenginapan', $pageData);
+  }
+  public function PdfObjek(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $id = $this->input->get();
+    $dataProfil = $this->DetailObjekModel->getProfil($id);
+    $tmp['id_user'] = $dataProfil['id_user_approv'];
+    $approv = $this->DetailDesawisataModel->getUser($tmp);
+    $tmp['id_user'] = $dataProfil['id_user_entry'];
+    $entry = $this->DetailDesawisataModel->getUser($tmp);
+   
+    $pageData = array(
+    'dataProfil' => $dataProfil,
+    'approv' => $approv['nama'],
+    'entry' => $entry['nama'],
+    );
+    $this->load->view('pimpinan/pdfobjek', $pageData);
+  }
   
+  public function PdfPemugaran(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $id = $this->input->get();
+    $dataProfil = $this->DetailPemugaranModel->getProfil($id);
+    $tmp['id_user'] = $dataProfil['id_user_approv'];
+    $approv = $this->DetailDesawisataModel->getUser($tmp);
+    $tmp['id_user'] = $dataProfil['id_user_entry'];
+    $entry = $this->DetailDesawisataModel->getUser($tmp);
+   
+    $pageData = array(
+    'dataProfil' => $dataProfil,
+    'approv' => $approv['nama'],
+    'entry' => $entry['nama'],
+    );
+    $this->load->view('pimpinan/pdfpemugaran', $pageData);
+  }
+  public function PdfPagelaran(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $id = $this->input->get();
+    $dataProfil = $this->DetailPagelaranModel->getProfil($id);
+    $tmp['id_user'] = $dataProfil['id_user_approv'];
+    $approv = $this->DetailDesawisataModel->getUser($tmp);
+    $tmp['id_user'] = $dataProfil['id_user_entry'];
+    $entry = $this->DetailDesawisataModel->getUser($tmp);
+   
+    $pageData = array(
+    'dataProfil' => $dataProfil,
+    'approv' => $approv['nama'],
+    'entry' => $entry['nama'],
+    );
+    $this->load->view('pimpinan/pdfpagelaran', $pageData);
+  }
+  public function PdfSenibudaya(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $id = $this->input->get();
+    $dataProfil = $this->DetailSenibudayaModel->getProfil($id);
+    $tmp['id_user'] = $dataProfil['id_user_approv'];
+    $approv = $this->DetailDesawisataModel->getUser($tmp);
+    $tmp['id_user'] = $dataProfil['id_user_entry'];
+    $entry = $this->DetailDesawisataModel->getUser($tmp);
+   
+    $pageData = array(
+    'dataProfil' => $dataProfil,
+    'approv' => $approv['nama'],
+    'entry' => $entry['nama'],
+    );
+    $this->load->view('pimpinan/pdfsenibudaya', $pageData);
+  }
+  public function PdfBiro(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $id = $this->input->get();
+    $dataProfil = $this->DetailBiroModel->getProfil($id);
+    $tmp['id_user'] = $dataProfil['id_user_approv'];
+    $approv = $this->DetailDesawisataModel->getUser($tmp);
+    $tmp['id_user'] = $dataProfil['id_user_entry'];
+    $entry = $this->DetailDesawisataModel->getUser($tmp);
+   
+    $pageData = array(
+    'dataProfil' => $dataProfil,
+    'approv' => $approv['nama'],
+    'entry' => $entry['nama'],
+    );
+    $this->load->view('pimpinan/pdfbiro', $pageData);
+  }
+  public function PdfAllCagarbudaya(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->CagarbudayaModel->getAllCagarbudaya();
+    $pageData = array(
+    'data' => $data,
+    );
+    $this->load->view('pimpinan/PdfAllCagarbudaya', $pageData);
+  }
+  public function PdfAllMuseum(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->MuseumModel->getAllMuseum();
+    $pageData = array(
+    'data' => $data,
+    );
+    $this->load->view('pimpinan/PdfAllMuseum', $pageData);
+  }
+  public function PdfAllBiro(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->BiroModel->getAllBiro();
+    $pageData = array(
+    'data' => $data,
+    );
+    $this->load->view('pimpinan/PdfAllBiro', $pageData);
+  }
+  public function PdfAllUsaha(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->UsahaModel->getAllUsaha();
+    $pageData = array(
+    'data' => $data,
+    );
+    $this->load->view('pimpinan/PdfAllUsaha', $pageData);
+  }
+  
+  public function PdfAllPemugaran(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->PemugaranModel->getAllPemugaran();
+    $pageData = array(
+    'data' => $data,
+    );
+    $this->load->view('pimpinan/PdfAllpemugaran', $pageData);
+  }
+  public function PdfAllPagelaran(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->PagelaranModel->getAllPagelaran();
+    $pageData = array(
+    'data' => $data,
+    );
+    $this->load->view('pimpinan/pdfallpagelaran', $pageData);
+  }
+  public function PdfAllSaranaprasarana(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->SaranaprasaranaModel->getAllSaranaprasarana();
+    $pageData = array(
+    'data' => $data,
+    );
+    $this->load->view('pimpinan/pdfallsaranaprasarana', $pageData);
+  }
+
+  public function PdfAllSenibudaya(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->SenibudayaModel->getAllSenibudaya();
+    $pageData = array(
+    'data' => $data,
+    );
+    $this->load->view('pimpinan/pdfallsenibudaya', $pageData);
+  }
+
+  public function PdfAllDesawisata(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->DesawisataModel->getAllDesawisata();
+    $pageData = array(
+    'data' => $data, 
+    );
+    $this->load->view('pimpinan/pdfalldesawisata', $pageData);
+  }
+  
+  public function PdfAllObjek(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->ObjekModel->getAllObjek();
+    $pageData = array(
+    'data' => $data,
+  
+    );
+    $this->load->view('pimpinan/pdfallobjek', $pageData);
+  }
+  public function PdfAllPenginapan(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+   
+    $data = $this->PenginapanModel->getAllPenginapan();
+    $pageData = array(
+    'data' => $data,
+  
+    );
+    $this->load->view('pimpinan/pdfallpenginapan', $pageData);
+  }
+
   public function Kalender(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
     $pageData = array(
@@ -297,17 +759,7 @@ class PimpinanController extends CI_Controller {
     $this->load->view('Page', $pageData);
   }
 
-  public function LaporanPariwisata(){
-    $this->SecurityModel->roleOnlyGuard('pimpinan');
-    $pageData = array(
-      'title' => 'Entry Data',
-      'content' => 'pimpinan/LaporanPariwisata',
-      'breadcrumb' => array(
-        'Home' => base_url(),
-      ),
-    );
-    $this->load->view('Page', $pageData);
-  }
+ 
 
   public function test(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');

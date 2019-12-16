@@ -1,7 +1,7 @@
 
-<a class="btn btn-light my-1 mr-sm-2" href="<?=site_url('PimpinanController/Laporan')?>"> <i class="fal fa-download"></i> Export Excel</a>
+<a class="btn btn-light my-1 mr-sm-2" href="<?=site_url('OperatorController/Laporan')?>"> <i class="fal fa-download"></i> Export Excel</a>
 
- 
+
   <div class="col-lg-12">
       <div class="tabs-container">
           <ul class="nav nav-tabs" role="tablist">
@@ -18,7 +18,7 @@
                               <select class="dropdown-item" id="tahun_input2" name="tahun_input" required="required"></select>
                             </div>
                             <div class="form-group mx-sm-3 mb-2">
-                              <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn2" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong>Approv Data</strong></button>
+                              <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn2" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong><i class="fal fa-save"></i> Simpan Data</strong></button>
                             </div>
                             <div class="form-group mx-sm-3 mb-2" id="header_approv2">
                             </div>
@@ -36,7 +36,7 @@
                               <select class="dropdown-item" id="tahun_input" name="tahun_input" required="required"></select>
                             </div>
                             <div class="form-group mx-sm-3 mb-2">
-                              <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong>Approv Data</strong></button>
+                              <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong><i class="fal fa-save"></i> Simpan Data</strong></button>
                             </div>
                             <div class="form-group mx-sm-3 mb-2" id="header_approv">
                             </div>
@@ -50,6 +50,31 @@
           </div>
         </div>
     </div>
+
+    <!-- <div class="row">                
+    <div class="col-lg-6">
+      <div class="ibox" id="input_modal2">
+      
+        <div class="ibox-content" id=""><h5></h5>
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="ibox" id="input_modal">
+      
+        <div class="ibox-content" id=""><h5></h5>
+          <form id="pariwisata_form">
+
+            <select class="dropdown-item" id="tahun_input" name="tahun_input" required="required"></select>
+            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong>Simpan Perubahan</strong></button>
+            <div id="form_pariwisata">   </div>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+   -->
 
 <script>
 $(document).ready(function() {
@@ -83,12 +108,12 @@ $(document).ready(function() {
     InputModal.saveBtn.hide();
     InputModal2.saveBtn.hide();
   var swalSaveConfigure = {
-    title: "Konfirmasi Approv",
-    text: "Yakin akan Approv data ini?",
+    title: "Konfirmasi simpan",
+    text: "Yakin akan menyimpan data ini?",
     type: "info",
     showCancelButton: true,
     confirmButtonColor: "#18a689",
-    confirmButtonText: "Ya, Approv!",
+    confirmButtonText: "Ya, Simpan!",
   };
 
     InputModal.form.submit(function(event){
@@ -118,7 +143,7 @@ $(document).ready(function() {
       if(!result.value){ return; }
      // buttonLoading(ObjekModal.addBtn);
       $.ajax({
-        url: `<?=site_url('LaporanPariwisataController/approvData')?>`, 'type': 'POST',
+        url: `<?=site_url('LaporanPariwisataController/saveForm')?>`, 'type': 'POST',
         data: InputModal.form.serialize(),
         success: function (data){
           buttonIdle(InputModal.saveBtn);
@@ -141,7 +166,7 @@ $(document).ready(function() {
       if(!result.value){ return; }
       buttonLoading(InputModal2.saveBtn);
       $.ajax({
-        url: `<?=site_url('LaporanPariwisataController/approvData2')?>`, 'type': 'POST',
+        url: `<?=site_url('LaporanPariwisataController/saveForm2')?>`, 'type': 'POST',
         data: InputModal2.form.serialize(),
         success: function (data){
           buttonIdle(InputModal2.saveBtn);
@@ -228,10 +253,8 @@ $(document).ready(function() {
             header_approv2.innerHTML = `<h5><span class="badge badge-warning">Data Belum di Approv</span></h5>`;
           }else{
             header_approv2.innerHTML = `<h5><span class="badge badge-info">Data Sudah Approv</span></h5>`;  
-            InputModal2.saveBtn.hide();
-          }
 
-          //<input type="number" class="form-control" name="tahun" id="tahun" placeholder="tahun">
+          }
           html +=` 
           <br>
           `;
@@ -270,18 +293,17 @@ $(document).ready(function() {
           
           `;
           }
-          var header_approv = document.getElementById("header_approv");  
+        var header_approv = document.getElementById("header_approv");  
           //if(false){
          if(dataFormat[1]['id_approv']=='0' ||dataFormat[1]['id_approv']== null){
             header_approv.innerHTML = `<h5><span class="badge badge-warning">Data Belum di Approv</span></h5>`;
           }else{
             header_approv.innerHTML = `<h5><span class="badge badge-info">Data Sudah Approv</span></h5>`;  
-            InputModal.saveBtn.hide();
+           
           }
 
-     
           html +=` 
-         <br>
+         
           `;
           $('#form_pariwisata').html(html);
       }

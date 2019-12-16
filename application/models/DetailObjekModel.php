@@ -6,11 +6,12 @@ class DetailObjekModel extends CI_Model {
 	
 	public function getProfil($filter){
 	
-		$this->db->select('*');
+		$this->db->select('cb.*,js.*,kab.nama_kabupaten');
 		$this->db->from('pariwisata_objek as cb');
 		$this->db->where("id_objek",$filter['id_objek']);
 		$this->db->join("pariwisata_jenis_objek as js", "js.id_jenis_objek = cb.id_jenis_objek");
-	
+		$this->db->join("kabupaten as kab", "kab.id_kabupaten = cb.id_kabupaten");
+		
 		$res = $this->db->get();
 		$res = $res->result_array();
 		return $res[0];
@@ -18,8 +19,9 @@ class DetailObjekModel extends CI_Model {
 
 	
 		public function approvObjek($data){
+			$data['tanggal_approv'] = date('Y-m-d');
 			$data['id_user_approv'] = $this->session->userdata('id_user');
-			$this->db->set(DataStructure::slice($data, ['id_user_approv']));
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
 			$this->db->where('id_objek', $data['id_objek']);
 			$this->db->update('pariwisata_objek');
 			echo $data['id_user_approv'];
@@ -30,8 +32,9 @@ class DetailObjekModel extends CI_Model {
 	
 		}
 		public function approv($data){
+			$data['tanggal_approv'] = date('Y-m-d');
 			$data['id_user_approv'] = $this->session->userdata('id_user');
-			$this->db->set(DataStructure::slice($data, ['id_user_approv']));
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
 			$this->db->where('id_objek', $data['id_objek']);
 			$this->db->update('pariwisata_objek');
 			echo $data['id_user_approv'];
@@ -81,7 +84,7 @@ class DetailObjekModel extends CI_Model {
 			//return $data['nomor'];
 		}
 
-		public function saveTambah($id_objek,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak){
+		public function saveTambah($id_objek,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_objek' => $id_objek,
@@ -92,6 +95,7 @@ class DetailObjekModel extends CI_Model {
 					'mancanegara_l' => $ml,
 					'mancanegara_p' => $mp,
 					'pajak' => $pajak,
+					'retribusi' => $retribusi,
 					'approv' => '0'
 					);
 			
@@ -100,7 +104,7 @@ class DetailObjekModel extends CI_Model {
 			//return $data['nomor'];
 		}
 
-		public function saveEdit($id_data,$id_objek,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak){
+		public function saveEdit($id_data,$id_objek,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_data_objek' => $id_data,
@@ -112,6 +116,7 @@ class DetailObjekModel extends CI_Model {
 					'mancanegara_l' => $ml,
 					'mancanegara_p' => $mp,
 					'pajak' => $pajak,
+					'retribusi' => $retribusi,
 					'approv' => '0'
 					);
 			
@@ -123,7 +128,8 @@ class DetailObjekModel extends CI_Model {
 		public function approv_pengunjung($id_data){
 			$idapprov = $this->session->userdata('id_user');
 			$data = array( 
-					'approv' => $idapprov
+					'approv' => $idapprov,
+					'tanggal_approv_data' => date('Y-m-d')
 					);
 			
 					$this->db->set($data);
@@ -168,7 +174,7 @@ class DetailObjekModel extends CI_Model {
 
 	public function editDetailObjek($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$this->db->set(DataStructure::slice($data, ['nama','id_jenis_objek','lokasi','deskripsi','alamat','id_user_entry']));
+		$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_objek','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_objek', $data['id_objek']);
 		$this->db->update('pariwisata_objek');
 

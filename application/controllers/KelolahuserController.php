@@ -56,6 +56,7 @@ class KelolahuserController extends CI_Controller {
       ExceptionHandler::handle($e);
     }
   }
+  
   public function editPassword(){
     try{
       $this->SecurityModel->userOnlyGuard(TRUE);

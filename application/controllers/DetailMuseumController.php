@@ -77,12 +77,26 @@ class DetailMuseumController extends CI_Controller {
       }else{
         for($i=1; $i <= 12; $i++){
           if(empty($data['id_data_museum'.$i])){      
-            $this->DetailMuseumModel->saveTambah($data['id_museum'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i]);
+            $this->DetailMuseumModel->saveTambah($data['id_museum'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
           }else{
-            $this->DetailMuseumModel->saveEdit($data['id_data_museum'.$i],$data['id_museum'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i]);
+            $this->DetailMuseumModel->saveEdit($data['id_data_museum'.$i],$data['id_museum'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
           }
         }
       }
+      echo json_encode('succes');
+    } catch (Exception $e) {
+      ExceptionHandler::handle($e);
+    }
+  }
+  public function approvPengunjung(){
+    try{
+      $this->SecurityModel->userOnlyGuard(TRUE);
+      $data = $this->input->post();
+     
+        for($i=1; $i <= 12; $i++){
+            $this->DetailMuseumModel->approv_pengunjung($data['id_data_museum'.$i]);
+        }
+     
       echo json_encode('succes');
     } catch (Exception $e) {
       ExceptionHandler::handle($e);

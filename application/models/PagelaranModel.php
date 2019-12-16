@@ -31,7 +31,7 @@ class PagelaranModel extends CI_Model {
 		$this->db->join("senibudaya as sb", "sb.id_senibudaya = cb.id_senibudaya");
 		//$this->db->join("senibudaya as sb", "sb.id_senibudaya = cb.id_senibudaya");
 		$this->db->join("kabupaten as kab", "sb.id_kabupaten = kab.id_kabupaten");
-		if(!empty($this->session->userdata('id_kabupaten'))) $this->db->where('cb.id_kabupaten', $this->session->userdata('id_kabupaten'));
+		if(!empty($this->session->userdata('id_kabupaten'))) $this->db->where('sb.id_kabupaten', $this->session->userdata('id_kabupaten'));
 		if(!empty($filter['id_pagelaran'])) $this->db->where('cb.id_pagelaran', $filter['id_pagelaran']);
 
 	    $res = $this->db->get();
@@ -48,8 +48,8 @@ class PagelaranModel extends CI_Model {
 
 	  public function addPagelaran($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
-	    $dataInsert = DataStructure::slice($data, ['id_kabupaten','id_user_entry','id_jenis_pagelaran','id_senibudaya','nama','tanggal_kegiatan','tanggal_kegiatan_end','jumlah_penonton','deskripsi']);
+	
+	    $dataInsert = DataStructure::slice($data, ['id_user_entry','id_jenis_pagelaran','id_senibudaya','nama','tanggal_kegiatan','tanggal_kegiatan_end','jumlah_penonton','deskripsi']);
 	    $this->db->insert('senibudaya_pagelaranpameran', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Pagelaran", "senibudaya_pagelaranpameran");
 	    return $this->db->insert_id();

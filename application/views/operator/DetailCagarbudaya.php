@@ -1,5 +1,27 @@
+<style>
+.zoom {
+  padding: 0;
+  background-color: transparent;
+  transition: transform .2s; /* Animation */
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
 
+.zoom:hover {
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+</style>
 <div class="wrapper wrapper-content animated fadeInRight">
+<div class="tabs-container">
+            <ul class="nav nav-tabs" role="tablist">
+                <li><a class="nav-link active" data-toggle="tab" href="#tab-11">Data Profil</a></li>
+                <li><a class="nav-link" data-toggle="tab" href="#tab-22">Data Pengunjung</a></li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel"  id="tab-11" class="tab-pane active">
+                <div class="panel-body">
+                 
   <div class="row">
     <div class="col-lg-6">
       <div class="ibox">
@@ -14,6 +36,7 @@
                 <label for="formGroupExampleInput">Nama Cagar Budaya</label>
                 <input type="text" class="form-control" id="namacagarbudaya"  readonly="readonly">
               </div>
+           
               <div class="form-group">
                 <label for="formGroupExampleInput">Alamat</label>
                 <input type="text" class="form-control" id="alamat" readonly="readonly">
@@ -49,7 +72,9 @@
                 <textarea class="form-control" id="deskripsi" rows="4" disabled></textarea>
               </div>
             </form>
-            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data Cagar Budaya</strong></button>
+            <!-- <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button> -->
+            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button>
+            <!-- <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button> -->
             <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
     
           </div><!-- profil -->
@@ -126,6 +151,10 @@
                       <div class="ibox-content">
                         <div class="form-group col-md-12" >
                           <label for="formGroupExampleInput">Photo</label>
+                          <div class="btn alert-primary" role="alert" id="show_photo">
+                            Lihat Foto
+                          </div>
+                              
                         </div>
                           <div class="form-group col-md-12">
                             <img src="" class="img-fluid" id='fileimg' alt="Responsive image" style='height: 200px;'>
@@ -146,8 +175,12 @@
               </div>
           </div>
         </div>
-
-  <div class="col-lg-12">
+        </div>
+   </div>
+              </div>
+              <div role="tabpanel" id="tab-22" class="tab-pane">
+                 <div class="panel-body" >
+               
     <div class="ibox">
       <div class="ibox-content" id="input_modal">
       <div class="form-inline">
@@ -165,8 +198,11 @@
         </form>
       </div>
     </div>
-  </div>
 
+ </div>
+              </div>
+    </div>
+</div>
   
 <div class="modal inmodal" id="edit_modal" tabindex="-1" role="dialog"  aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -183,6 +219,7 @@
             <label for="nama">Nama Cagarbudaya</label> 
             <input type="text" placeholder="Nama Cagarbudaya" class="form-control" id="edit_nama" name="nama" required="required">
           </div>
+
           <div class="form-group">
             <label for="jenis">Jenis Cagar budaya</label> 
             <select class="form-control mr-sm-2" id="edit_id_jenis" name="id_jenis_cagarbudaya" required="required">
@@ -230,6 +267,65 @@
 </div>
 
 
+<div class="modal inmodal" id="photo2_modal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content animated fadeIn">
+      <div class="modal-header">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">           
+          </ol>
+          <div class="carousel-inner">            
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal inmodal" id="message_modal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content animated fadeIn">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Kirim Pesan</h4>
+        <span class="info"></span>
+      </div>
+      <div class="modal-body" id="modal-body">              
+        <form role="form" id="user_form" onsubmit="return false;" type="multipart" autocomplete="off">
+          <input hidden type="text" id="id_operator" name="id_user_reciver" >
+          <div class="form-group">
+            <label for="nama">Ke : </label> 
+            <input type="text" placeholder="Nama" class="form-control" id="nama_operator" name="" required="required" readonly>
+          </div>
+          
+          <div class="form-group">
+            <label for="deskripsi">Pesan</label> 
+            <textarea rows="5" type="text" placeholder="" class="form-control" id="" name="message" required="required"></textarea>
+          </div>
+          <div class="form-group">
+            
+            <textarea hidden rows="5" type="text" placeholder="" class="form-control" id="format_message" name="format_message" required="required"></textarea>
+          </div>
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="send_btn" data-loading-text="Loading..." onclick="this.form.target='send'"><strong>Kirim</strong></button>       
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <script>
 $(document).ready(function() {
   $('#cagar_dan_budaya').addClass('active');
@@ -241,6 +337,124 @@ $(document).ready(function() {
   getProfil();
 
 
+document.getElementById("export_btn").href = '<?= site_url('OperatorController/Pdfcagarbudaya?id_cagarbudaya=')?>'+id_cagarbudaya;
+var Photo2Modal = {
+    'self': $('#photo2_modal'),
+    'info': $('#photo2_modal').find('.infoy'),
+    'images': $('#photo2_modal').find('.carousel-inner'),
+    'indicators': $('#photo2_modal').find('.carousel-indicators'),
+  };
+  var MessageModal = {
+    'self': $('#message_modal'),
+    'info': $('#message_modal').find('.info'),
+    'form': $('#message_modal').find('#user_form'),
+    'sendBtn': $('#message_modal').find('#send_btn'),
+    'saveEditBtn': $('#message_modal').find('#save_edit_btn'),
+    'edit_id_desawisata': $('#message_modal').find('#edit_id_desawisata'),
+    'id_data_desawisata': $('#message_modal').find('#id_data_desawisata'),
+    'id_operator': $('#message_modal').find('#id_operator'),
+    'nama_operator': $('#message_modal').find('#nama_operator'),
+    'message': $('#message_modal').find('#message'),
+    'format_message': $('#message_modal').find('#format_message'),
+  }
+ 
+function renderPhotoModal(){
+  var ph = dataProfil['file2'];
+  var ph1  = ph.split(",");
+ 
+  if(dataProfil['file']==""){
+    indicatorsHTML = ``;
+    img2HTML = ``;
+  }else{
+    tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+    indicatorsHTML = `<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>`;
+    img2HTML = `
+            <div class="carousel-item active">
+                <img src="${tmp}" class="d-block w-100" alt="...">
+              </div>
+        `;     
+  }  
+ 
+  var i = 0;
+ // tmp2 =`active`;
+    ph1.forEach((d) => {
+    console.log(d);
+    tmp = `<?= base_url('upload/file2/')?>`+d;
+    if (dataProfil['file2'] != ""){
+    indicatorsHTML +=`<li data-target="#carouselExampleIndicators" data-slide-to="${i+1}" class=""></li>`
+    img2HTML +=`
+              <div class="carousel-item">
+                <img src="${tmp}" class="d-block w-100" alt="...">
+              </div>
+          `;
+
+   
+    tmp2=``;
+    i++;
+    };
+    });
+    
+
+  Photo2Modal.indicators.html(indicatorsHTML);
+  Photo2Modal.images.html(img2HTML);
+    
+  }
+  document.getElementById("show_photo").onclick = function() {
+    showPhotoModal()
+    };
+  function showPhotoModal(){
+  Photo2Modal.self.modal('show');
+  }
+
+//   document.getElementById("message_btn").onclick = function() {MessageFunction()}
+//   function MessageFunction() {
+//     console.log('cok');
+//     MessageModal.nama_operator.val(nama_user_entry.value);
+//     MessageModal.id_operator.val(dataProfil['id_user_entry']);
+//     formatMessage = `Pada Cagar dan Budaya - `+dataProfil['nama']+`
+// `;
+//     MessageModal.format_message.val(formatMessage);
+//     MessageModal.self.modal('show'); 
+//   }
+
+  MessageModal.form.submit(function(event){
+    event.preventDefault();
+    switch(MessageModal.form[0].target){
+      case 'send':
+        sendMessage();
+        break;
+    }
+  });
+  function sendMessage(){
+    buttonLoading(MessageModal.sendBtn);
+    console.log(toolbar.form.serialize());
+    $.ajax({
+      url: `<?=site_url('MessageController/sendMessage')?>`, 'type': 'GET',
+      data: MessageModal.form.serialize(),
+      success: function (data){
+        buttonIdle(MessageModal.sendBtn);
+        var json = JSON.parse(data);
+        if(json['error']){
+          swal("Simpan Gagal", json['message'], "error");
+          return;
+        }
+        swal("Pesan Terkirim", "", "success");
+        MessageModal.form.trigger('reset'); 
+        MessageModal.self.modal('hide'); 
+      },
+      error: function(e) {}
+    });
+  }
+ 
+
+    var swalApprovConfigure = {
+    title: "Konfirmasi Approv",
+    text: "Yakin akan Approv data profil ini?",
+    type: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#18a689",
+    confirmButtonText: "Ya, Approv!",
+    };
 $('#form_upload1').submit(function(e){
   console.log('file1upload')
             e.preventDefault(); 
@@ -383,6 +597,7 @@ var map;
     'edit_id_jenis': $('#edit_modal').find('#edit_id_jenis'),
     'edit_id_kepemilikan': $('#edit_modal').find('#edit_id_kepemilikan'),
     'edit_id_status': $('#edit_modal').find('#edit_id_status_penetapan'),
+
   }
   // EditModal.edit_id_cagarbudaya.val(id_cagarbudaya);
   // EditModal.edit_nama.val(dataProfil['nama']);
@@ -390,7 +605,6 @@ var map;
   // EditModal.edit_alamat.val(dataProfil['alamat']);
   // EditModal.edit_deskripsi.val(dataProfil['deskripsi']);
 
-document.getElementById("export_btn").href = '<?= site_url('OperatorController/PdfCagarbudaya?id_cagarbudaya=')?>'+id_cagarbudaya;
 
 
 document.getElementById("edit_profil_btn").onclick = function() {myFunction()};
@@ -406,7 +620,8 @@ function myFunction() {
     EditModal.edit_deskripsi.val(dataProfil['deskripsi']);
     EditModal.edit_id_jenis.val(dataProfil['id_jenis_cagarbudaya']);
     EditModal.edit_id_kepemilikan.val(dataProfil['id_kepemilikan_cagarbudaya']);
-    EditModal.edit_id_status.val(dataProfil['id_status_penetapan_cagarbudaya']);  
+    EditModal.edit_id_status.val(dataProfil['id_status_penetapan_cagarbudaya']); 
+
 }
 
 
@@ -417,6 +632,14 @@ function myFunction() {
     showCancelButton: true,
     confirmButtonColor: "#18a689",
     confirmButtonText: "Ya, Simpan!",
+  };
+  var swalSaveConfigure2 = {
+    title: "Konfirmasi Approv",
+    text: "Yakin Approv data ini?",
+    type: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#18a689",
+    confirmButtonText: "Ya, Approv!",
   };
   var swalNotApprov = {
     title: "Konfirmasi simpan",
@@ -463,7 +686,7 @@ function myFunction() {
         var fileimg = document.getElementById("fileimg");
         var fil2 = document.getElementById("file2");
         var file2img = document.getElementById("file2img");
-        
+     
         var dokumen = document.getElementById("dokumen");
          var id_upload1 = document.getElementById("id_cagarbudayatoupload1");
         var id_upload2 = document.getElementById("id_cagarbudayatoupload2");
@@ -476,6 +699,7 @@ function myFunction() {
         id_upload4.value = id_cagarbudaya;
         nama.value = dataProfil['nama'];
         alamat.value = dataProfil['alamat'];
+ 
         
         kepemilikan.value = dataProfil['nama_kepemilikan_cagarbudaya'];
         penetapan.value = dataProfil['nama_status_penetapan_cagarbudaya'];
@@ -500,6 +724,7 @@ function myFunction() {
       
 
         renderPhoto();
+        renderPhotoModal()
         renderPdf();
       
       },
@@ -665,6 +890,7 @@ function renderInputPengunjung(data){
     var tmpmp = 0;
     var tmpjumlah = 0;
     var tmppajak = 0;
+    var tmpretribusi = 0;
     var intputhtml = `<div class="form-row">
           <div class="col-2">
           <label>Bulan </label>
@@ -687,6 +913,9 @@ function renderInputPengunjung(data){
           <div class="col">
           <label>Pajak</label>
           </div>
+          <div class="col">
+          <label>Retribusi</label>
+          </div>
 
         </div>`;
     Object.values(data).forEach((d) => {
@@ -696,6 +925,7 @@ function renderInputPengunjung(data){
       tmpmp += Number(d['mancanegara_p']);
       tmpjumlah += Number(d['jumlah']);
       tmppajak += Number(d['pajak']);
+      tmpretribusi += Number(d['retribusi']);
        intputhtml +=`
       <div class="form-row">
           <div class="col-2">
@@ -721,6 +951,9 @@ function renderInputPengunjung(data){
           </div>
           <div class="col">
             <input type="number" class="form-control" name="pajak${i}" placeholder=""  value="${d['pajak']}">
+          </div>
+          <div class="col">
+            <input type="number" class="form-control" name="retribusi${i}" placeholder=""  value="${d['retribusi']}">
           </div>
         </div>
       `;
@@ -750,9 +983,13 @@ function renderInputPengunjung(data){
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${tmppajak}" disabled>
           </div>
+          <div class="col">
+            <input type="number" class="form-control" placeholder="0"  value="${tmpretribusi}" disabled>
+          </div>
         </div>
       `;
-    intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> `;
+    intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> 
+                    `;
       var input_data_pengunjung = document.getElementById("input_data_pengunjung");  
         input_data_pengunjung.innerHTML = intputhtml;
       var header_approv = document.getElementById("header_approv");  
@@ -769,11 +1006,36 @@ function renderInputPengunjung(data){
       case 'save':
         console.log('tombol save')
         saveInputPengunjung();
-        break;
+      break;
+      case 'approv':
+        console.log('tombol approv')
+        approvInputPengunjung();
+      break;
      
     }
   });
 
+  function approvInputPengunjung(){
+    swal(swalSaveConfigure2).then((result) => {
+      if(!result.value){ return; }
+      buttonLoading(InputModal.save_pengunjung);
+      $.ajax({
+        url: `<?=site_url('DetailCagarbudayaController/approvPengunjung')?>`, 'type': 'POST',
+        data: InputModal.form.serialize(),
+        success: function (data){
+          buttonIdle(InputModal.save_pengunjung);
+          var json = JSON.parse(data);
+          if(json['error']){
+            swal("Simpan Gagal", json['message'], "error");
+            return;
+          }
+          swal("Approv Berhasil", "", "success");     
+          getInputPengunjung();
+        },
+        error: function(e) {}
+      });
+    });
+    }
 
   function saveInputPengunjung(){
     swal(swalSaveConfigure).then((result) => {
@@ -789,12 +1051,8 @@ function renderInputPengunjung(data){
             swal("Simpan Gagal", json['message'], "error");
             return;
           }
-          swal("Simpan Berhasil", "", "success");
-          //var dataPengunjung = json['data']
-          //dataDetailCagarbudaya[detailcagarbudaya['nomor']] = detailcagarbudaya;
-          
+          swal("Simpan Berhasil", "", "success");     
           getInputPengunjung();
-          // DetailCagarbudayaModal.self.modal('hide');
         },
         error: function(e) {}
       });
@@ -852,7 +1110,7 @@ function renderInputPengunjung(data){
       });
     });
     }
-    
+  
     getTahun();  
     function getTahun(){
     return $.ajax({
@@ -871,13 +1129,10 @@ function renderInputPengunjung(data){
   }
 
   $("#tahun_input").click(function(e) {
-    if(dataProfil['id_user_approv']=='0'){
-      console.log('data belum di approv');
-      swal("Data Belum di Approv",'Harap Konformasi ke Pimpinan Untuk Approval', "error");
-    }else{
+   
       registerTahunSelectionChange();
-      console.log("fungsi clik tahun aktif approv=",dataProfil['id_user_approv'] )
-    };
+     
+
   });
     function registerTahunSelectionChange(){
     InputModal.tahun.on('change', function(e){
@@ -900,7 +1155,9 @@ function renderInputPengunjung(data){
         value: d['tahun'],
         text: d['tahun'],
       }));  
+      InputModal.tahun.val(d['tahun']); 
     });
+    getInputPengunjung();
    }
 
      getAllJenis();  

@@ -6,10 +6,11 @@ class DetailDesawisataModel extends CI_Model {
 	
 	public function getProfil($filter){
 	
-		$this->db->select('*');
+		$this->db->select('cb.*,js.*,kab.nama_kabupaten');
 		$this->db->from('desawisata as cb');
 		$this->db->where("id_desawisata",$filter['id_desawisata']);
 		$this->db->join("kategori_desawisata as js", "js.id_kategori = cb.id_kategori");
+		$this->db->join("kabupaten as kab", "kab.id_kabupaten = cb.id_kabupaten");
 	
 		$res = $this->db->get();
 		$res = $res->result_array();
@@ -18,8 +19,9 @@ class DetailDesawisataModel extends CI_Model {
 
 	
 		public function approvDesawisata($data){
+			
             $data['id_user_approv'] = $this->session->userdata('id_user');
-            $data['tanggal_approv'] = date('d-m-Y');
+            $data['tanggal_approv'] = date('Y-m-d');
 			$this->db->set(DataStructure::slice($data, ['id_user_approv','tanggal_approv']));
 			$this->db->where('id_desawisata', $data['id_desawisata']);
 			$this->db->update('desawisata');
@@ -69,7 +71,7 @@ class DetailDesawisataModel extends CI_Model {
 			//return $data['nomor'];
 		}
 
-		public function saveTambah($id_desawisata,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak){
+		public function saveTambah($id_desawisata,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_desawisata' => $id_desawisata,
@@ -80,6 +82,7 @@ class DetailDesawisataModel extends CI_Model {
 					'mancanegara_l' => $ml,
 					'mancanegara_p' => $mp,
 					'pajak' => $pajak,
+					'retribusi' => $retribusi,
 					'approv' => '0'
 					);
 			
@@ -88,7 +91,7 @@ class DetailDesawisataModel extends CI_Model {
 			//return $data['nomor'];
 		}
 
-		public function saveEdit($id_data,$id_desawisata,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak){
+		public function saveEdit($id_data,$id_desawisata,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_data_desawisata' => $id_data,
@@ -100,6 +103,7 @@ class DetailDesawisataModel extends CI_Model {
 					'mancanegara_l' => $ml,
 					'mancanegara_p' => $mp,
 					'pajak' => $pajak,
+					'retribusi' => $retribusi,
 					'approv' => '0'
 					);
 			
@@ -111,7 +115,7 @@ class DetailDesawisataModel extends CI_Model {
 		public function approv_pengunjung($id_data){
 			$idapprov = $this->session->userdata('id_user');
 			$data = array( 
-					'tanggal_approv_data' => date('d-m-Y'),
+					'tanggal_approv_data' => date('Y-d-m'),
 					'approv' => $idapprov
 					);
 			
@@ -157,7 +161,7 @@ class DetailDesawisataModel extends CI_Model {
 
 	public function editDetailDesawisata($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$this->db->set(DataStructure::slice($data, ['nama','id_kategori','lokasi','deskripsi','alamat','id_user_entry']));
+		$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_kategori','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_desawisata', $data['id_desawisata']);
 		$this->db->update('desawisata');
 

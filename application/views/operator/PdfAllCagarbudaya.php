@@ -66,7 +66,7 @@ $pdf->Cell(70,7,$value['alamat'],1,1);
 $tmpdate = explode('-',$today);
 
 $pdf->Cell(10,20,' ',0,1);
-$pdf->Cell(250,7,$kabupaten.', '.$tmpdate[1].' '.getBulan($tmpdate[2]).' '.$tmpdate[3],0,1,'C'); 
+$pdf->Cell(250,7,'Pangkalpinang, '.$tmpdate[1].' '.getBulan($tmpdate[2]).' '.$tmpdate[3],0,1,'C'); 
 $pdf->Cell(250,3,'Approval',0,1,'C'); 
 $pdf->Cell(250,50,'(                                               )',0,1,'C');
 // $url = 'upload\file/'.$dataProfil['file'];

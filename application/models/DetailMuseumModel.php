@@ -6,21 +6,35 @@ class DetailMuseumModel extends CI_Model {
 	
 	public function getProfil($filter){
 	
-		$this->db->select('*');
+		$this->db->select('cb.*,ko.*,sp.*,kab.nama_kabupaten');
 		$this->db->from('museum as cb');
 		$this->db->where("id_museum",$filter['id_museum']);
 		$this->db->join("museum_kepemilikan as ko", "ko.id_kepemilikan_museum = cb.id_kepemilikan_museum");
 		$this->db->join("museum_status as sp", "sp.id_status_museum = cb.id_status_museum");
+		$this->db->join("kabupaten as kab", "kab.id_kabupaten = cb.id_kabupaten");
 	
 		$res = $this->db->get();
 		$res = $res->result_array();
 		return $res[0];
 		}
 
-	
-		public function approv($data){
+		public function approvMuseum($data){
+			$data['tanggal_approv'] = date('Y-m-d');
 			$data['id_user_approv'] = $this->session->userdata('id_user');
-			$this->db->set(DataStructure::slice($data, ['id_user_approv']));
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
+			$this->db->where('id_museum', $data['id_museum']);
+			$this->db->update('museum');
+			echo $data['id_user_approv'];
+			echo $data['id_museum'];
+			
+			ExceptionHandler::handleDBError($this->db->error(), "Ubah Museum", "museum");	
+			return $data['id_museum'];
+	
+		}
+		public function approv($data){
+			$data['tanggal_approv'] = date('Y-m-d');
+			$data['id_user_approv'] = $this->session->userdata('id_user');
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
 			$this->db->where('id_museum', $data['id_museum']);
 			$this->db->update('museum');
 			echo $data['id_user_approv'];
@@ -31,8 +45,7 @@ class DetailMuseumModel extends CI_Model {
 	
 		}
 		public function getUser($filter){
-			
-			
+						
 			$this->db->select('nama');
 			$this->db->from('user');
 			$this->db->where("id_user",$filter['id_user']);
@@ -55,7 +68,7 @@ class DetailMuseumModel extends CI_Model {
 				ExceptionHandler::handleDBError($this->db->error(), "Upload File1", "id_museum");	
 		}
 		
-		public function saveTambah($id_museum,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak){
+		public function saveTambah($id_museum,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_museum' => $id_museum,
@@ -66,6 +79,7 @@ class DetailMuseumModel extends CI_Model {
 					'mancanegara_l' => $ml,
 					'mancanegara_p' => $mp,
 					'pajak' => $pajak,
+					'retribusi' => $retribusi,
 					'approv' => '0'
 					);
 			
@@ -76,7 +90,8 @@ class DetailMuseumModel extends CI_Model {
 		public function approv_pengunjung($id_data){
 			$idapprov = $this->session->userdata('id_user');
 			$data = array( 
-					'approv' => $idapprov
+					'approv' => $idapprov,
+					'tanggal_approv_data' => date('Y-m-d')
 					);
 			
 					$this->db->set($data);
@@ -84,7 +99,7 @@ class DetailMuseumModel extends CI_Model {
 					$this->db->update('data_museum');
 
 		}
-		public function saveEdit($id_data,$id_museum,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak){
+		public function saveEdit($id_data,$id_museum,$tahun,$bulan,$dl,$dp,$ml,$mp,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_data_museum' => $id_data,
@@ -96,6 +111,7 @@ class DetailMuseumModel extends CI_Model {
 					'mancanegara_l' => $ml,
 					'mancanegara_p' => $mp,
 					'pajak' => $pajak,
+					'retribusi' => $retribusi,
 					'approv' => '0'
 
 					);
@@ -157,7 +173,7 @@ class DetailMuseumModel extends CI_Model {
 
 	public function editDetailMuseum($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$this->db->set(DataStructure::slice($data, ['nama','id_kepemilikan_museum','id_status_museum','lokasi','deskripsi','alamat','id_user_entry']));
+		$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_kepemilikan_museum','id_status_museum','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_museum', $data['id_museum']);
 		$this->db->update('museum');
 

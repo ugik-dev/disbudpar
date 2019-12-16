@@ -5,6 +5,8 @@
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
         <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -41,7 +43,7 @@
     <div class="modal-content animated fadeIn">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Kelola Usaha dan Agen</h4>
+        <h4 class="modal-title">Kelola Usaha dan Jasa</h4>
         <span class="info"></span>
       </div>
       <div class="modal-body" id="modal-body">              
@@ -78,7 +80,7 @@
           </div>
           <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
-            <input type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required">
+            <textarea rows="5" type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required"></textarea>
           </div>
 
 
@@ -227,6 +229,7 @@ $(document).ready(function() {
     });
     }
   
+    document.getElementById("export_btn").href = '<?= site_url('AdminController/PdfAllUsaha')?>';
 
   function getUsaha(){
     buttonLoading(toolbar.showBtn);

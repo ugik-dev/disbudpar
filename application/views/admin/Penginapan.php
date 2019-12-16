@@ -5,6 +5,8 @@
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
         <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -70,17 +72,10 @@
             <label for="jumlah_tempat_tidur">Jumlah Tempat Tidur</label> 
             <input type="number" placeholder="Jumlah Tempat Tidur" class="form-control" id="jumlah_tempat_tidur" name="jumlah_tempat_tidur" required="required">
           </div>
-          <div class="form-group">
-            <label for="file">File</label> 
-            <input type="text" placeholder="File" class="form-control" id="file" name="file" required="required">
-          </div>
-          <div class="form-group">
-            <label for="lokasi">Lokasi</label> 
-            <input type="text" placeholder="Lokasi" class="form-control" id="lokasi" name="lokasi" required="required">
-          </div>
+
           <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
-            <input type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required">
+            <textarea rows="4" type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required"></textarea>
           </div>
 
 
@@ -299,6 +294,9 @@ $(document).ready(function() {
     PenginapanModal.deskripsi.val(penginapan['deskripsi']);
     PenginapanModal.kabupaten.val(penginapan['id_kabupaten']);
   });
+  
+  document.getElementById("export_btn").href = '<?= site_url('AdminController/PdfAllPenginapan')?>';
+
 
   FDataTable.on('click','.delete', function(){
     event.preventDefault();

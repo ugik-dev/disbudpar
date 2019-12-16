@@ -1,5 +1,18 @@
 
+<style>
+.zoom {
+  padding: 0;
+  background-color: transparent;
+  transition: transform .2s; /* Animation */
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
 
+.zoom:hover {
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+</style>
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="col-lg-6">
@@ -60,8 +73,11 @@
                 <textarea class="form-control" id="deskripsi" rows="4" disabled></textarea>
               </div>
             </form>
-            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data</strong></button>
-          </div><!-- profil -->
+            <!-- <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button> -->
+            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button>
+            <!-- <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button> -->
+            <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
+             </div><!-- profil -->
           </div><!-- ibox content -->
       </div> <!-- ibox -->
       <div class="ibox">
@@ -139,9 +155,13 @@
                       <div class="ibox-content">
                         <div class="form-group col-md-12" >
                           <label for="formGroupExampleInput">Photo</label>
+                          <div class="btn alert-primary" role="alert" id="show_photo">
+                            Lihat Foto
+                          </div>
+            
                         </div>
                           <div class="form-group col-md-12">
-                            <img src="" class="img-fluid" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -232,6 +252,63 @@
   </div>
 </div>
 
+<div class="modal inmodal" id="photo2_modal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content animated fadeIn">
+      <div class="modal-header">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">           
+          </ol>
+          <div class="carousel-inner">            
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal inmodal" id="message_modal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content animated fadeIn">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Kirim Pesan</h4>
+        <span class="info"></span>
+      </div>
+      <div class="modal-body" id="modal-body">              
+        <form role="form" id="user_form" onsubmit="return false;" type="multipart" autocomplete="off">
+          <input hidden type="text" id="id_operator" name="id_user_reciver" >
+          <div class="form-group">
+            <label for="nama">Ke : </label> 
+            <input type="text" placeholder="Nama" class="form-control" id="nama_operator" name="" required="required" readonly>
+          </div>
+          
+          <div class="form-group">
+            <label for="deskripsi">Pesan</label> 
+            <textarea rows="5" type="text" placeholder="" class="form-control" id="" name="message" required="required"></textarea>
+          </div>
+          <div class="form-group">
+            
+            <textarea hidden rows="5" type="text" placeholder="" class="form-control" id="format_message" name="format_message" required="required"></textarea>
+          </div>
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="send_btn" data-loading-text="Loading..." onclick="this.form.target='send'"><strong>Kirim</strong></button>       
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script>
 $(document).ready(function() {
@@ -245,6 +322,124 @@ $(document).ready(function() {
   getProfil();
 
 
+
+document.getElementById("export_btn").href = '<?= site_url('OperatorController/Pdfpagelaran?id_pagelaran=')?>'+id_pagelaran;
+var Photo2Modal = {
+    'self': $('#photo2_modal'),
+    'info': $('#photo2_modal').find('.infoy'),
+    'images': $('#photo2_modal').find('.carousel-inner'),
+    'indicators': $('#photo2_modal').find('.carousel-indicators'),
+  };
+  var MessageModal = {
+    'self': $('#message_modal'),
+    'info': $('#message_modal').find('.info'),
+    'form': $('#message_modal').find('#user_form'),
+    'sendBtn': $('#message_modal').find('#send_btn'),
+    'saveEditBtn': $('#message_modal').find('#save_edit_btn'),
+    'edit_id_desawisata': $('#message_modal').find('#edit_id_desawisata'),
+    'id_data_desawisata': $('#message_modal').find('#id_data_desawisata'),
+    'id_operator': $('#message_modal').find('#id_operator'),
+    'nama_operator': $('#message_modal').find('#nama_operator'),
+    'message': $('#message_modal').find('#message'),
+    'format_message': $('#message_modal').find('#format_message'),
+  }
+ 
+function renderPhotoModal(){
+  var ph = dataProfil['file2'];
+  var ph1  = ph.split(",");
+ 
+  if(dataProfil['file']==""){
+    indicatorsHTML = ``;
+    img2HTML = ``;
+  }else{
+    tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+    indicatorsHTML = `<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>`;
+    img2HTML = `
+            <div class="carousel-item active">
+                <img src="${tmp}" class="d-block w-100" alt="...">
+              </div>
+        `;     
+  }  
+ 
+  var i = 0;
+ // tmp2 =`active`;
+    ph1.forEach((d) => {
+    console.log(d);
+    tmp = `<?= base_url('upload/file2/')?>`+d;
+    if (dataProfil['file2'] != ""){
+    indicatorsHTML +=`<li data-target="#carouselExampleIndicators" data-slide-to="${i+1}" class=""></li>`
+    img2HTML +=`
+              <div class="carousel-item">
+                <img src="${tmp}" class="d-block w-100" alt="...">
+              </div>
+          `;
+
+   
+    tmp2=``;
+    i++;
+    };
+    });
+    
+
+  Photo2Modal.indicators.html(indicatorsHTML);
+  Photo2Modal.images.html(img2HTML);
+    
+  }
+  document.getElementById("show_photo").onclick = function() {
+    showPhotoModal()
+    };
+  function showPhotoModal(){
+  Photo2Modal.self.modal('show');
+  }
+
+//   document.getElementById("message_btn").onclick = function() {MessageFunction()}
+//   function MessageFunction() {
+//     console.log('cok');
+//     MessageModal.nama_operator.val(nama_user_entry.value);
+//     MessageModal.id_operator.val(dataProfil['id_user_entry']);
+//     formatMessage = `Pada Pagelaran / Pameran - `+dataProfil['nama']+`
+// `;
+//     MessageModal.format_message.val(formatMessage);
+//     MessageModal.self.modal('show'); 
+//   }
+
+  MessageModal.form.submit(function(event){
+    event.preventDefault();
+    switch(MessageModal.form[0].target){
+      case 'send':
+        sendMessage();
+        break;
+    }
+  });
+  function sendMessage(){
+    buttonLoading(MessageModal.sendBtn);
+    console.log(toolbar.form.serialize());
+    $.ajax({
+      url: `<?=site_url('MessageController/sendMessage')?>`, 'type': 'GET',
+      data: MessageModal.form.serialize(),
+      success: function (data){
+        buttonIdle(MessageModal.sendBtn);
+        var json = JSON.parse(data);
+        if(json['error']){
+          swal("Simpan Gagal", json['message'], "error");
+          return;
+        }
+        swal("Pesan Terkirim", "", "success");
+        MessageModal.form.trigger('reset'); 
+        MessageModal.self.modal('hide'); 
+      },
+      error: function(e) {}
+    });
+  }
+
+var swalApprovConfigure = {
+    title: "Konfirmasi Approv",
+    text: "Yakin akan Approv data profil ini?",
+    type: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#18a689",
+    confirmButtonText: "Ya, Approv!",
+    };
 
 
 $('#form_upload1').submit(function(e){
@@ -511,6 +706,7 @@ function myFunction() {
         dokumen.value = dataProfil['dokumen'];
        
         renderPhoto();
+        renderPhotoModal();
         renderPdf();
         //console.log(dataProfil)
         //renderDetailPagelaran(dataDetailPagelaran);
@@ -518,6 +714,7 @@ function myFunction() {
       error: function(e) {}
     });
   }
+
   function renderPdf(){
     if(!empty(dataProfil['dokumen'])){
     tmp = '<?=base_url('/upload/dokumen/')?>'+dataProfil['dokumen'];
@@ -749,7 +946,7 @@ function renderInputPengunjung(data){
       imgHTML +=`
                 <div class='form-group col-md-6'>
                   <a type="submit" id="del_photo${i}" >             
-                  <img src="${tmp}" class="img-fluid" id='file2img' alt="Responsive image" style='height: 200px;'>            
+                  <img src="${tmp}" class="zoom" id='file2img' alt="Responsive image" style='height: 200px;'>            
                   </a>
                 </div>
                 `;

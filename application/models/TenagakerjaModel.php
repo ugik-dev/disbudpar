@@ -11,6 +11,33 @@ class TenagakerjaModel extends CI_Model {
         if(!empty($filter['id_pendidikan'])) $this->db->where('id_pendidikan', $filter['id_pendidikan']);
 		
 		return DataStructure::keyValue($res->result_array(), 'id_pendidikan');
+	}
+	
+	public function getJeniskelaminOption($filter = []){
+		$this->db->select('*');
+		$this->db->from('jenis_kelamin as s');
+		$res=$this->db->get();
+      //  if(!empty($filter['id_pendidikan'])) $this->db->where('id_pendidikan', $filter['id_pendidikan']);
+		
+		return DataStructure::keyValue($res->result_array(), 'id_jenis_kelamin');
+	}
+	
+	public function getSertifikasiOption($filter = []){
+		$this->db->select('*');
+		$this->db->from('sertifikasi as s');
+		$res=$this->db->get();
+      //  if(!empty($filter['id_pendidikan'])) $this->db->where('id_pendidikan', $filter['id_pendidikan']);
+		
+		return DataStructure::keyValue($res->result_array(), 'id_sertifikasi');
+	}
+	
+	public function getPelatihanOption($filter = []){
+		$this->db->select('*');
+		$this->db->from('pelatihan as s');
+		$res=$this->db->get();
+       // if(!empty($filter['id_pendidikan'])) $this->db->where('id_pendidikan', $filter['id_pendidikan']);
+		
+		return DataStructure::keyValue($res->result_array(), 'id_pelatihan');
     }
 	
 	public function getLv1Option($filter = []){
@@ -51,13 +78,14 @@ class TenagakerjaModel extends CI_Model {
     }
 
   public function getAllTenagakerja($filter = []){
-		$this->db->select('cb.* , j1.nama_lv1,j2.nama_lv2,j3.nama_lv3,j4.nama_lv4,s.nama_sertifikasi,kab.nama_kabupaten');
+		$this->db->select('cb.* , j1.nama_lv1,j2.nama_lv2,j3.nama_lv3,j4.nama_lv4,s.nama_sertifikasi,p.nama_pelatihan,kab.nama_kabupaten');
 		$this->db->from('sdm as cb');
 		$this->db->join("sdm_lv1 as j1", "j1.id_lv1 = cb.id_lv1",'left');
         $this->db->join("sdm_lv2 as j2", "j2.id_lv2 = cb.id_lv2",'left');
         $this->db->join("sdm_lv3 as j3", "j3.id_lv3 = cb.id_lv3",'left');
         $this->db->join("sdm_lv4 as j4", "j4.id_lv4 = cb.id_lv4",'left');
 		$this->db->join("sertifikasi as s", "s.id_sertifikasi = cb.id_sertifikasi",'left');
+		$this->db->join("pelatihan as p", "p.id_pelatihan = cb.id_pelatihan",'left');
         $this->db->join("kabupaten as kab", "kab.id_kabupaten = cb.id_kabupaten");
 		//$this->db->join("status_penetapan_sdm as sp", "sp.id_status_penetapan_sdm = cb.status_penetapan");
 		if(!empty($filter['id_sdm'])) $this->db->where('cb.id_sdm', $filter['id_sdm']);
@@ -97,6 +125,36 @@ class TenagakerjaModel extends CI_Model {
 		ExceptionHandler::handleDBError($this->db->error(), "Ubah Tenagakerja", "sdm");	
 		return $data['id_sdm'];
 	}
+	public function setPhoto($data){
+        $dataInsert = DataStructure::slice($data, ['photo']);
+        $this->db->set($dataInsert);
+        $this->db->where('id_sdm', $data['id_sdm']);
+		$this->db->update('sdm');
+
+		return ExceptionHandler::handleDBError($this->db->error(), "Ubah Tenagakerja", "sdm");	
+		// $data['id_sdm'];
+	}
+
+	public function setPelatihan($data){
+	$dataInsert = DataStructure::slice($data, ['doc_pelatihan']);
+        $this->db->set($dataInsert);
+        $this->db->where('id_sdm', $data['id_sdm']);
+		$this->db->update('sdm');
+
+		return ExceptionHandler::handleDBError($this->db->error(), "Ubah Tenagakerja", "sdm");	
+		// $data['id_sdm'];
+	}
+
+	public function setSertifikasi($data){
+		$dataInsert = DataStructure::slice($data, ['doc_sertifikasi','tahun_sertifikasi','penyelenggara_sertifikasi']);
+			$this->db->set($dataInsert);
+			$this->db->where('id_sdm', $data['id_sdm']);
+			$this->db->update('sdm');
+	
+			return ExceptionHandler::handleDBError($this->db->error(), "Ubah Tenagakerja", "sdm");	
+			// $data['id_sdm'];
+		}
+	
 	
 	public function deleteTenagakerja($data){
 		$this->db->where('id_sdm', $data['id_sdm']);

@@ -5,6 +5,8 @@
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
         <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -48,8 +50,8 @@
         <form role="form" id="user_form" onsubmit="return false;" type="multipart" autocomplete="off">
           <input type="hidden" id="id_biro" name="id_biro">
           <div class="form-group">
-            <label for="nama">Nama Biro</label> 
-            <input type="text" placeholder="Nama Biro" class="form-control" id="nama" name="nama" required="required">
+            <label for="nama">Nama Biro / Agen</label> 
+            <input type="text" placeholder="Nama Biro / Agen" class="form-control" id="nama" name="nama" required="required">
           </div>
           <div class="form-group">
             <label for="kabupaten">Kabupaten / Kota</label> 
@@ -77,7 +79,7 @@
           </div>
           <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
-            <input type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required">
+            <textarea rows="4" type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required"></textarea>
           </div>
 
 
@@ -239,6 +241,7 @@ $(document).ready(function() {
       error: function(e) {}
     });
   }
+  document.getElementById("export_btn").href = '<?= site_url('AdminController/PdfAllBiro')?>';
 
   function renderBiro(data){
     if(data == null || typeof data != "object"){
@@ -256,13 +259,13 @@ $(document).ready(function() {
           apprv = "Sudah Di Approv";
         };
       var detailButton =`
-      <a class="detail dropdown-item" href='<?=site_url()?>AdminController/DetailBiro?id_biro=${biro['id_biro']}'><i class='fa fa-share'></i> Detail Biro</a>
+      <a class="detail dropdown-item" href='<?=site_url()?>AdminController/DetailBiro?id_biro=${biro['id_biro']}'><i class='fa fa-share'></i> Detail </a>
       `; 
       var editButton = `
-        <a class="edit dropdown-item" data-id='${biro['id_biro']}'><i class='fa fa-pencil'></i> Edit Biro</a>
+        <a class="edit dropdown-item" data-id='${biro['id_biro']}'><i class='fa fa-pencil'></i> Edit Data</a>
       `;
       var deleteButton = `
-        <a class="delete dropdown-item" data-id='${biro['id_biro']}'><i class='fa fa-trash'></i> Hapus Biro</a>
+        <a class="delete dropdown-item" data-id='${biro['id_biro']}'><i class='fa fa-trash'></i> Hapus Data</a>
       `;
       var button = `
         <div class="btn-group" role="group">

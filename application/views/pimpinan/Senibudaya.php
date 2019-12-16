@@ -4,7 +4,9 @@
       <form class="form-inline" id="toolbar_form" onsubmit="return false;">
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
-        <!-- <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button> -->
+        <button hidden type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -19,6 +21,7 @@
                 <tr>
              
                   <th style="width: 15%; text-align:center!important">Nama</th>
+                 
                   <th style="width: 12%; text-align:center!important">Jenis Seni Budaya</th>
                   <th style="width: 12%; text-align:center!important">Sub Senis Budaya</th>
                   <th style="width: 12%; text-align:center!important">Jumlah Anggota</th>
@@ -51,6 +54,7 @@
             <label for="nama">Nama Seni Budaya</label> 
             <input type="text" placeholder="Nama Seni Budaya" class="form-control" id="nama" name="nama" required="required">
           </div>
+          
           <div class="form-group">
             <label for="id_j_senibudaya">Jenis Seni Budaya</label> 
             <select class="form-control mr-sm-2" id="id_j_senibudaya" name="id_j_senibudaya" required="required">
@@ -122,6 +126,7 @@ $(document).ready(function() {
     'file': $('#senibudaya_modal').find('#file'),
     'lokasi': $('#senibudaya_modal').find('#lokasi'),
     'deskripsi': $('#senibudaya_modal').find('#deskripsi'),
+    
   }
 
   var swalSaveConfigure = {
@@ -219,8 +224,6 @@ $(document).ready(function() {
       }));
     });
   }
-  
-
   function getSenibudaya(){
     buttonLoading(toolbar.showBtn);
     $.ajax({
@@ -259,17 +262,18 @@ $(document).ready(function() {
       <a class="detail dropdown-item" href='<?=site_url()?>PimpinanController/DetailSenibudaya?id_senibudaya=${senibudaya['id_senibudaya']}'><i class='fa fa-share'></i> Detail Seni Budaya</a>
       `; 
       var editButton = `
-        <a class="edit dropdown-item" data-id='${senibudaya['id_senibudaya']}'><i class='fa fa-pencil'></i> Edit Seni Budaya</a>
+        <a hidden class="edit dropdown-item" data-id='${senibudaya['id_senibudaya']}'><i class='fa fa-pencil'></i> Edit Seni Budaya</a>
       `;
       var deleteButton = `
-        <a class="delete dropdown-item" data-id='${senibudaya['id_senibudaya']}'><i class='fa fa-trash'></i> Hapus Seni Budaya</a>
+        <a hidden class="delete dropdown-item" data-id='${senibudaya['id_senibudaya']}'><i class='fa fa-trash'></i> Hapus Seni Budaya</a>
       `;
       var button = `
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
           ${detailButton}
-           
+            ${editButton}
+            ${deleteButton}
           </div>
         </div>
       `;
@@ -278,7 +282,8 @@ $(document).ready(function() {
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
 
-  
+  document.getElementById("export_btn").href = '<?= site_url('PimpinanController/PdfAllSenibudaya')?>';
+
   FDataTable.on('click','.edit', function(){
     event.preventDefault();
     SenibudayaModal.form.trigger('reset');
@@ -295,6 +300,7 @@ $(document).ready(function() {
     SenibudayaModal.file.val(senibudaya['file']);
     SenibudayaModal.lokasi.val(senibudaya['lokasi']);
     SenibudayaModal.deskripsi.val(senibudaya['deskripsi']);
+   
   });
 
   FDataTable.on('click','.delete', function(){

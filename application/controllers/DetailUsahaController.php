@@ -154,17 +154,38 @@ function do_upload4(){
     }
   }
 
+
   public function savePengunjung(){
     try{
       $this->SecurityModel->userOnlyGuard(TRUE);
       $data = $this->input->post();
-      for($i=1; $i <= 12; $i++){
-        if(empty($data['id_data_usaha'.$i])){      
-          $this->DetailUsahaModel->saveTambah($data['id_usaha'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i]);
-        }else{
-          $this->DetailUsahaModel->saveEdit($data['id_data_usaha'.$i],$data['id_usaha'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i]);
+      if($this->session->userdata('id_role')=='3'){
+        for($i=1; $i <= 12; $i++){
+            $this->DetailUsahaModel->approv_pengunjung($data['id_data_usaha'.$i]);
+        }
+      }else{
+        for($i=1; $i <= 12; $i++){
+          if(empty($data['id_data_usaha'.$i])){      
+            $this->DetailUsahaModel->saveTambah($data['id_usaha'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+          }else{
+            $this->DetailUsahaModel->saveEdit($data['id_data_usaha'.$i],$data['id_usaha'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+          }
         }
       }
+      echo json_encode('succes');
+    } catch (Exception $e) {
+      ExceptionHandler::handle($e);
+    }
+  }
+  public function approvPengunjung(){
+    try{
+      $this->SecurityModel->userOnlyGuard(TRUE);
+      $data = $this->input->post();
+     
+        for($i=1; $i <= 12; $i++){
+            $this->DetailUsahaModel->approv_pengunjung($data['id_data_usaha'.$i]);
+        }
+     
       echo json_encode('succes');
     } catch (Exception $e) {
       ExceptionHandler::handle($e);

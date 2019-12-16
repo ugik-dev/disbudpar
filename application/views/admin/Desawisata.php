@@ -5,6 +5,8 @@
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
         <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -149,8 +151,11 @@ $(document).ready(function() {
       case 'add':
         showDesawisataModal();
         break;
+     
     }
   });
+  document.getElementById("export_btn").href = '<?= site_url('AdminController/PdfAllDesawisata')?>';
+
 
   getAllKategori();  
   function getAllKategori(){

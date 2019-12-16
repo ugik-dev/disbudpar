@@ -7,14 +7,16 @@
       <li id="dashboard">
         <a href="<?=site_url('PimpinanController/')?>"><i class="fa fa-home"></i> <span class="nav-label">Beranda</span></a>
       </li>
+      
       <li id="laporan">
-        <a href="<?=site_url('PimpinanController/laporanpariwisata')?>"><i class="fa fa-archive"></i> <span class="nav-label">Data</span></a>
+        <a href="<?=site_url('PimpinanController/laporanpariwisata')?>"><i class="fa fa-archive"></i> <span class="nav-label">Laporan</span></a>
       </li>
       <li id="kalender">
-        <a href="<?=site_url('PimpinanController/kalender')?>"><i class="fa fa-archive"></i> <span class="nav-label">Event</span></a>
-      <!--  -->
+        <a href="<?=site_url('PimpinanController/kalender')?>"><i class="fas fa-calendar-alt"></i> <span class="nav-label">Event</span></a>
+      </li>
+      
       <li id="pariwisata">
-        <a href="#"><i class="fa fa-hotel"></i><span class="nav-label">Pariwisata</span><span class="fa arrow"></span></a>
+        <a href="#"><i class="fas fa-bus"></i><span class="nav-label">Pariwisata</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" aria-expanded="false">
               <li id="objek">
                 <a href="<?=site_url('PimpinanController/objek')?>"> <span class="nav-label">Daya Tarik Wisata</span></a>
@@ -34,14 +36,14 @@
       </li>
       <!--  -->
       <li id="seni_dan_budaya">
-        <a href="#"><i class="fa fa-sign-language"></i> <span class="nav-label">Seni Dan Budaya</span><span class="fa arrow"></span></a>
+        <a href="#"><i class="fas fa-american-sign-language-interpreting"></i> <span class="nav-label">Seni Dan Budaya</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" aria-expanded="false">
           <li id="senibudaya">
             <a href="<?=site_url('PimpinanController/senibudaya')?>"><span class="nav-label">Seni Dan Budaya</span></a>
           </li>
           <li id="pagelaran">
             <a href="<?=site_url('PimpinanController/pagelaran')?>"><span class="nav-label">Pagelaran dan Pameran</span></a>
-          </li>  
+          </li>
           <li id="saranaprasarana">
             <a href="<?=site_url('PimpinanController/saranaprasarana')?>"><span class="nav-label">Sarana Dan Prasarana</span></a>
           </li>
@@ -49,7 +51,7 @@
       </li>
       
       <li id="cagar_dan_budaya">
-        <a href="#"><i class="fa fa-sun"></i><span class="nav-label">Cagar Dan Budaya</span><span class="fa arrow"></span></a>
+        <a href="#"><i class="fas fa-camera-retro"></i><span class="nav-label">Cagar Dan Budaya</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" aria-expanded="false">   
           <li id="cagarbudaya">
             <a href="<?=site_url('PimpinanController/cagarbudaya')?>"> <span class="nav-label">Cagar Budaya</span></a>
@@ -60,11 +62,14 @@
         </ul>
       </li>
       <li id="museum">
-            <a href="<?=site_url('PimpinanController/museum')?>"><i class="fa fa-building"></i> <span class="nav-label">Museum</span></a>
-          </li>
-      <!-- <li id="panduan">
-        <a href="<?=site_url('AdminController/panduan')?>"><i class="fa fa-question"></i> <span class="nav-label">Panduan</span></a>
-      </li> -->
+        <a href="<?=site_url('PimpinanController/museum')?>"><i class="fas fa-ethernet"></i> <span class="nav-label">Museum</span></a>
+      </li>
+      <li id="desawisata">
+        <a href="<?=site_url('PimpinanController/desawisata')?>"><i class="fab fa-accusoft"></i> <span class="nav-label">Desa Wisata</span></a>
+      </li>
+      <li id="panduan">
+        <a href="<?=site_url('PimpinanController/panduan')?>"><i class="fa fa-question"></i> <span class="nav-label">Panduan</span></a>
+      </li>
       <li id="logout">
         <a href="<?=site_url('PimpinanController')?>" class="logout"><i class="fa fa-sign-out"></i> <span class="nav-label">Logout</span></a>
       </li>

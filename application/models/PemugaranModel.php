@@ -43,7 +43,18 @@ class PemugaranModel extends CI_Model {
 
 	  public function addPemugaran($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+	
+		if(empty($this->session->userdata('id_kabupaten'))){
+		$this->db->select('id_kabupaten');
+		$this->db->from('cagarbudaya');
+		$this->db->where('id_cagarbudaya',$data['id_cagarbudaya']);
+		$res = $this->db->get();
+		$res = $res->result_array();
+	
+		$data['id_kabupaten'] = $res[0]['id_kabupaten'];
+		}else{
+			$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+		}
 	    $dataInsert = DataStructure::slice($data, ['id_kabupaten','id_user_entry','id_cagarbudaya','nama','tanggal_kegiatan','deskripsi']);
 	    $this->db->insert('cagarbudaya_pemugaran', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Pemugaran", "cagarbudaya_pemugaran");
@@ -53,9 +64,11 @@ class PemugaranModel extends CI_Model {
 	public function editPemugaran($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+	
 		$this->db->set(DataStructure::slice($data,  ['id_kabupaten','id_user_entry','id_cagarbudaya','nama','tanggal_kegiatan','deskripsi']));
 		$this->db->where('id_pemugaran', $data['id_pemugaran']);
 		$this->db->update('cagarbudaya_pemugaran');
+		
 
 		ExceptionHandler::handleDBError($this->db->error(), "Ubah Pemugaran", "cagarbudaya_pemugaran");	
 		return $data['id_pemugaran'];

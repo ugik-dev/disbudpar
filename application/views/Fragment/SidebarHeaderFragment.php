@@ -1,8 +1,8 @@
 <li class="nav-header">
   <div class="dropdown profile-element">
   <?php $img = base_url('upload/profile/').$this->session->userdata('photo'); 
-  if(empty($this->session->userdata('photo'))){
-    $img = base_url('upload/profile/profile_small.jpg');
+  if($this->session->userdata('photo')=='profile_small.jpg'){
+    $img = base_url('upload/profile_small.jpg');
   }  ?>
     <img alt="image" class="rounded-circle" style="width:48px; height:48px;" src="<?=$img?>"/>
     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -15,10 +15,18 @@
     </a>
     <ul class="dropdown-menu animated fadeInRight m-t-xs">
         <li><a id="profile_btn" class="dropdown-item">Edit Profile</a></li>
-        <li><a id="password_btn" class="dropdown-item">Ganti Password Profile</a></li>
+        <li><a id="password_btn" class="dropdown-item">Ganti Password</a></li>
         <li><a id="photo_btn" class="dropdown-item">Ganti Photo</a></li>
         <!-- <li><a class="dropdown-item" href="<?=site_url('UserController/logout/')?>">Logout</a></li> -->
-        <li><a id="pesan_btn" class="dropdown-item" href="<?=site_url('OperatorController/Message/')?>">Pesan</a></li>
+        <?php if( $this->session->userdata('nama_role') == 'admin'){?>
+        <li><a id="pesan_btn" class="dropdown-item" href="<?=site_url('AdminController/Message/')?>">Pesan</a></li>
+        <?php }else if( $this->session->userdata('nama_role') == 'pimpinan'){  ?>
+          <li><a id="pesan_btn" class="dropdown-item" href="<?=site_url('PimpinanController/Message/')?>">Pesan</a></li>
+       
+        <?php  }else if( $this->session->userdata('nama_role') == 'operator'){?>
+          <li><a id="pesan_btn" class="dropdown-item" href="<?=site_url('OperatorController/Message/')?>">Pesan</a></li>
+       
+        <?php  } ?>
     </ul>
   </div>
   <div class="logo-element">

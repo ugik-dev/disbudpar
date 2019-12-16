@@ -46,8 +46,8 @@ $(document).ready(function() {
                 <td class="check-mail">
                     <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" class="i-checks" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
                 </td>
-                <td class="mail-ontact"><a href="<?=site_url()?>OperatorController/DetailMessage?id_message=${d['id_message']}">${d['nama_user_sending']}</a> ${status_read2} </td>
-                <td class="mail-subject"><a href="<?=site_url()?>OperatorController/DetailMessage?id_message=${d['id_message']}">${d['text_message']}</a></td>
+                <td class="mail-ontact"><a href="<?=site_url()?>AdminController/DetailMessage?id_message=${d['id_message']}">${d['nama_user_sending']}</a> ${status_read2} </td>
+                <td class="mail-subject"><a href="<?=site_url()?>AdminController/DetailMessage?id_message=${d['id_message']}">${d['text_message']}</a></td>
                 <td class="delete"></td>
                 <td class="text-right mail-date">${d['date']}</td>
             </tr>

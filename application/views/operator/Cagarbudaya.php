@@ -21,8 +21,10 @@
               <thead>
                 <tr>
 
-                  <th style="width: 20%; text-align:center!important">Nama Cagarbudaya</th>
-                  <th style="width: 12%; text-align:center!important">Jenis Cagarbudaya</th>
+                  <th style="width: 20%; text-align:center!important">Nama Cagar Budaya</th>
+                  
+                  <th style="width: 12%; text-align:center!important">Jenis Cagar Budaya</th>
+                  
                   <th style="width: 12%; text-align:center!important">Kepemilikan</th>
                   <th style="width: 12%; text-align:center!important">Status Penetapan</th>
                   <th style="width: 12%; text-align:center!important">Approval</th>
@@ -71,7 +73,7 @@
     <div class="modal-content animated fadeIn">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Kelola Cagarbudaya</h4>
+        <h4 class="modal-title">Kelola Cagar Budaya</h4>
         <span class="info"></span>
       </div>
       <div class="modal-body" id="modal-body">              
@@ -81,6 +83,7 @@
             <label for="nama">Nama Cagarbudaya</label> 
             <input type="text" placeholder="Nama Cagarbudaya" class="form-control" id="nama" name="nama" required="required">
           </div>
+          
           <div class="form-group">
             <label for="jenis">Jenis Cagar budaya</label> 
             <select class="form-control mr-sm-2" id="jenis" name="id_jenis_cagarbudaya" required="required">
@@ -157,6 +160,7 @@ $(document).ready(function() {
     'id_cagarbudaya': $('#cagarbudaya_modal').find('#id_cagarbudaya'),
     'nama': $('#cagarbudaya_modal').find('#nama'),
     'jenis': $('#cagarbudaya_modal').find('#jenis'),
+
     'kepemilikan': $('#cagarbudaya_modal').find('#kepemilikan'),
     'status_penetapan': $('#cagarbudaya_modal').find('#status_penetapan'),
     'file': $('#cagarbudaya_modal').find('#file'),
@@ -250,7 +254,7 @@ $(document).ready(function() {
           return;
         }
         dataStatusPenetapan = json['data'];
-        renderStatusPenetapanSelection(dataStatusPenetapan);
+       renderStatusPenetapanSelection(dataStatusPenetapan);
       },
       error: function(e) {}
     });
@@ -289,7 +293,7 @@ $(document).ready(function() {
     });
   }
   
-  document.getElementById("export_btn").href = '<?= site_url('OperatorController/PdfAllCagarbudaya')?>';
+  document.getElementById("export_btn").href = '<?= site_url('OperatorController/Pdfallcagarbudaya?id_cagarbudaya=')?>'+id_cagarbudaya;
 
 
   function getCagarbudaya(){
@@ -369,6 +373,7 @@ $(document).ready(function() {
     CagarbudayaModal.file.val(cagarbudaya['file']);
     CagarbudayaModal.lokasi.val(cagarbudaya['lokasi']);
     CagarbudayaModal.deskripsi.val(cagarbudaya['deskripsi']);
+   
   });
 
   FDataTable.on('click','.delete', function(){

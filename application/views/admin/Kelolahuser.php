@@ -94,7 +94,7 @@
     <div class="modal-content animated fadeIn">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Kelola User</h4>
+        <h4 class="modal-title">Reset Password User</h4>
         <span class="info"></span>
       </div>
       <div class="modal-body" id="modal-body">              
@@ -287,13 +287,13 @@ $(document).ready(function() {
       <a class="detail dropdown-item" href='<?=site_url()?>AdminController/DetailKelolahuser?id_user=${user['id_user']}&nama_user=${user['nama']}'><i class='fa fa-share'></i> Detail Desa Wisata</a>
       `; 
       var editButton = `
-        <a class="edit dropdown-item" data-id='${user['id_user']}'><i class='fa fa-pencil'></i> Edit Kelolahuser</a>
+        <a class="edit dropdown-item" data-id='${user['id_user']}'><i class='fa fa-pencil'></i> Edit Data User</a>
       `;
       var resetButton = `
         <a class="resetpassword dropdown-item" data-id='${user['id_user']}'><i class='fa fa-pencil'></i>Reset Password</a>
       `;
       var deleteButton = `
-        <a class="delete dropdown-item" data-id='${user['id_user']}'><i class='fa fa-trash'></i> Hapus Kelolahuser</a>
+        <a class="delete dropdown-item" data-id='${user['id_user']}'><i class='fa fa-trash'></i> Hapus User</a>
       `;
       var button = `
         <div class="btn-group" role="group">

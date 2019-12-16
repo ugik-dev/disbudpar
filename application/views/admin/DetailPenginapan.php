@@ -1,5 +1,28 @@
 
+<style>
+.zoom {
+  padding: 0;
+  background-color: transparent;
+  transition: transform .2s; /* Animation */
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+</style>
 <div class="wrapper wrapper-content animated fadeInRight">
+<div class="tabs-container">
+            <ul class="nav nav-tabs" role="tablist">
+                <li><a class="nav-link active" data-toggle="tab" href="#tab-11">Data Profil</a></li>
+                <li><a class="nav-link" data-toggle="tab" href="#tab-22">Data Pengunjung</a></li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel"  id="tab-11" class="tab-pane active">
+                <div class="panel-body">
+                 
   <div class="row">
     <div class="col-lg-6">
       <div class="ibox">
@@ -38,7 +61,7 @@
                   <input type="text" class="form-control" id="jenis" readonly="readonly">
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="formGroupExampleInput">Approvment</label>
+                  <label for="formGroupExampleInput">Approval</label>
                   <input type="text" class="form-control" id="approv" readonly="readonly">
                 </div>
               </div>
@@ -49,13 +72,17 @@
                 <textarea class="form-control" id="deskripsi" rows="4" disabled></textarea>
               </div>
             </form>
-            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data Penginapan</strong></button>
-          </div><!-- profil -->
+            <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button>
+            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button>
+            <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button>
+            <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
+      </div><!-- profil -->
           </div><!-- ibox content -->
       </div> <!-- ibox -->
       <div class="ibox">
         <div class="ibox-content">
               <label for="formGroupExampleInput">Photo </label>
+              
               <div class="form-row">
                 <form class="form-row col-md-12" id="form_upload1" onsubmit="return false;" >
                   <div class="form-group" style="width : 60%;">
@@ -69,6 +96,7 @@
                 </form>               
               </div>  
               <label for="formGroupExampleInput">Photo</label>
+              
               <div class="form-row">
                 <form class="form-row col-md-12" id="form_upload2" onsubmit="return false;">
                   <div class="form-group" style="width : 60%;">
@@ -122,9 +150,13 @@
                       <div class="ibox-content">
                         <div class="form-group col-md-12" >
                           <label for="formGroupExampleInput">Photo</label>
+                          <div class="btn alert-primary" role="alert" id="show_photo">
+                                              Lihat Foto
+                                            </div>
                         </div>
+                        
                           <div class="form-group col-md-12">
-                            <img src="" class="img-fluid" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -142,8 +174,11 @@
               </div>
           </div>
         </div>
-
-
+        </div>
+                </div>
+              </div>
+              <div role="tabpanel" id="tab-22" class="tab-pane">
+                 <div class="panel-body" >
 
  <div class="col-md-12">
   <div class="ibox">
@@ -153,7 +188,11 @@
           <select class="dropdown-item" id="tahun_input" name="tahun_input" required="required"></select>
         </div>
         <div class="form-group mx-sm-3 mb-2" id="header_approv"> </div>
+        <div class="form-group mb-2">
+          <a type="" class="btn btn-light my-1 mr-sm-2" id="export_pengunjung_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
+        </div>
       </div>
+      
       <form class="form" id="pengujung_form" onsubmit="return false;">
         <input type="hidden" id="id_penginapan" name="id_penginapan" readonly="readonly">
         <!-- form isian data pengunjung  -->
@@ -164,6 +203,9 @@
     </div>
   </div>
   </div>
+              </div>
+    </div>
+</div>
 
   
 <div class="modal inmodal" id="edit_modal" tabindex="-1" role="dialog"  aria-hidden="true">
@@ -181,6 +223,12 @@
             <label for="nama">Nama Penginapan</label> 
             <input type="text" placeholder="Nama Penginapan" class="form-control" id="edit_nama" name="nama" required="required">
           </div>
+          <div class="form-group">
+            <label for="kabupaten">Kabupaten / Kota</label> 
+            <select class="form-control mr-sm-2" id="edit_id_kabupaten" name="id_kabupaten" required="required">
+            </select>
+          </div>
+         
           <div class="form-group">
             <label for="jenis">Jenis Penginapan</label> 
             <select class="form-control mr-sm-2" id="edit_id_jenis" name="id_jenis_penginapan" required="required">
@@ -209,7 +257,7 @@
           </div>
           <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
-            <input type="text" placeholder="Deskripsi" class="form-control" id="edit_deskripsi" name="deskripsi" required="required">
+            <textarea rows="4" type="text" placeholder="Deskripsi" class="form-control" id="edit_deskripsi" name="deskripsi" required="required"></textarea>
           </div>
 
 
@@ -225,6 +273,64 @@
   </div>
 </div>
 
+<div class="modal inmodal" id="photo2_modal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content animated fadeIn">
+      <div class="modal-header">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">           
+          </ol>
+          <div class="carousel-inner">            
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal inmodal" id="message_modal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content animated fadeIn">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Kirim Pesan</h4>
+        <span class="info"></span>
+      </div>
+      <div class="modal-body" id="modal-body">              
+        <form role="form" id="user_form" onsubmit="return false;" type="multipart" autocomplete="off">
+          <input hidden type="text" id="id_operator" name="id_user_reciver" >
+          <div class="form-group">
+            <label for="nama">Ke : </label> 
+            <input type="text" placeholder="Nama" class="form-control" id="nama_operator" name="" required="required" readonly>
+          </div>
+          
+          <div class="form-group">
+            <label for="deskripsi">Pesan</label> 
+            <textarea rows="5" type="text" placeholder="" class="form-control" id="" name="message" required="required"></textarea>
+          </div>
+          <div class="form-group">
+            
+            <textarea hidden rows="5" type="text" placeholder="" class="form-control" id="format_message" name="format_message" required="required"></textarea>
+          </div>
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="send_btn" data-loading-text="Loading..." onclick="this.form.target='send'"><strong>Kirim</strong></button>       
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <script>
 $(document).ready(function() {
@@ -237,8 +343,164 @@ $(document).ready(function() {
 
   getProfil();
 
+document.getElementById("export_btn").href = '<?= site_url('AdminController/PdfPenginapan?id_penginapan=')?>'+id_penginapan;
+var Photo2Modal = {
+    'self': $('#photo2_modal'),
+    'info': $('#photo2_modal').find('.infoy'),
+    'images': $('#photo2_modal').find('.carousel-inner'),
+    'indicators': $('#photo2_modal').find('.carousel-indicators'),
+  };
+  var MessageModal = {
+    'self': $('#message_modal'),
+    'info': $('#message_modal').find('.info'),
+    'form': $('#message_modal').find('#user_form'),
+    'sendBtn': $('#message_modal').find('#send_btn'),
+    'saveEditBtn': $('#message_modal').find('#save_edit_btn'),
+    'edit_id_desawisata': $('#message_modal').find('#edit_id_desawisata'),
+    'id_data_desawisata': $('#message_modal').find('#id_data_desawisata'),
+    'id_operator': $('#message_modal').find('#id_operator'),
+    'nama_operator': $('#message_modal').find('#nama_operator'),
+    'message': $('#message_modal').find('#message'),
+    'format_message': $('#message_modal').find('#format_message'),
+  }
+ 
+function renderPhotoModal(){
+  var ph = dataProfil['file2'];
+  var ph1  = ph.split(",");
+ 
+  if(dataProfil['file']==""){
+    indicatorsHTML = ``;
+    img2HTML = ``;
+  }else{
+    tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+    indicatorsHTML = `<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>`;
+    img2HTML = `
+            <div class="carousel-item active">
+                <img src="${tmp}" class="d-block w-100" alt="...">
+              </div>
+        `;     
+  }  
+ 
+  var i = 0;
+ // tmp2 =`active`;
+    ph1.forEach((d) => {
+    console.log(d);
+    tmp = `<?= base_url('upload/file2/')?>`+d;
+    if (dataProfil['file2'] != ""){
+    indicatorsHTML +=`<li data-target="#carouselExampleIndicators" data-slide-to="${i+1}" class=""></li>`
+    img2HTML +=`
+              <div class="carousel-item">
+                <img src="${tmp}" class="d-block w-100" alt="...">
+              </div>
+          `;
 
+   
+    tmp2=``;
+    i++;
+    };
+    });
+    
 
+  Photo2Modal.indicators.html(indicatorsHTML);
+  Photo2Modal.images.html(img2HTML);
+    
+  }
+  document.getElementById("show_photo").onclick = function() {
+    showPhotoModal()
+    };
+  function showPhotoModal(){
+  Photo2Modal.self.modal('show');
+  }
+
+  document.getElementById("message_btn").onclick = function() {MessageFunction()}
+  function MessageFunction() {
+    console.log('cok');
+    MessageModal.nama_operator.val(nama_user_entry.value);
+    MessageModal.id_operator.val(dataProfil['id_user_entry']);
+    formatMessage = `Pada Penginapan - `+dataProfil['nama']+`
+`;
+    MessageModal.format_message.val(formatMessage);
+    MessageModal.self.modal('show'); 
+  }
+
+  MessageModal.form.submit(function(event){
+    event.preventDefault();
+    switch(MessageModal.form[0].target){
+      case 'send':
+        sendMessage();
+        break;
+    }
+  });
+  function sendMessage(){
+    buttonLoading(MessageModal.sendBtn);
+    console.log(toolbar.form.serialize());
+    $.ajax({
+      url: `<?=site_url('MessageController/sendMessage')?>`, 'type': 'GET',
+      data: MessageModal.form.serialize(),
+      success: function (data){
+        buttonIdle(MessageModal.sendBtn);
+        var json = JSON.parse(data);
+        if(json['error']){
+          swal("Simpan Gagal", json['message'], "error");
+          return;
+        }
+        swal("Pesan Terkirim", "", "success");
+        MessageModal.form.trigger('reset'); 
+        MessageModal.self.modal('hide'); 
+      },
+      error: function(e) {}
+    });
+  }
+
+getAllKabupaten();  
+  function getAllKabupaten(){
+    return $.ajax({
+      url: `<?php echo site_url('AdminController/getAllKabupaten/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataKabupaten = json['data'];
+        renderKabupatenSelection(dataKabupaten);
+      },
+      error: function(e) {}
+    });
+  }
+  function renderKabupatenSelection(data){
+    EditModal.edit_id_kabupaten.empty();
+    EditModal.edit_id_kabupaten.append($('<option>', { value: "", text: "-- Pilih Kabupaten --"}));
+    Object.values(data).forEach((d) => {
+      EditModal.edit_id_kabupaten.append($('<option>', {
+        value: d['id_kabupaten'],
+        text: d['id_kabupaten'] + ' :: ' + d['nama_kabupaten'],
+      }));
+    });
+  }
+  document.getElementById("approv_profil_btn").onclick = function() {ApprovProfil()};
+function ApprovProfil() {
+    swal(swalApprovConfigure).then((result) => {
+      if(!result.value){ return; }
+      $.ajax({
+        url: `<?=site_url('DetailPenginapanController/approvPenginapan')?>`, 'type': 'get',
+        data: {id_penginapan : id_penginapan} ,
+        success: function (data){
+        getProfil();
+        },
+        error: function(e) {}
+      });
+    });
+}
+
+ var swalApprovConfigure = {
+    title: "Konfirmasi Approv",
+    text: "Yakin akan Approv data ini?",
+    type: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#18a689",
+    confirmButtonText: "Ya, Approv!",
+  };
 
 $('#form_upload1').submit(function(e){
   console.log('file1upload')
@@ -383,7 +645,8 @@ var map;
     'edit_id_jenis': $('#edit_modal').find('#edit_id_jenis'),
     'edit_jumlah_kamar': $('#edit_modal').find('#edit_jumlah_kamar'),
     'edit_jumlah_tempat_tidur': $('#edit_modal').find('#edit_jumlah_tempat_tidur'),
-    
+    'edit_id_kabupaten': $('#edit_modal').find('#edit_id_kabupaten'),
+   
   }
   // EditModal.edit_id_penginapan.val(id_penginapan);
   // EditModal.edit_nama.val(dataProfil['nama']);
@@ -405,6 +668,7 @@ function myFunction() {
     EditModal.edit_id_jenis.val(dataProfil['id_jenis_penginapan']);
     EditModal.edit_jumlah_kamar.val(dataProfil['jumlah_kamar']);
     EditModal.edit_jumlah_tempat_tidur.val(dataProfil['jumlah_tempat_tidur']);
+    EditModal.edit_id_kabupaten.val(dataProfil['id_kabupaten']);
    
 }
 
@@ -501,6 +765,7 @@ function myFunction() {
         dokumen.value = dataProfil['dokumen'];
          renderPhoto();
         renderPdf();
+        renderPhotoModal()
         //console.log(dataProfil)
         //renderDetailPenginapan(dataDetailPenginapan);
       },
@@ -532,7 +797,7 @@ function myFunction() {
       imgHTML +=`
                 <div class='form-group col-md-6'>
                   <a type="submit" id="del_photo${i}" >             
-                  <img src="${tmp}" class="img-fluid" id='file2img' alt="Responsive image" style='height: 200px;'>            
+                  <img src="${tmp}" class="zoom" id='file2img' alt="Responsive image" style='height: 200px;'>            
                   </a>
                 </div>
                 `;
@@ -654,6 +919,7 @@ function renderInputPengunjung(data){
       console.log("User::UNKNOWN DATA");
       return;
     }
+    document.getElementById("export_pengunjung_btn").href = '<?= site_url('AdminController/ExportPengunjung?tb=penginapan&id_data=')?>'+id_penginapan+`&tahun=`+InputModal.tahun.val();
     var i = 1;
     var tmpdl = 0;
     var tmpdp = 0;
@@ -661,6 +927,7 @@ function renderInputPengunjung(data){
     var tmpmp = 0;
     var tmpjumlah = 0;
     var tmppajak = 0;
+    var tmpretribusi = 0;
     var tmpjumlahdurasi = 0;
     var tmpdd = 0;
     var tmpdm = 0;
@@ -696,6 +963,9 @@ function renderInputPengunjung(data){
           <div class="col">
           <label>Pajak</label>
           </div>
+          <div class="col">
+          <label>Retribusi</label>
+          </div>
 
         </div>`;
     Object.values(data).forEach((d) => {
@@ -705,6 +975,7 @@ function renderInputPengunjung(data){
       tmpmp += Number(d['mancanegara_personal_p']);
       tmpjumlah += Number(d['jumlah_personal']);
       tmppajak += Number(d['pajak']);
+      tmpretribusi += Number(d['retribusi']);
       tmpdd += Number(d['domestik_durasi']);
       tmpdm += Number(d['mancanegara_durasi']);
       tmpjumlahdurasi += Number(d['jumlah_durasi']);
@@ -743,6 +1014,9 @@ function renderInputPengunjung(data){
           <div class="col">
             <input type="number" class="form-control" name="pajak${i}" placeholder=""  value="${d['pajak']}">
           </div>
+          <div class="col">
+            <input type="number" class="form-control" name="retribusi${i}" placeholder=""  value="${d['retribusi']}">
+          </div>
         </div>
       `;
       i++;
@@ -780,9 +1054,13 @@ function renderInputPengunjung(data){
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${tmppajak}" disabled>
           </div>
+          <div class="col">
+            <input type="number" class="form-control" placeholder="0"  value="${tmpretribusi}" disabled>
+          </div>
         </div>
       `;
-    intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> `;
+    intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> 
+    <button type="submit" class="btn btn-info my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='approv'"><i class="fal fa-save"></i> Approv Data</button>`;
       var input_data_pengunjung = document.getElementById("input_data_pengunjung");  
         input_data_pengunjung.innerHTML = intputhtml;
         var header_approv = document.getElementById("header_approv");  
@@ -800,10 +1078,34 @@ function renderInputPengunjung(data){
         console.log('tombol save')
         saveInputPengunjung();
         break;
-     
+        case 'approv':
+        console.log('tombol save')
+        approvInputPengunjung();
+        break;
     }
   });
 
+  function approvInputPengunjung(){
+    swal(swalApprovConfigure).then((result) => {
+      if(!result.value){ return; }
+      buttonLoading(InputModal.save_pengunjung);
+      $.ajax({
+        url: `<?=site_url('DetailPenginapanController/approvPengunjung')?>`, 'type': 'POST',
+        data: InputModal.form.serialize(),
+        success: function (data){
+          buttonIdle(InputModal.save_pengunjung);
+          var json = JSON.parse(data);
+          if(json['error']){
+            swal("Simpan Gagal", json['message'], "error");
+            return;
+          }
+          swal("Approv Berhasil", "", "success");
+            getInputPengunjung();
+        },
+        error: function(e) {}
+      });
+    });
+    }
 
   function saveInputPengunjung(){
     swal(swalSaveConfigure).then((result) => {
@@ -900,14 +1202,8 @@ function renderInputPengunjung(data){
     });
   }
 
-  $("#tahun_input").click(function(e) {
-    if(dataProfil['id_user_approv']=='0'){
-      console.log('data belum di approv');
-      swal("Data Belum di Approv",'Harap Konformasi ke Pimpinan Untuk Approval', "error");
-    }else{
-      registerTahunSelectionChange();
-      console.log("fungsi clik tahun aktif approv=",dataProfil['id_user_approv'] )
-    };
+ $("#tahun_input").click(function(e) {
+     registerTahunSelectionChange();
   });
     function registerTahunSelectionChange(){
     InputModal.tahun.on('change', function(e){
@@ -929,7 +1225,9 @@ function renderInputPengunjung(data){
         value: d['tahun'],
         text: d['tahun'],
       }));  
+      InputModal.tahun.val(d['tahun']); 
     });
+    getInputPengunjung();
    }
 
      getAllJenis();  

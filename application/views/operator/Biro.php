@@ -5,6 +5,8 @@
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
         <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -21,6 +23,7 @@
                   <th style="width: 15%; text-align:center!important">Nama Biro / Agen</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
                   <th style="width: 12%; text-align:center!important">Sertifikat</th>
+                
                   <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
@@ -50,6 +53,7 @@
             <label for="nama">Nama Biro</label> 
             <input type="text" placeholder="Nama Biro" class="form-control" id="nama" name="nama" required="required">
           </div>
+
           <div class="form-group">
             <label for="id_jenis_biro">Jenis</label> 
             <select class="form-control mr-sm-2" id="id_jenis_biro" name="id_jenis_biro" required="required">
@@ -121,6 +125,7 @@ $(document).ready(function() {
     'alamat': $('#biro_modal').find('#alamat'),
     'lokasi': $('#biro_modal').find('#lokasi'),
     'deskripsi': $('#biro_modal').find('#deskripsi'),
+   
   }
 
   var swalSaveConfigure = {
@@ -232,6 +237,7 @@ $(document).ready(function() {
       error: function(e) {}
     });
   }
+  document.getElementById("export_btn").href = '<?= site_url('OperatorController/PdfAllBiro')?>';
 
   function renderBiro(data){
     if(data == null || typeof data != "object"){
@@ -243,7 +249,7 @@ $(document).ready(function() {
     var renderData = [];
     Object.values(data).forEach((biro) => {
       var apprv;
-      if(saranaprasarana['id_user_approv']=='0'){
+      if(biro['id_user_approv']=='0'){
         apprv= "Belum Di Approv"
         }else{
           apprv = "Sudah Di Approv";
@@ -289,6 +295,7 @@ $(document).ready(function() {
     BiroModal.file.val(biro['file']);
     BiroModal.lokasi.val(biro['lokasi']);
     BiroModal.deskripsi.val(biro['deskripsi']);
+   
   });
 
   FDataTable.on('click','.delete', function(){
@@ -358,7 +365,6 @@ $(document).ready(function() {
     });
   }
 
-  
   function editBiro(){
     swal(swalSaveConfigure).then((result) => {
       if(!result.value){ return; }

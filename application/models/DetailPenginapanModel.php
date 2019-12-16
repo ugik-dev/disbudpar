@@ -6,20 +6,34 @@ class DetailPenginapanModel extends CI_Model {
 	
 	public function getProfil($filter){
 	
-		$this->db->select('*');
+		$this->db->select('cb.*,js.*,kab.nama_kabupaten');
 		$this->db->from('pariwisata_penginapan as cb');
 		$this->db->where("id_penginapan",$filter['id_penginapan']);
 		$this->db->join("pariwisata_jenis_penginapan as js", "js.id_jenis_penginapan = cb.id_jenis_penginapan");
+		$this->db->join("kabupaten as kab", "kab.id_kabupaten = cb.id_kabupaten");
 	
 		$res = $this->db->get();
 		$res = $res->result_array();
 		return $res[0];
 		}
 
-	
-		public function approv($data){
+		public function approvPenginapan($data){
+			$data['tanggal_approv'] = date('Y-m-d');
 			$data['id_user_approv'] = $this->session->userdata('id_user');
-			$this->db->set(DataStructure::slice($data, ['id_user_approv']));
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
+			$this->db->where('id_penginapan', $data['id_penginapan']);
+			$this->db->update('pariwisata_penginapan');
+			echo $data['id_user_approv'];
+			echo $data['id_penginapan'];
+			
+			ExceptionHandler::handleDBError($this->db->error(), "Ubah penginapan", "penginapan");	
+			return $data['id_penginapan'];
+	
+		}
+		public function approv($data){
+			$data['tanggal_approv'] = date('Y-m-d');
+			$data['id_user_approv'] = $this->session->userdata('id_user');
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
 			$this->db->where('id_penginapan', $data['id_penginapan']);
 			$this->db->update('pariwisata_penginapan');
 			echo $data['id_user_approv'];
@@ -69,7 +83,7 @@ class DetailPenginapanModel extends CI_Model {
 			//return $data['nomor'];
 		}
 
-		public function saveTambah($id_penginapan,$tahun,$bulan,$dl,$dp,$ml,$mp,$dd,$dm,$pajak){
+		public function saveTambah($id_penginapan,$tahun,$bulan,$dl,$dp,$ml,$mp,$dd,$dm,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_penginapan' => $id_penginapan,
@@ -81,7 +95,7 @@ class DetailPenginapanModel extends CI_Model {
 					'mancanegara_personal_p' => $mp,
 					'domestik_durasi' => $dd,
 					'mancanegara_durasi' => $dm,
-					
+					'retribusi' => $retribusi,
 					'pajak' => $pajak,
 					'approv' => '0'
 					);
@@ -91,7 +105,7 @@ class DetailPenginapanModel extends CI_Model {
 			//return $data['nomor'];
 		}
 
-		public function saveEdit($id_data,$id_penginapan,$tahun,$bulan,$dl,$dp,$ml,$mp,$dd,$dm,$pajak){
+		public function saveEdit($id_data,$id_penginapan,$tahun,$bulan,$dl,$dp,$ml,$mp,$dd,$dm,$pajak,$retribusi){
 			
 			$data = array( 
 					'id_data_penginapan' => $id_data,
@@ -104,7 +118,7 @@ class DetailPenginapanModel extends CI_Model {
 					'mancanegara_personal_p' => $mp,
 					'domestik_durasi' => $dd,
 					'mancanegara_durasi' => $dm,
-					
+					'retribusi' => $retribusi,
 					'pajak' => $pajak,
 					'approv' => '0'
 
@@ -120,7 +134,8 @@ class DetailPenginapanModel extends CI_Model {
 		public function approv_pengunjung($id_data){
 			$idapprov = $this->session->userdata('id_user');
 			$data = array( 
-					'approv' => $idapprov
+					'approv' => $idapprov,
+					'tanggal_approv_data' => date('Y-m-d')
 					);			
 					$this->db->set($data);
 					$this->db->where('id_data_penginapan', $id_data);
@@ -163,7 +178,7 @@ class DetailPenginapanModel extends CI_Model {
 
 	public function editDetailPenginapan($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$this->db->set(DataStructure::slice($data, ['nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','deskripsi','alamat','id_user_entry']));
+		$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_penginapan', $data['id_penginapan']);
 		$this->db->update('pariwisata_penginapan');
 

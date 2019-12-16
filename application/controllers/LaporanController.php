@@ -36,6 +36,27 @@ class LaporanController extends CI_Controller {
         ExceptionHandler::handle($e);
       }
     }
+    public function p1(){
+      try{
+        $this->SecurityModel->userOnlyGuard(TRUE);
+        $data = $this->LaporanModel->p1();
+         echo json_encode(array("data" => $data, "error" => false));
+  
+      } catch (Exception $e) {
+        ExceptionHandler::handle($e);
+      }
+    }
+
+    public function p2(){
+      try{
+        $this->SecurityModel->userOnlyGuard(TRUE);
+        $data = $this->LaporanModel->p2();
+         echo json_encode(array("data" => $data, "error" => false));
+  
+      } catch (Exception $e) {
+        ExceptionHandler::handle($e);
+      }
+    }
 
     public function getFormat(){
       try{

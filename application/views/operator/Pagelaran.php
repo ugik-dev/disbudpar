@@ -5,6 +5,8 @@
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
         <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -22,8 +24,8 @@
                   <th style="width: 12%; text-align:center!important">Kategori</th>
                   <th style="width: 12%; text-align:center!important">Pelaksana</th>
                   <th style="width: 12%; text-align:center!important">Tanggal</th>
-                  <th style="width: 12%; text-align:center!important">Tanggal Berakhir</th>
-                  <th style="width: 12%; text-align:center!important">Jumlah Penonton</th>
+                  <th style="width: 12%; text-align:center!important">Tempat Acara</th>
+
                   
                   <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
@@ -54,6 +56,7 @@
             <label for="nama">Nama Kegiatan</label> 
             <input type="text" placeholder="Nama Kegiatan" class="form-control" id="nama" name="nama" required="required">
           </div>
+          
           <div class="form-group">
             <label for="id_jenis_pagelaran">Kategori</label> 
             <select class="form-control mr-sm-2" id="id_jenis_pagelaran" name="id_jenis_pagelaran" required="required">
@@ -211,6 +214,7 @@ $(document).ready(function() {
       error: function(e) {}
     });
   }
+  document.getElementById("export_btn").href = '<?= site_url('OperatorController/PdfAllPagelaran')?>';
 
 
    function renderSenibudayaSelection(data){
@@ -279,7 +283,7 @@ $(document).ready(function() {
           </div>
         </div>
       `;
-      renderData.push([ pagelaran['nama'], pagelaran['nama_jenis_pagelaran'], pagelaran['nama_senibudaya'],pagelaran['tanggal_kegiatan'],pagelaran['tanggal_kegiatan_end'],pagelaran['jumlah_penonton'],apprv, button]);
+      renderData.push([ pagelaran['nama'], pagelaran['nama_jenis_pagelaran'], pagelaran['nama_senibudaya'],pagelaran['tanggal_kegiatan'],pagelaran['alamat'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }

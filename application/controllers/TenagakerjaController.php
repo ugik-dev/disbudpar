@@ -19,7 +19,117 @@ class TenagakerjaController extends CI_Controller {
           ExceptionHandler::handle($e);
         }
       }
+      public function getJeniskelaminOption(){
+        try{
+          $this->SecurityModel->userOnlyGuard(TRUE);
+          $data = $this->TenagakerjaModel->getJeniskelaminOption($this->input->get());
+          echo json_encode(array('data' => $data));
+        } catch (Exception $e) {
+          ExceptionHandler::handle($e);
+        }
+      }
+      public function getPelatihanOption(){
+        try{
+          $this->SecurityModel->userOnlyGuard(TRUE);
+          $data = $this->TenagakerjaModel->getPelatihanOption($this->input->get());
+          echo json_encode(array('data' => $data));
+        } catch (Exception $e) {
+          ExceptionHandler::handle($e);
+        }
+      }
+      public function getSertifikasiOption(){
+        try{
+          $this->SecurityModel->userOnlyGuard(TRUE);
+          $data = $this->TenagakerjaModel->getSertifikasiOption($this->input->get());
+          echo json_encode(array('data' => $data));
+        } catch (Exception $e) {
+          ExceptionHandler::handle($e);
+        }
+      }
 
+      function do_upload_photo(){
+        $config['upload_path']="./upload/photo_tenaga_kerja";
+        $config['allowed_types']='bmp|jpg|png';
+        $config['encrypt_name'] = TRUE;
+         // var_dump('anjay',$this->input->post());
+      
+        $this->load->library('upload',$config);
+        
+        if($this->upload->do_upload("photo")){
+          $data = array('upload_data' => $this->upload->data());
+         
+          
+          $dataupdate['id_sdm']= $this->input->post('id_sdm');
+          $dataupdate['photo']= $data['upload_data']['file_name']; 
+          $fileold= $this->input->post('oldphoto');
+          echo $fileold;
+          if($fileold != '' || $fileold != null){ 
+            unlink("./upload/photo_tenaga_kerja/".$fileold);
+          };
+          
+          $result= $this->TenagakerjaModel->setPhoto($dataupdate);
+          $data = $this->TenagakerjaModel->getAllTenagakerja($dataupdate);
+          echo json_encode(array('data' => $data));
+         
+        }
+      
+       }
+
+       function do_upload_pelatihan(){
+        $config['upload_path']="./upload/pelatihan_tenaga_kerja";
+        $config['allowed_types']='pdf|jpg';
+        $config['encrypt_name'] = TRUE;
+         // var_dump('anjay',$this->input->post());
+      
+        $this->load->library('upload',$config);
+        
+        if($this->upload->do_upload("doc_pelatihan")){
+          $data = array('upload_data' => $this->upload->data());
+         
+          
+          $dataupdate['id_sdm']= $this->input->post('id_sdm');
+          $dataupdate['doc_pelatihan']= $data['upload_data']['file_name']; 
+          $fileold= $this->input->post('old_doc_pelatihan');
+          echo $fileold;
+          if($fileold != '' || $fileold != null){ 
+            unlink("./upload/pelatihan_tenaga_kerja/".$fileold);
+          };
+          
+          $result= $this->TenagakerjaModel->setPelatihan($dataupdate);
+          $data = $this->TenagakerjaModel->getAllTenagakerja($dataupdate);
+          echo json_encode(array('data' => $data));
+         
+        }
+      
+       }
+       function do_upload_sertifikasi(){
+        $config['upload_path']="./upload/sertifikasi_tenaga_kerja";
+        $config['allowed_types']='pdf|jpg';
+        $config['encrypt_name'] = TRUE;
+         // var_dump('anjay',$this->input->post());
+      
+        $this->load->library('upload',$config);
+        
+        if($this->upload->do_upload("doc_sertifikasi")){
+          $data = array('upload_data' => $this->upload->data());
+          $dataupdate['tahun_sertifikasi']= $this->input->post('tahun_sertifikasi');
+          $dataupdate['penyelenggara_sertifikasi']= $this->input->post('penyelenggara_sertifikasi');
+          $dataupdate['id_sdm']= $this->input->post('id_sdm');
+          $dataupdate['doc_sertifikasi']= $data['upload_data']['file_name']; 
+          $fileold= $this->input->post('old_doc_sertifikasi');
+          echo $fileold;
+          if($fileold != '' || $fileold != null){ 
+            unlink("./upload/sertifikasi_tenaga_kerja/".$fileold);
+          };
+          
+          $result= $this->TenagakerjaModel->setSertifikasi($dataupdate);
+          $data = $this->TenagakerjaModel->getAllTenagakerja($dataupdate);
+          echo json_encode(array('data' => $data));
+         
+        }
+      
+       }
+    
 
   public function getLv1Option(){
     try{

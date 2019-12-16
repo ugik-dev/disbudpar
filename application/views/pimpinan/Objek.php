@@ -4,7 +4,9 @@
       <form class="form-inline" id="toolbar_form" onsubmit="return false;">
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
-        <!-- <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button> -->
+        <button hidden type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -18,9 +20,9 @@
               <thead>
                 <tr>
          
-                  <th style="width: 15%; text-align:center!important">Nama Objek</th>
+                  <th style="width: 15%; text-align:center!important">Nama Daya Tarik Wisata</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
-                  
+                 
                   <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
@@ -40,16 +42,18 @@
     <div class="modal-content animated fadeIn">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Kelola Sarana dan Prasarana</h4>
+        <h4 class="modal-title">Kelola Daya Tarik Wisata</h4>
         <span class="info"></span>
       </div>
       <div class="modal-body" id="modal-body">              
         <form role="form" id="user_form" onsubmit="return false;" type="multipart" autocomplete="off">
           <input type="hidden" id="id_objek" name="id_objek">
           <div class="form-group">
-            <label for="nama">Nama Objek Wisata</label> 
+            <label for="nama">Nama Daya Tarik Wisata</label> 
             <input type="text" placeholder="Nama Objek" class="form-control" id="nama" name="nama" required="required">
           </div>
+         
+
           <div class="form-group">
             <label for="id_jenis_objek">Jenis</label> 
             <select class="form-control mr-sm-2" id="id_jenis_objek" name="id_jenis_objek" required="required">
@@ -79,6 +83,7 @@ $(document).ready(function() {
   $('#pariwisata').addClass('active');
   $('#objek').addClass('active');
 
+
   var toolbar = {
     'form': $('#toolbar_form'),
     'showBtn': $('#show_btn'),
@@ -105,6 +110,7 @@ $(document).ready(function() {
     'file': $('#objek_modal').find('#file'),
     'lokasi': $('#objek_modal').find('#lokasi'),
     'deskripsi': $('#objek_modal').find('#deskripsi'),
+   
   }
 
   var swalSaveConfigure = {
@@ -188,6 +194,7 @@ $(document).ready(function() {
       error: function(e) {}
     });
   }
+  document.getElementById("export_btn").href = '<?= site_url('PimpinanController/PdfAllObjek')?>';
 
   function renderObjek(data){
     if(data == null || typeof data != "object"){
@@ -205,24 +212,25 @@ $(document).ready(function() {
           apprv = "Sudah Di Approv";
         };
       var detailButton =`
-      <a class="detail dropdown-item" href='<?=site_url()?>PimpinanController/DetailObjek?id_objek=${objek['id_objek']}'><i class='fa fa-share'></i> Detail Objek Wisata</a>
+      <a  class="detail dropdown-item" href='<?=site_url()?>PimpinanController/DetailObjek?id_objek=${objek['id_objek']}'><i class='fa fa-share'></i> Detail </a>
       `; 
       var editButton = `
-        <a class="edit dropdown-item" data-id='${objek['id_objek']}'><i class='fa fa-pencil'></i> Edit Objek</a>
+        <a hidden class="edit dropdown-item" data-id='${objek['id_objek']}'><i class='fa fa-pencil'></i> Edit</a>
       `;
       var deleteButton = `
-        <a class="delete dropdown-item" data-id='${objek['id_objek']}'><i class='fa fa-trash'></i> Hapus Objek</a>
+        <a hidden class="delete dropdown-item" data-id='${objek['id_objek']}'><i class='fa fa-trash'></i> Hapus</a>
       `;
       var button = `
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
             ${detailButton}
-           
+            ${editButton}
+            ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([objek['nama'], objek['nama_jenis_objek'],apprv, button]);
+      renderData.push([objek['nama'], objek['nama_jenis_objek'], apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
@@ -242,6 +250,7 @@ $(document).ready(function() {
     ObjekModal.file.val(objek['file']);
     ObjekModal.lokasi.val(objek['lokasi']);
     ObjekModal.deskripsi.val(objek['deskripsi']);
+  
   });
 
   FDataTable.on('click','.delete', function(){
@@ -310,8 +319,6 @@ $(document).ready(function() {
       });
     });
   }
-
-  
   function editObjek(){
     swal(swalSaveConfigure).then((result) => {
       if(!result.value){ return; }

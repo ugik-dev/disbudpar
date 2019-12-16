@@ -146,8 +146,9 @@ class DetailPemugaranModel extends CI_Model {
 	}
 
 	public function approv($data){
+		$data['tanggal_approv'] = date('Y-m-d');
 		$data['id_user_approv'] = $this->session->userdata('id_user');
-		$this->db->set(DataStructure::slice($data, ['id_user_approv']));
+		$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
 		$this->db->where('id_pemugaran', $data['id_pemugaran']);
 		$this->db->update('cagarbudaya_pemugaran');
 

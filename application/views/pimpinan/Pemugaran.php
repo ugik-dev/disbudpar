@@ -4,7 +4,9 @@
       <form class="form-inline" id="toolbar_form" onsubmit="return false;">
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
-        <!-- <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button> -->
+        <button hidden type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -21,6 +23,7 @@
                   <th style="width: 15%; text-align:center!important">Nama Kegiatan</th>
 
                   <th style="width: 12%; text-align:center!important">Nama Cagar Budaya</th>
+                  
                   <th style="width: 12%; text-align:center!important">Tanggal</th>
 
                   <th style="width: 10%; text-align:center!important">Approval</th>
@@ -42,7 +45,7 @@
     <div class="modal-content animated fadeIn">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Kelola Pemugaran dan Pameran</h4>
+        <h4 class="modal-title">Kelola Pemugaran</h4>
         <span class="info"></span>
       </div>
       <div class="modal-body" id="modal-body">              
@@ -108,7 +111,7 @@ $(document).ready(function() {
     'id_pemugaran': $('#pemugaran_modal').find('#id_pemugaran'),
     'nama': $('#pemugaran_modal').find('#nama'),
    
-   
+    
     'id_cagarbudaya': $('#pemugaran_modal').find('#id_cagarbudaya'),
     'nama_cagarbudaya': $('#pemugaran_modal').find('#nama_cagarbudaya'),
     'jumlah_penonton': $('#pemugaran_modal').find('#jumlah_penonton'),
@@ -185,7 +188,6 @@ $(document).ready(function() {
     });
   }
 
-  
 
   function getPemugaran(){
     buttonLoading(toolbar.showBtn);
@@ -225,17 +227,18 @@ $(document).ready(function() {
       <a class="detail dropdown-item" href='<?=site_url()?>PimpinanController/DetailPemugaran?id_pemugaran=${pemugaran['id_pemugaran']}'><i class='fa fa-share'></i> Detail </a>
       `; 
       var editButton = `
-        <a class="edit dropdown-item" data-id='${pemugaran['id_pemugaran']}'><i class='fa fa-pencil'></i> Edit Cagar Budaya</a>
+        <a hidden class="edit dropdown-item" data-id='${pemugaran['id_pemugaran']}'><i class='fa fa-pencil'></i> Edit Cagar Budaya</a>
       `;
       var deleteButton = `
-        <a class="delete dropdown-item" data-id='${pemugaran['id_pemugaran']}'><i class='fa fa-trash'></i> Hapus Cagar Budaya</a>
+        <a hidden class="delete dropdown-item" data-id='${pemugaran['id_pemugaran']}'><i class='fa fa-trash'></i> Hapus Cagar Budaya</a>
       `;
       var button = `
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
           ${detailButton}
-           
+            ${editButton}
+            ${deleteButton}
           </div>
         </div>
       `;
@@ -263,6 +266,7 @@ $(document).ready(function() {
     PemugaranModal.lokasi.val(pemugaran['lokasi']);
     PemugaranModal.deskripsi.val(pemugaran['deskripsi']);
   });
+  document.getElementById("export_btn").href = '<?= site_url('PimpinanController/PdfAllpemugaran')?>';
 
   FDataTable.on('click','.delete', function(){
     event.preventDefault();

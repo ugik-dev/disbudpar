@@ -35,6 +35,40 @@
   </div>
 </div>
 
+<div class="modal inmodal" id="editpassword_modal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content animated fadeIn">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Ganti Password</h4>
+        <span class="infox"></span>
+      </div>
+      <div class="modal-body" id="modal-body">              
+        <form role="form" id="ganti_pass_form" onsubmit="return false;" type="multipart" autocomplete="off">
+          <input type="hidden" id="id_userz" name="id_user">
+          <div class="form-group">
+            <label for="password">Password</label> 
+            <input type="password" placeholder="Password" class="form-control" id="password_now" name="old_password">
+          </div>
+          <div class="form-group">
+            <label for="password">Password Baru</label> 
+            <input type="password" placeholder="Password" class="form-control" id="password_new" name="password">
+          </div>
+          <div class="form-group">
+            <label for="repasswordx">Konfirmasi Password Baru</label> 
+            <input type="password" placeholder="Konfirmasi Password" class="form-control" id="repassword_new" name="repassword">
+          </div>
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="ganti_password_btn" data-loading-text="Loading..."><strong>Simpan Perubahan</strong></button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="modal inmodal" id="photo_modal" tabindex="-1" role="dialog"  aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content animated fadeIn">
@@ -84,6 +118,18 @@ $(document).ready(function() {
     'repassword': $('#profile_modal').find('#repasswordx'),
   }
 
+    var ChangePasswordModal = {
+    'self': $('#editpassword_modal'),
+    'info': $('#editpassword_modal').find('.infox'),
+    'form': $('#editpassword_modal').find('#ganti_pass_form'),
+    'saveEditBtn': $('#editpassword_modal').find('#ganti_password_btn'),
+    'idUser': $('#editpassword_modal').find('#id_userz'),
+    'repassword_now': $('#editpassword_modal').find('#password_now'),
+    'password_new': $('#editpassword_modal').find('#password_new'),
+    'repassword_new': $('#editpassword_modal').find('#repassword_new'),
+  }
+
+
   var swalSaveConfigure = {
     title: "Konfirmasi simpan",
     text: "Yakin akan menyimpan data ini?",
@@ -130,6 +176,13 @@ $(document).ready(function() {
   ProfileModal.repassword.on('keyup', () => {
     confirmPasswordRule(ProfileModal.password, ProfileModal.repassword);
   });
+  ChangePasswordModal.password_new.on('change', () => {
+    confirmPasswordRule(ChangePasswordModal.password_new, ChangePasswordModal.repassword_new);
+  });
+
+  ChangePasswordModal.repassword_new.on('keyup', () => {
+    confirmPasswordRule(ChangePasswordModal.password_new, ChangePasswordModal.repassword_new);
+  });
 
   function confirmPasswordRule(password, rePassword){
     if(password.val() != rePassword.val()){
@@ -150,12 +203,33 @@ $(document).ready(function() {
         success: function (data){
           buttonIdle(ProfileModal.saveEditBtn);
 
-          if(json['error']){
-            swal("Simpan Gagal", json['message'], "error");
-            return;
-          }
 
           swal("Simpan Berhasil", "", "success").then((result) =>{
+            document.location.reload();
+          })
+
+        },
+        error: function(e) {}
+      });
+    });
+  });
+  
+  ChangePasswordModal.form.submit(function(event) {
+    event.preventDefault();
+    swal(swalSaveConfigure).then((result) => {
+      if(!result.value){ return; }
+      buttonLoading(ChangePasswordModal.saveEditBtn);
+      $.ajax({
+        url: "<?=site_url('UserController/changePassword')?>", 'type': 'POST',
+        data: ChangePasswordModal.form.serialize(),
+        success: function (data){
+          buttonIdle(ChangePasswordModal.saveEditBtn);
+          var json = JSON.parse(data);
+          if(json['error']){
+            swal("Gagal Ganti Password", json['message'], "error");
+            return;
+          }
+          swal("Berhasil Ganti Password", "", "success").then((result) =>{
             document.location.reload();
           })
 
@@ -197,6 +271,15 @@ var PhotoModal = {
   //   var title = user['title_role'] + (user['nama_kabupaten'] ? ' - ' + user['nama_kabupaten'] : '')
   //   photo.title.html(title);
   // }
+  passwordButton.on('click', () => {
+  
+    ChangePasswordModal.form.trigger('reset');
+    ChangePasswordModal.self.modal('show');
+    ChangePasswordModal.self.modal('show');
+    var currentData = user;
+    ChangePasswordModal.idUser.val(currentData['id_user']);
+   
+  });
 
   photoButton.on('click', () => {
  
@@ -229,10 +312,6 @@ var PhotoModal = {
         success: function (data){
           buttonIdle(PhotoModal.saveEditBtn);
 
-          if(json['error']){
-            swal("Simpan Gagal", json['message'], "error");
-            return;
-          }
        
           swal("Simpan Berhasil", "", "success").then((result) =>{
             document.location.reload();

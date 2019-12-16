@@ -5,6 +5,8 @@
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
         <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+   
       </form>
     </div>
   </div>
@@ -20,7 +22,7 @@
              
                   <th style="width: 15%; text-align:center!important">Nama Sarana dan Prasarana</th>
                   <th style="width: 12%; text-align:center!important">Jenis</th>
-                  <th style="width: 12%; text-align:center!important">Alamat</th>
+                 
                  
                   <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
@@ -51,6 +53,7 @@
             <label for="nama">Nama Sarana dan Prasarana</label> 
             <input type="text" placeholder="Nama Saranaprasarana" class="form-control" id="nama" name="nama" required="required">
           </div>
+          
           <div class="form-group">
             <label for="id_jenis_saranaprasarana">Jenis</label> 
             <select class="form-control mr-sm-2" id="id_jenis_saranaprasarana" name="id_jenis_saranaprasarana" required="required">
@@ -114,6 +117,7 @@ $(document).ready(function() {
     'alamat': $('#saranaprasarana_modal').find('#alamat'),
     'lokasi': $('#saranaprasarana_modal').find('#lokasi'),
     'deskripsi': $('#saranaprasarana_modal').find('#deskripsi'),
+   
   }
 
   var swalSaveConfigure = {
@@ -197,6 +201,7 @@ $(document).ready(function() {
       error: function(e) {}
     });
   }
+  document.getElementById("export_btn").href = '<?= site_url('OperatorController/PdfAllSaranaprasarana')?>';
 
   function renderSaranaprasarana(data){
     if(data == null || typeof data != "object"){
@@ -232,7 +237,7 @@ $(document).ready(function() {
           </div>
         </div>
       `;
-      renderData.push([saranaprasarana['nama'], saranaprasarana['nama_jenis_saranaprasarana'],saranaprasarana['alamat'],apprv, button]);
+      renderData.push([saranaprasarana['nama'], saranaprasarana['nama_jenis_saranaprasarana'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
@@ -252,6 +257,7 @@ $(document).ready(function() {
     SaranaprasaranaModal.alamat.val(saranaprasarana['alamat']);
     SaranaprasaranaModal.lokasi.val(saranaprasarana['lokasi']);
     SaranaprasaranaModal.deskripsi.val(saranaprasarana['deskripsi']);
+
   });
 
   FDataTable.on('click','.delete', function(){
@@ -295,7 +301,7 @@ $(document).ready(function() {
         break;
     }
   });
-
+   
   function addSaranaprasarana(){
     swal(swalSaveConfigure).then((result) => {
       if(!result.value){ return; }

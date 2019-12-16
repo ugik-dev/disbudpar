@@ -98,8 +98,10 @@ class UserController extends CI_Controller {
 				$id= $this->input->post('id_user');
 				$image= $data['upload_data']['file_name']; 
 				$fileold= $this->input->post('oldphoto');
-				unlink("./upload/profile/".$fileold);
-				$result= $this->UserModel->editPhoto($id,$image);
+				if($fileold != 'profile_small.jpg'){
+					unlink("./upload/profile/".$fileold);
+				};
+					$result= $this->UserModel->editPhoto($id,$image);
 				$this->session->set_userdata('photo', $image);
 				echo json_decode($result);
 			}

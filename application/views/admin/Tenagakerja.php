@@ -19,9 +19,11 @@
                 <tr>
              
                   <th style="width: 15%; text-align:center!important">Nama Tenaga Kerja</th>
+                  <th style="width: 12%; text-align:center!important">Foto</th>
                   <th style="width: 12%; text-align:center!important">Posisi</th>
                   <th style="width: 12%; text-align:center!important">Kabupaten / Kota</th>
                   <th style="width: 12%; text-align:center!important">Sertifikasi</th>
+                  <th style="width: 12%; text-align:center!important">Pelatihan</th>
               
                  
                   <th style="width: 7%; text-align:center!important">Action</th>
@@ -45,7 +47,16 @@
         <h4 class="modal-title">Kelola Tenaga Kerja</h4>
         <span class="info"></span>
       </div>
-      <div class="modal-body" id="modal-body">              
+      <div class="modal-body" id="modal-body">
+      <div class="tabs-container">
+          <ul class="nav nav-tabs" role="tablist">
+              <li><a class="nav-link active" id="tab-1-reg" data-toggle="tab" href="#tab-1-x">Biodata</a></li>
+              <li><a class="nav-link" id="tab-2-reg" data-toggle="tab" href="#tab-2-x">Dokumen</a></li>
+          </ul>
+          <div class="tab-content">
+              <div role="tabpanel" id="tab-1-x" class="tab-pane active">
+                <div class="panel-body">
+
         <form role="form" id="user_form" onsubmit="return false;" type="multipart" autocomplete="off">
           <input type="hidden" id="id_sdm" name="id_sdm">
           <div class="form-group">
@@ -99,51 +110,85 @@
             <select class="form-control mr-sm-2" id="id_lv4" name="id_lv4" required="">
             </select>
           </div>
-          <label for="jumlahanggota"></label> 
-          <div class="form-group">      
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" id="id_jenis_kelamin">
-                <label class="btn btn-secondary active">
-                    <input type="radio" name="id_jenis_kelamin" value="1"  autocomplete="on" checked> Laki-Laki
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="id_jenis_kelamin" value="2"  autocomplete="off"> Perempuan
-                </label>
-            </div>
-          </div>
-          <div class="form-group">      
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" >
-                <label class="btn btn-secondary ">
-                    <input type="radio" name="id_sertifikasi" value="1" id="id_sertifikasi" autocomplete="on" > Sudah Sertifikasi
-                </label>
-                <label class="btn btn-secondary active">
-                    <input type="radio" name="id_sertifikasi" value="2" id="id_sertifikasi" autocomplete="off" checked> Belum Sertifikasi
-                </label>
-            </div>
-          </div>
-          <div class="form-group">      
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" >
-                <label class="btn btn-secondary ">
-                    <input type="radio" name="id_pelatihan" value="1"  id="id_pelatihan"autocomplete="off" > Sudah Pelatihan
-                </label>
-                <label class="btn btn-secondary active">
-                    <input type="radio" name="id_pelatihan" value="2" id="id_pelatihan" autocomplete="off" checked> Belum Pelatihan
-                </label>
-            </div>
+          <div class="form-group">
+            <label for="jenis_kelamin">Jenis Kelamin</label> 
+            <select class="form-control mr-sm-2" id="id_jenis_kelamin" name="id_jenis_kelamin" required="required">
+            </select>
           </div>
           <div class="form-group">
-            <label for="deskripsi">Tahun Sertifikasi</label> 
-            <input type="number" placeholder="" class="form-control" id="tahun_sertifikasi" name="tahun_sertifikasi" required="required">
+            <label for="id_pelatihan">Pelatihan</label> 
+            <select class="form-control mr-sm-2" id="id_pelatihan" name="id_pelatihan" required="required">
+            </select>
           </div>
           <div class="form-group">
-            <label for="deskripsi">Penyelenggara Sertifikasi</label> 
-            <input type="text" placeholder="" class="form-control" id="penyelenggara_sertifikasi" name="penyelenggara_sertifikasi" required="required">
+            <label for="id_sertifikasi">Sertifikasi</label> 
+            <select class="form-control mr-sm-2" id="id_sertifikasi" name="id_sertifikasi" required="required">
+            </select>
           </div>
 
-
-
-          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="add_btn" data-loading-text="Loading..." onclick="this.form.target='add'"><strong>Tambah Data</strong></button>
-          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong>Simpan Perubahan</strong></button>
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="add_btn_x" data-loading-text="Loading..." onclick="this.form.target='add'"><strong>Simpan Data</strong></button>
+          <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn_x" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong>Simpan Perubahan</strong></button>
         </form>
+
+              </div>
+            </div>
+            <div role="tabpanel" id="tab-2-x" class="tab-pane">
+              <div class="panel-body">
+              <!--  -->
+
+                    <form role="form" id="form_photo_tenagakerja" onsubmit="return false;" type="multipart" autocomplete="off">
+                      <input type="" id="id_tenagakerjax" name="id_sdm" hidden>
+                      <input type="" id="photo_tenagakerja" name="oldphoto" hidden>
+                      <div class="form-group  text-center"> 
+                      <h4>Foto</h4>
+                        <img class="form-group  text-center"id='imgtenagakerja' src="" style='height: 200px;'>
+                      </div>
+                      <div class="form-group">          
+                        <label for="nama"></label> 
+                        <input type="file" placeholder="" class="form-control" name="photo" required="required">
+                      </div>
+                      <button class="btn btn-success my-1 mr-sm-2" type="submit" id="upload_pohoto_tenagakerja_btn" data-loading-text="Loading..."><strong>Upload Foto</strong></button> * jpg  
+                    </form>
+                    <br>
+                     <hr>
+                     <hr>
+                     <br>
+                    <form role="form" id="form_pelatihan_tenagakerja" onsubmit="return false;" type="multipart" autocomplete="off">
+                      <input type="" id="id_tenagakerjay" name="id_sdm" hidden>
+          
+                      <input type="" id="old_doc_pelatihan" name="old_doc_pelatihan" hidden >
+                      <div class="form-group  text-center" id="framepelatihan">
+                      </div>
+                      <div class="form-group">          
+                        <!-- <label for="nama">Dokumen Pelatihan</label>  -->
+                        <input type="file" placeholder="" class="form-control" name="doc_pelatihan" required="required">
+                      </div>
+                      <button class="btn btn-success my-1 mr-sm-2" type="submit" id="upload_pelatihan_tenagakerja_btn" data-loading-text="Loading..."><strong>Upload Dokumen Pelatihan</strong></button> * pdf
+                    </form>
+                    <br>
+                     <hr>
+                     <hr>
+                     <br>
+                    <form role="form" id="form_sertifikasi_tenagakerja" onsubmit="return false;" type="multipart" autocomplete="off">
+                      <input type="" id="id_tenagakerjaz" name="id_sdm" hidden>
+                      <input type="" id="old_doc_sertifikasi" name="old_doc_sertifikasi" hidden >
+                      <div class="form-group  text-center"  id="framesertifikasi">
+                        
+                      </div>
+                      <div class="form-group">          
+                        <!-- <label for="nama">Dokumen Sertifikasi</label>  -->
+                        <input type="file" placeholder="" class="form-control" name="doc_sertifikasi" required="required">
+                        <input type="text" placeholder="Tahun Sertifikasi" class="form-control" name="tahun_sertifikasi" required="required">
+                        <input type="text" placeholder="Penyelenggara Sertifikasi" class="form-control" name="penyelenggara_sertifikasi" required="required">
+                      </div>
+                      <button class="btn btn-success my-1 mr-sm-2" type="submit" id="upload_sertifikasi_tenagakerja_btn" data-loading-text="Loading..."><strong>Upload Dokumen Sertifikasi </strong></button> * pdf
+                    </form>
+
+              <!--  -->
+                 </div>
+              </div>  
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -154,7 +199,7 @@
 
 <script>
 $(document).ready(function() {
-  $('#seni_dan_budaya').addClass('active');
+
   $('#tenagakerja').addClass('active');
 
   var toolbar = {
@@ -174,8 +219,8 @@ $(document).ready(function() {
     'self': $('#tenagakerja_modal'),
     'info': $('#tenagakerja_modal').find('.info'),
     'form': $('#tenagakerja_modal').find('#user_form'),
-    'addBtn': $('#tenagakerja_modal').find('#add_btn'),
-    'saveEditBtn': $('#tenagakerja_modal').find('#save_edit_btn'),
+    'addBtn': $('#tenagakerja_modal').find('#add_btn_x'),
+    'saveEditBtn': $('#tenagakerja_modal').find('#save_edit_btn_x'),
     'id_sdm': $('#tenagakerja_modal').find('#id_sdm'),
     'nama_sdm': $('#tenagakerja_modal').find('#nama_sdm'),
     'kabupaten': $('#tenagakerja_modal').find('#kabupaten'),
@@ -196,7 +241,7 @@ $(document).ready(function() {
     'tahun_sertifikasi': $('#tenagakerja_modal').find('#tahun_sertifikasi'),
     'penyelenggara_sertifikasi': $('#tenagakerja_modal').find('#penyelenggara_sertifikasi'),
   }
-  //resetForm();
+  resetForm();
   function resetForm(){
   TenagakerjaModal.id_lv2.hide();
   TenagakerjaModal.id_lv3.hide();
@@ -234,248 +279,80 @@ $(document).ready(function() {
         getTenagakerja();
         break;
       case 'add':
+      $('#tab-1-reg').removeClass()
+      $('#tab-1-x').removeClass()
+      $('#tab-2-reg').removeClass()
+      $('#tab-2-x').removeClass()
+  
+      $('#tab-1-reg').addClass('nav-link active')
+       $('#tab-1-x').addClass('tab-pane active')
+       $('#tab-2-reg').addClass('nav-link disabled');
+       $('#tab-2-x').addClass('tab-pane')
         showTenagakerjaModal();
+        document.getElementById("id_tenagakerjax").value ="";
+        document.getElementById("photo_tenagakerja").value = "";
+       // $('#tab-2').addClass('disabled');
         break;
     }
   });
-  getPendidikanOption();  
-  function getPendidikanOption(){
-    return $.ajax({
-      url: `<?php echo site_url('TenagakerjaController/getPendidikanOption/')?>`, 'type': 'GET',
-      data: {},
-      success: function (data){
-        var json = JSON.parse(data);
-        if(json['error']){
-          return;
-        }
-        dataPendidikan = json['data'];
-        renderPendidikanSelection(dataPendidikan);
-      },
-      error: function(e) {}
-    });
-   
-  }
 
-  getLv1Option();  
-  function getLv1Option(){
-    return $.ajax({
-      url: `<?php echo site_url('TenagakerjaController/getLv1Option/')?>`, 'type': 'GET',
-      data: {},
-      success: function (data){
-        var json = JSON.parse(data);
-        if(json['error']){
-          return;
-        }
-        dataLv1 = json['data'];
-        renderLv1Selection(dataLv1);
-      },
-      error: function(e) {}
-    });
-   
-  }
+    $('#form_photo_tenagakerja').submit(function(e){
+    console.log('upload berjalan')
+      e.preventDefault(); 
+            $.ajax({
+                url:`<?=site_url('TenagakerjaController/do_upload_photo')?>`,
+                type:"post",
+                data:new FormData(this),
+                processData:false,
+                contentType:false,
+                cache:false,
+                async:false,
+                success: function(data){    
+                getTenagakerja()
+                TenagakerjaModal.saveEditBtn.show();
+                TenagakerjaModal.self.modal('hide');
 
-  
-  function getLv2Option(){
-    return $.ajax({
-      url: `<?php echo site_url('TenagakerjaController/getLv2Option/')?>`, 'type': 'GET',
-      data: {id_lv1 : TenagakerjaModal.id_lv1.val() },
-      success: function (data){
-        var json = JSON.parse(data);
-        if(json['error']){
-          return;
-        }
-
-        dataLv2 = json['data'];
-        if(dataLv2 == ''){
-           TenagakerjaModal.id_lv2.hide();
-           TenagakerjaModal.id_lv3.hide();
-           TenagakerjaModal.id_lv4.hide();
-           TenagakerjaModal.id_lv2.prop('disabled',true)
-           TenagakerjaModal.id_lv3.prop('disabled',true)
-           TenagakerjaModal.id_lv4.prop('disabled',true)
-        }else{
-            renderLv2Selection(dataLv2);
-            
-            TenagakerjaModal.id_lv2.show();  
-            TenagakerjaModal.id_lv2.prop('disabled',false)
-            TenagakerjaModal.id_lv3.prop('disabled',true)
-            TenagakerjaModal.id_lv4.prop('disabled',true) 
-            TenagakerjaModal.id_lv3.hide();
-            TenagakerjaModal.id_lv4.hide();       
-        }
-
-      },
-      error: function(e) {}
+              }
+            }); 
     });
-  }
+    $('#form_pelatihan_tenagakerja').submit(function(e){
+    console.log('upload berjalan')
+      e.preventDefault(); 
+            $.ajax({
+                url:`<?=site_url('TenagakerjaController/do_upload_pelatihan')?>`,
+                type:"post",
+                data:new FormData(this),
+                processData:false,
+                contentType:false,
+                cache:false,
+                async:false,
+                success: function(data){    
+                getTenagakerja()
+                TenagakerjaModal.saveEditBtn.show();
+                TenagakerjaModal.self.modal('hide');
 
-  function getLv3Option(){
-    return $.ajax({
-      url: `<?php echo site_url('TenagakerjaController/getLv3Option/')?>`, 'type': 'GET',
-      data: {id_lv2 : TenagakerjaModal.id_lv2.val() },
-      success: function (data){
-        var json = JSON.parse(data);
-        if(json['error']){
-          return;
-        }
-        dataLv3 = json['data'];
-        dataLv3 = json['data'];
-        if(dataLv3 == ''){
-            
-            TenagakerjaModal.id_lv3.hide();
-            TenagakerjaModal.id_lv4.hide();          
-           TenagakerjaModal.id_lv3.prop('disabled',true)
-           TenagakerjaModal.id_lv4.prop('disabled',true)
-        }else{
-            renderLv3Selection(dataLv3);
-            TenagakerjaModal.id_lv3.show();     
-            TenagakerjaModal.id_lv3.prop('disabled',false)
-            TenagakerjaModal.id_lv4.hide(); 
-            TenagakerjaModal.id_lv4.prop('disabled',true)    
-        }
-      },
-      error: function(e) {}
+              }
+            }); 
     });
-  }
-  function getLv4Option(){
-    return $.ajax({
-      url: `<?php echo site_url('TenagakerjaController/getLv4Option/')?>`, 'type': 'GET',
-      data: {id_lv3 : TenagakerjaModal.id_lv3.val() },
-      success: function (data){
-        var json = JSON.parse(data);
-        if(json['error']){
-          return;
-        }
-        dataLv4 = json['data'];
-        dataLv4 = json['data'];
-        if(dataLv4 == ''){        
-            TenagakerjaModal.id_lv4.hide();         
-           TenagakerjaModal.id_lv4.prop('disabled',true)
-        }else{
-            renderLv4Selection(dataLv4);
-            TenagakerjaModal.id_lv4.prop('disabled',false)
-            TenagakerjaModal.id_lv4.show();          
-        }
-      },
-      error: function(e) {}
-    });
-  }
+    $('#form_sertifikasi_tenagakerja').submit(function(e){
+    console.log('upload berjalan')
+      e.preventDefault(); 
+            $.ajax({
+                url:`<?=site_url('TenagakerjaController/do_upload_sertifikasi')?>`,
+                type:"post",
+                data:new FormData(this),
+                processData:false,
+                contentType:false,
+                cache:false,
+                async:false,
+                success: function(data){    
+                getTenagakerja()
+                TenagakerjaModal.saveEditBtn.show();
+                TenagakerjaModal.self.modal('hide');
 
-    TenagakerjaModal.id_lv1.on('change', function(e){        
-      getLv2Option();
+              }
+            }); 
     });
-
-    TenagakerjaModal.id_lv2.on('change', function(e){
-        getLv3Option(); 
-    });
-    TenagakerjaModal.id_lv3.on('change', function(e){
-        getLv4Option(); 
-    });
-
-
-   function renderPendidikanSelection(data){
-    TenagakerjaModal.id_pendidikan.empty();
-    TenagakerjaModal.id_pendidikan.append($('<option>', { value: "", text: "-- Pilih Pendidikan--"}));
-    Object.values(data).forEach((d) => {
-      TenagakerjaModal.id_pendidikan.append($('<option>', {
-        value: d['id_pendidikan'],
-        text: d['id_pendidikan'] + ' :: ' + d['nama_pendidikan'],
-      }));
-     
-      });
-    }
-
-   function renderLv1Selection(data){
-    TenagakerjaModal.id_lv1.empty();
-    TenagakerjaModal.id_lv1.append($('<option>', { value: "", text: "-- Pilih --"}));
-    Object.values(data).forEach((d) => {
-      TenagakerjaModal.id_lv1.append($('<option>', {
-        value: d['id_lv1'],
-        text: d['id_lv1'] + ' :: ' + d['nama_lv1'],
-      }));
-     
-    });
-    }
-
-   function renderLv2Selection(data){
-       
-    TenagakerjaModal.id_lv2.empty();
-    TenagakerjaModal.id_lv2.append($('<option>', { value: "", text: "-- Pilih --"})); 
-    Object.values(data).forEach((d) => {
-      TenagakerjaModal.id_lv2.append($('<option>', {
-        value: d['id_lv2'],
-        text:  d['nama_lv2'],
-      }));
-    });
-    }
-    function renderLv3Selection(data){
-        TenagakerjaModal.id_lv3.empty();
-        TenagakerjaModal.id_lv3.append($('<option>', { value: "", text: "-- Pilih --"}));
-    
-            Object.values(data).forEach((d) => {
-        TenagakerjaModal.id_lv3.append($('<option>', {
-            value: d['id_lv3'],
-            text:  d['nama_lv3'],
-        }));
-        });
-    }
-   function renderLv4Selection(data){
-    TenagakerjaModal.id_lv4.empty();
-     TenagakerjaModal.id_lv4.append($('<option>', { value: "", text: "-- Pilih --"}));
-   
-        Object.values(data).forEach((d) => {
-      TenagakerjaModal.id_lv4.append($('<option>', {
-        value: d['id_lv4'],
-        text:  d['nama_lv4'],
-      }));
-    });
-   }
-    getAllKabupaten();  
-    function getAllKabupaten(){
-        return $.ajax({
-        url: `<?php echo site_url('AdminController/getAllKabupaten/')?>`, 'type': 'GET',
-        data: {},
-        success: function (data){
-            var json = JSON.parse(data);
-            if(json['error']){
-            return;
-            }
-            dataKabupaten = json['data'];
-            renderKabupatenSelection(dataKabupaten);
-        },
-        error: function(e) {}
-        });
-    }
-
-  function renderKabupatenSelection(data){
-    TenagakerjaModal.kabupaten.empty();
-    TenagakerjaModal.kabupaten.append($('<option>', { value: "", text: "-- Pilih Kabupaten --"}));
-    Object.values(data).forEach((d) => {
-      TenagakerjaModal.kabupaten.append($('<option>', {
-        value: d['id_kabupaten'],
-        text: d['id_kabupaten'] + ' :: ' + d['nama_kabupaten'],
-      }));
-    });
-  }
-
-  function getTenagakerja(){
-    buttonLoading(toolbar.showBtn);
-    $.ajax({
-      url: `<?=site_url('TenagakerjaController/getAllTenagakerja')?>`, 'type': 'GET',
-      data: {},
-      success: function (data){
-        buttonIdle(toolbar.showBtn);
-        var json = JSON.parse(data);
-        if(json['error']){
-          swal("Simpan Gagal", json['message'], "error");
-          return;
-        }
-        dataTenagakerja = json['data'];
-        renderTenagakerja(dataTenagakerja);
-      },
-      error: function(e) {}
-    });
-  }
 
   function renderTenagakerja(data){
     if(data == null || typeof data != "object"){
@@ -496,17 +373,22 @@ $(document).ready(function() {
       var deleteButton = `
         <a class="delete dropdown-item" data-id='${tenagakerja['id_sdm']}'><i class='fa fa-trash'></i> Hapus Tenaga Kerja</a>
       `;
+      if(tenagakerja['photo'] == "" || tenagakerja['photo'] == null){    
+        tmp = `<?= base_url('upload/profile_small.jpg')?>`;
+      }else{
+        tmp = `<?= base_url('upload/photo_tenaga_kerja/')?>`+tenagakerja['photo'];
+      };
+      var imgtk = `<img class="cover" src="${tmp}" style='height: 100px; width: 80px;'>`;
       var button = `
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
-          ${detailButton}
             ${editButton}
             ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([ tenagakerja['nama_sdm'], tenagakerja['nama_lv1'],tenagakerja['nama_kabupaten'], tenagakerja['nama_sertifikasi'], button]);
+      renderData.push([ tenagakerja['nama_sdm'],imgtk, tenagakerja['nama_lv1'],tenagakerja['nama_kabupaten'], tenagakerja['nama_sertifikasi'],tenagakerja['nama_pelatihan'], button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
@@ -541,6 +423,52 @@ $(document).ready(function() {
     TenagakerjaModal.no_hp.val(tenagakerja['no_hp']);
     TenagakerjaModal.no_ktp.val(tenagakerja['no_ktp']);
     TenagakerjaModal.kabupaten.val(tenagakerja['id_kabupaten']);
+    document.getElementById("id_tenagakerjax").value = tenagakerja['id_sdm'];
+    document.getElementById("photo_tenagakerja").value = tenagakerja['photo'];
+    document.getElementById("id_tenagakerjay").value = tenagakerja['id_sdm'];
+    document.getElementById("old_doc_pelatihan").value = tenagakerja['doc_pelatihan'];
+    document.getElementById("id_tenagakerjaz").value = tenagakerja['id_sdm'];
+    document.getElementById("old_doc_sertifikasi").value = tenagakerja['doc_sertifikasi'];
+    if(tenagakerja['id_sertifikasi']=='1'){
+      $('#form_sertifikasi_tenagakerja').show()
+    }else{
+      $('#form_sertifikasi_tenagakerja').hide()
+    }
+    if(tenagakerja['id_pelatihan']=='1'){
+      $('#form_pelatihan_tenagakerja').show()
+    }else{
+      $('#form_pelatihan_tenagakerja').hide()
+    }
+   
+
+  if(tenagakerja['photo'] == "" || tenagakerja['photo'] == null){
+    document.getElementById("imgtenagakerja").src = `<?= base_url('upload/profile_small.jpg')?>`;
+  }else{
+    document.getElementById("imgtenagakerja").src = `<?= base_url('upload/photo_tenaga_kerja/')?>`+tenagakerja['photo'];
+  };
+
+  if(tenagakerja['doc_pelatihan'] == "" || tenagakerja['doc_pelatihan'] == null){
+    document.getElementById("framepelatihan").innerHTML = `<h4>Dokumen Pelatihan</h4> <h6>BELUM ADA DOKUMEN</h6>`;
+  }else{
+    urlpelatihan = `<?=base_url('upload/pelatihan_tenaga_kerja/')?>`+tenagakerja['doc_pelatihan'];
+    document.getElementById("framepelatihan").innerHTML = ` <h4>Dokumen Pelatihan</h4> <iframe id="iframepdf" src="${urlpelatihan}" width = "100%" height = "400px"></iframe>`;
+  };
+
+    if(tenagakerja['doc_sertifikasi'] == "" || tenagakerja['doc_sertifikasi'] == null){
+    document.getElementById("framesertifikasi").innerHTML = `<h4>Dokumen Sertifikasi</h4> <h6>BELUM ADA DOKUMEN</h6>`;
+  }else{
+    urlpelatihan = `<?=base_url('upload/sertifikasi_tenaga_kerja/')?>`+tenagakerja['doc_sertifikasi'];
+    document.getElementById("framesertifikasi").innerHTML = `<h4>Dokumen Sertifikasi</h4> <iframe id="iframepdf" src="${urlpelatihan}" width = "100%" height = "400px"></iframe>`;
+  };
+          $('#tab-1-reg').removeClass()
+          $('#tab-1-x').removeClass()
+          $('#tab-2-reg').removeClass()
+          
+          $('#tab-1-reg').addClass('nav-link active')
+          $('#tab-1-reg').addClass('nav-link active')
+          $('#tab-1-x').addClass('tab-pane active')
+          $('#tab-2-reg').addClass('nav-link');
+          $('#tab-2-x').addClass('tab-pane')
   });
 
   FDataTable.on('click','.delete', function(){
@@ -601,8 +529,19 @@ $(document).ready(function() {
           }
           var tenagakerja = json['data']
           dataTenagakerja[tenagakerja['id_sdm']] = tenagakerja;
-          swal("Simpan Berhasil", "", "success");
+          swal("Simpan Berhasil, Harap Melengkapi Dokumen!", "", "success");
           renderTenagakerja(dataTenagakerja);
+          // $('#tab-1-reg').removeClass()
+          // $('#tab-1-x').removeClass()
+          // $('#tab-2-reg').removeClass()
+          // $('#tab-2-x').removeClass()
+      
+          // $('#tab-2-reg').addClass('nav-link active')
+          // $('#tab-2-x').addClass('tab-pane active')
+          // $('#tab-1-reg').addClass('nav-link');
+          // $('#tab-1-x').addClass('tab-pane')
+          // TenagakerjaModal.addBtn.hide();
+          TenagakerjaModal.saveEditBtn.show();
           TenagakerjaModal.self.modal('hide');
         },
         error: function(e) {}
@@ -742,6 +681,329 @@ $(document).ready(function() {
             TenagakerjaModal.id_lv4.show();  
             TenagakerjaModal.id_lv4.val(ten['id_lv4']);          
         }
+      },
+      error: function(e) {}
+    });
+  }
+  getPendidikanOption();  
+  function getPendidikanOption(){
+    return $.ajax({
+      url: `<?php echo site_url('TenagakerjaController/getPendidikanOption/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataPendidikan = json['data'];
+        renderPendidikanSelection(dataPendidikan);
+      },
+      error: function(e) {}
+    });
+   
+  }
+  getJeniskelaminOption();  
+  function getJeniskelaminOption(){
+    return $.ajax({
+      url: `<?php echo site_url('TenagakerjaController/getJeniskelaminOption/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataJK = json['data'];
+        renderJeniskelaminSelection(dataJK);
+      },
+      error: function(e) {}
+    });
+   
+  }
+  getPelatihanOption();  
+  function getPelatihanOption(){
+    return $.ajax({
+      url: `<?php echo site_url('TenagakerjaController/getPelatihanOption/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataPelatihan = json['data'];
+        renderPelatihanSelection(dataPelatihan);
+      },
+      error: function(e) {}
+    });
+   
+  }
+  getSertifikasiOption();  
+  function getSertifikasiOption(){
+    return $.ajax({
+      url: `<?php echo site_url('TenagakerjaController/getSertifikasiOption/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataSertifikasi = json['data'];
+        renderSertifikasiSelection(dataSertifikasi);
+      },
+      error: function(e) {}
+    });
+   
+  }
+
+
+  getLv1Option();  
+  function getLv1Option(){
+    return $.ajax({
+      url: `<?php echo site_url('TenagakerjaController/getLv1Option/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataLv1 = json['data'];
+        renderLv1Selection(dataLv1);
+      },
+      error: function(e) {}
+    });
+   
+  }
+
+  
+  function getLv2Option(){
+    return $.ajax({
+      url: `<?php echo site_url('TenagakerjaController/getLv2Option/')?>`, 'type': 'GET',
+      data: {id_lv1 : TenagakerjaModal.id_lv1.val() },
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+
+        dataLv2 = json['data'];
+        if(dataLv2 == ''){
+           TenagakerjaModal.id_lv2.hide();
+           TenagakerjaModal.id_lv3.hide();
+           TenagakerjaModal.id_lv4.hide();
+           TenagakerjaModal.id_lv2.prop('disabled',true)
+           TenagakerjaModal.id_lv3.prop('disabled',true)
+           TenagakerjaModal.id_lv4.prop('disabled',true)
+        }else{
+            renderLv2Selection(dataLv2);
+            
+            TenagakerjaModal.id_lv2.show();  
+            TenagakerjaModal.id_lv2.prop('disabled',false)
+            TenagakerjaModal.id_lv3.prop('disabled',true)
+            TenagakerjaModal.id_lv4.prop('disabled',true) 
+            TenagakerjaModal.id_lv3.hide();
+            TenagakerjaModal.id_lv4.hide();       
+        }
+
+      },
+      error: function(e) {}
+    });
+  }
+
+  function getLv3Option(){
+    return $.ajax({
+      url: `<?php echo site_url('TenagakerjaController/getLv3Option/')?>`, 'type': 'GET',
+      data: {id_lv2 : TenagakerjaModal.id_lv2.val() },
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataLv3 = json['data'];
+        dataLv3 = json['data'];
+        if(dataLv3 == ''){
+            
+            TenagakerjaModal.id_lv3.hide();
+            TenagakerjaModal.id_lv4.hide();          
+           TenagakerjaModal.id_lv3.prop('disabled',true)
+           TenagakerjaModal.id_lv4.prop('disabled',true)
+        }else{
+            renderLv3Selection(dataLv3);
+            TenagakerjaModal.id_lv3.show();     
+            TenagakerjaModal.id_lv3.prop('disabled',false)
+            TenagakerjaModal.id_lv4.hide(); 
+            TenagakerjaModal.id_lv4.prop('disabled',true)    
+        }
+      },
+      error: function(e) {}
+    });
+  }
+  function getLv4Option(){
+    return $.ajax({
+      url: `<?php echo site_url('TenagakerjaController/getLv4Option/')?>`, 'type': 'GET',
+      data: {id_lv3 : TenagakerjaModal.id_lv3.val() },
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataLv4 = json['data'];
+        dataLv4 = json['data'];
+        if(dataLv4 == ''){        
+            TenagakerjaModal.id_lv4.hide();         
+           TenagakerjaModal.id_lv4.prop('disabled',true)
+        }else{
+            renderLv4Selection(dataLv4);
+            TenagakerjaModal.id_lv4.prop('disabled',false)
+            TenagakerjaModal.id_lv4.show();          
+        }
+      },
+      error: function(e) {}
+    });
+  }
+
+    TenagakerjaModal.id_lv1.on('change', function(e){        
+      getLv2Option();
+    });
+
+    TenagakerjaModal.id_lv2.on('change', function(e){
+        getLv3Option(); 
+    });
+    TenagakerjaModal.id_lv3.on('change', function(e){
+        getLv4Option(); 
+    });
+
+
+   function renderPendidikanSelection(data){
+    TenagakerjaModal.id_pendidikan.empty();
+    TenagakerjaModal.id_pendidikan.append($('<option>', { value: "", text: "-- Pilih Pendidikan--"}));
+    Object.values(data).forEach((d) => {
+      TenagakerjaModal.id_pendidikan.append($('<option>', {
+        value: d['id_pendidikan'],
+        text: d['id_pendidikan'] + ' :: ' + d['nama_pendidikan'],
+      }));
+     
+      });
+    }
+    function renderJeniskelaminSelection(data){
+    TenagakerjaModal.id_jenis_kelamin.empty();
+    TenagakerjaModal.id_jenis_kelamin.append($('<option>', { value: "", text: "-- Pilih Jenis Kelamin --"}));
+    Object.values(data).forEach((d) => {
+      TenagakerjaModal.id_jenis_kelamin.append($('<option>', {
+        value: d['id_jenis_kelamin'],
+        text: d['id_jenis_kelamin'] + ' :: ' + d['nama_jenis_kelamin'],
+      }));
+     
+      });
+    }
+    function renderPelatihanSelection(data){
+    TenagakerjaModal.id_pelatihan.empty();
+    TenagakerjaModal.id_pelatihan.append($('<option>', { value: "", text: "-- Pilih Pelatihan--"}));
+    Object.values(data).forEach((d) => {
+      TenagakerjaModal.id_pelatihan.append($('<option>', {
+        value: d['id_pelatihan'],
+        text: d['id_pelatihan'] + ' :: ' + d['nama_pelatihan'],
+      }));
+     
+      });
+    }
+    function renderSertifikasiSelection(data){
+    TenagakerjaModal.id_sertifikasi.empty();
+    TenagakerjaModal.id_sertifikasi.append($('<option>', { value: "", text: "-- Pilih Sertifikasi--"}));
+    Object.values(data).forEach((d) => {
+      TenagakerjaModal.id_sertifikasi.append($('<option>', {
+        value: d['id_sertifikasi'],
+        text: d['id_sertifikasi'] + ' :: ' + d['nama_sertifikasi'],
+      }));
+     
+      });
+    }
+
+   function renderLv1Selection(data){
+    TenagakerjaModal.id_lv1.empty();
+    TenagakerjaModal.id_lv1.append($('<option>', { value: "", text: "-- Pilih --"}));
+    Object.values(data).forEach((d) => {
+      TenagakerjaModal.id_lv1.append($('<option>', {
+        value: d['id_lv1'],
+        text: d['id_lv1'] + ' :: ' + d['nama_lv1'],
+      }));
+     
+    });
+    }
+
+   function renderLv2Selection(data){
+       
+    TenagakerjaModal.id_lv2.empty();
+    TenagakerjaModal.id_lv2.append($('<option>', { value: "", text: "-- Pilih --"})); 
+    Object.values(data).forEach((d) => {
+      TenagakerjaModal.id_lv2.append($('<option>', {
+        value: d['id_lv2'],
+        text:  d['nama_lv2'],
+      }));
+    });
+    }
+    function renderLv3Selection(data){
+        TenagakerjaModal.id_lv3.empty();
+        TenagakerjaModal.id_lv3.append($('<option>', { value: "", text: "-- Pilih --"}));
+    
+            Object.values(data).forEach((d) => {
+        TenagakerjaModal.id_lv3.append($('<option>', {
+            value: d['id_lv3'],
+            text:  d['nama_lv3'],
+        }));
+        });
+    }
+   function renderLv4Selection(data){
+    TenagakerjaModal.id_lv4.empty();
+     TenagakerjaModal.id_lv4.append($('<option>', { value: "", text: "-- Pilih --"}));
+   
+        Object.values(data).forEach((d) => {
+      TenagakerjaModal.id_lv4.append($('<option>', {
+        value: d['id_lv4'],
+        text:  d['nama_lv4'],
+      }));
+    });
+   }
+    getAllKabupaten();  
+    function getAllKabupaten(){
+        return $.ajax({
+        url: `<?php echo site_url('AdminController/getAllKabupaten/')?>`, 'type': 'GET',
+        data: {},
+        success: function (data){
+            var json = JSON.parse(data);
+            if(json['error']){
+            return;
+            }
+            dataKabupaten = json['data'];
+            renderKabupatenSelection(dataKabupaten);
+        },
+        error: function(e) {}
+        });
+    }
+
+  function renderKabupatenSelection(data){
+    TenagakerjaModal.kabupaten.empty();
+    TenagakerjaModal.kabupaten.append($('<option>', { value: "", text: "-- Pilih Kabupaten --"}));
+    Object.values(data).forEach((d) => {
+      TenagakerjaModal.kabupaten.append($('<option>', {
+        value: d['id_kabupaten'],
+        text: d['id_kabupaten'] + ' :: ' + d['nama_kabupaten'],
+      }));
+    });
+  }
+
+  function getTenagakerja(){
+    buttonLoading(toolbar.showBtn);
+    $.ajax({
+      url: `<?=site_url('TenagakerjaController/getAllTenagakerja')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        buttonIdle(toolbar.showBtn);
+        var json = JSON.parse(data);
+        if(json['error']){
+          swal("Simpan Gagal", json['message'], "error");
+          return;
+        }
+        dataTenagakerja = json['data'];
+        renderTenagakerja(dataTenagakerja);
       },
       error: function(e) {}
     });

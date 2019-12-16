@@ -6,10 +6,11 @@ class DetailSaranaprasaranaModel extends CI_Model {
 	
 	public function getProfil($filter){
 	
-		$this->db->select('*');
+		$this->db->select('sp.*,jp.*,kab.nama_kabupaten');
 		$this->db->from('senibudaya_saranaprasarana as sp');
 		$this->db->where("id_saranaprasarana",$filter['id_saranaprasarana']);
         $this->db->join("jenis_saranaprasarana as jp", "jp.id_jenis_saranaprasarana = sp.id_jenis_saranaprasarana");
+		$this->db->join("kabupaten as kab", "kab.id_kabupaten = sp.id_kabupaten");
 		
 	//	$this->db->join("j_saranaprasarana as js", "js.id_j_saranaprasarana = cb.id_j_saranaprasarana");
 	//	$this->db->join("j2_saranaprasarana as j2s", "j2s.id_j2_saranaprasarana = cb.id_j2_saranaprasarana");	
@@ -19,8 +20,9 @@ class DetailSaranaprasaranaModel extends CI_Model {
 		}
 
 		public function approv($data){
+			$data['tanggal_approv'] = date('Y-m-d');
 			$data['id_user_approv'] = $this->session->userdata('id_user');
-			$this->db->set(DataStructure::slice($data, ['id_user_approv']));
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
 			$this->db->where('id_saranaprasarana', $data['id_saranaprasarana']);
 			$this->db->update('senibudaya_saranaprasarana');
 	
@@ -159,8 +161,7 @@ class DetailSaranaprasaranaModel extends CI_Model {
 
 	public function editDetailSaranaprasarana($data){
         $data['id_user_entry'] = $this->session->userdata('id_user');
-        $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
-		$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_saranaprasarana','lokasi','deskripsi','alamat','id_user_entry']));
+       	$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_saranaprasarana','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_saranaprasarana', $data['id_saranaprasarana']);
 		$this->db->update('senibudaya_saranaprasarana');
 

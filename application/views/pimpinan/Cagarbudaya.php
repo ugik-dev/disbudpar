@@ -5,9 +5,9 @@
 
         <!-- <button type="submit" class="btn btn-success my-1 mr-sm-2" id="statistik_btn"  data-loading-text="Loading..." onclick="this.form.target='statistik'"><i class="fal fa-eye"></i> Statistik Data</button>  -->
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
-        <!-- <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
-        <button type="submit" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..." onclick="this.form.target='export'"><i class="fal fa-download"></i> Export Ecxel</button>
-     -->
+        <button hidden type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
+    
       </form>
     </div>
   </div>
@@ -21,8 +21,10 @@
               <thead>
                 <tr>
 
-                  <th style="width: 20%; text-align:center!important">Nama Cagarbudaya</th>
-                  <th style="width: 12%; text-align:center!important">Jenis Cagarbudaya</th>
+                  <th style="width: 20%; text-align:center!important">Nama Cagar Budaya</th>
+                  
+                  <th style="width: 12%; text-align:center!important">Jenis Cagar Budaya</th>
+                 
                   <th style="width: 12%; text-align:center!important">Kepemilikan</th>
                   <th style="width: 12%; text-align:center!important">Status Penetapan</th>
                   <th style="width: 12%; text-align:center!important">Approval</th>
@@ -71,7 +73,7 @@
     <div class="modal-content animated fadeIn">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Kelola Cagarbudaya</h4>
+        <h4 class="modal-title">Kelola Cagar Budaya</h4>
         <span class="info"></span>
       </div>
       <div class="modal-body" id="modal-body">              
@@ -81,6 +83,7 @@
             <label for="nama">Nama Cagarbudaya</label> 
             <input type="text" placeholder="Nama Cagarbudaya" class="form-control" id="nama" name="nama" required="required">
           </div>
+         
           <div class="form-group">
             <label for="jenis">Jenis Cagar budaya</label> 
             <select class="form-control mr-sm-2" id="jenis" name="id_jenis_cagarbudaya" required="required">
@@ -106,7 +109,8 @@
           </div>
           <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
-            <input type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required">
+            <textarea rows="3" type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required">
+            </textarea>
           </div>
 
 
@@ -131,7 +135,7 @@ $(document).ready(function() {
     'form': $('#toolbar_form'),
     'showBtn': $('#show_btn'),
     'addBtn': $('#add_btn'),
-    'exportBtn': $('#export_btn'),
+   
  
   }
 
@@ -156,6 +160,7 @@ $(document).ready(function() {
     'id_cagarbudaya': $('#cagarbudaya_modal').find('#id_cagarbudaya'),
     'nama': $('#cagarbudaya_modal').find('#nama'),
     'jenis': $('#cagarbudaya_modal').find('#jenis'),
+   
     'kepemilikan': $('#cagarbudaya_modal').find('#kepemilikan'),
     'status_penetapan': $('#cagarbudaya_modal').find('#status_penetapan'),
     'file': $('#cagarbudaya_modal').find('#file'),
@@ -199,7 +204,7 @@ $(document).ready(function() {
         showCagarbudayaModal();
         break;
       case 'export':
-        getExport();
+     
       break;
     }
   });
@@ -249,11 +254,12 @@ $(document).ready(function() {
           return;
         }
         dataStatusPenetapan = json['data'];
-        renderStatusPenetapanSelection(dataStatusPenetapan);
+       renderStatusPenetapanSelection(dataStatusPenetapan);
       },
       error: function(e) {}
     });
   }
+
 
   function renderJenisSelection(data){
     CagarbudayaModal.jenis.empty();
@@ -288,25 +294,8 @@ $(document).ready(function() {
     });
   }
   
+  document.getElementById("export_btn").href = '<?= site_url('PimpinanController/Pdfallcagarbudaya?id_cagarbudaya=')?>'+id_cagarbudaya;
 
-  function getExport(){
-    buttonLoading(toolbar.exportBtn);
-    $.ajax({
-      url: `<?=site_url('ExportController/export')?>`, 'type': 'GET',
-      data: {},
-      success: function (data){
-        buttonIdle(toolbar.exportBtn);
-        var json = JSON.parse(data);
-        if(json['error']){
-          swal("Simpan Gagal", json['message'], "error");
-          return;
-        }
-        dataexportCagarbudaya = json['data'];
-      //  renderStatistikCagarbudaya(dataStatistikCagarbudaya);
-      },
-      error: function(e) {}
-    });
-  }
 
   function getCagarbudaya(){
     buttonLoading(toolbar.showBtn);
@@ -347,21 +336,22 @@ $(document).ready(function() {
       <a class="detail dropdown-item" href='<?=site_url()?>PimpinanController/DetailCagarbudaya?id_cagarbudaya=${cagarbudaya['id_cagarbudaya']}'><i class='fa fa-share'></i> Detail Cagarbudaya</a>
       `;  
       var editButton = `
-        <a class="edit dropdown-item" data-id='${cagarbudaya['id_cagarbudaya']}'><i class='fa fa-pencil'></i> Edit Cagarbudaya</a>
+        <a hidden class="edit dropdown-item" data-id='${cagarbudaya['id_cagarbudaya']}'><i class='fa fa-pencil'></i> Edit Cagarbudaya</a>
       `;
       var deleteButton = `
-        <a class="delete dropdown-item" data-id='${cagarbudaya['id_cagarbudaya']}'><i class='fa fa-trash'></i> Hapus Cagarbudaya</a>
+        <a hidden class="delete dropdown-item" data-id='${cagarbudaya['id_cagarbudaya']}'><i class='fa fa-trash'></i> Hapus Cagarbudaya</a>
       `;
       var button = `
         <div class="btn-group" role="group">
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
             ${detailButton}
-           
+            ${editButton}
+            ${deleteButton}
           </div>
         </div>
       `;
-      renderData.push([cagarbudaya['nama'], cagarbudaya['nama_jenis_cagarbudaya'], cagarbudaya['nama_kepemilikan_cagarbudaya'], cagarbudaya['nama_status_penetapan_cagarbudaya'],apprv, button]);
+      renderData.push([cagarbudaya['nama'], cagarbudaya['nama_jenis_cagarbudaya'],  cagarbudaya['nama_kepemilikan_cagarbudaya'], cagarbudaya['nama_status_penetapan_cagarbudaya'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
@@ -438,10 +428,10 @@ $(document).ready(function() {
         success: function (data){
           buttonIdle(CagarbudayaModal.addBtn);
           var json = JSON.parse(data);
-          if(json['error']){
-            swal("Simpan Gagal", json['message'], "error");
-            return;
-          }
+          // if(json['error']){
+          //   swal("Simpan Gagal", json['message'], "error");
+          //   return;
+          // }
           var cagarbudaya = json['data']
           dataCagarbudaya[cagarbudaya['id_cagarbudaya']] = cagarbudaya;
           swal("Simpan Berhasil", "", "success");

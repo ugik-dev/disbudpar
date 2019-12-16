@@ -74,9 +74,9 @@ class DetailDesawisataController extends CI_Controller {
       }else{
         for($i=1; $i <= 12; $i++){
           if(empty($data['id_data_desawisata'.$i])){      
-            $this->DetailDesawisataModel->saveTambah($data['id_desawisata'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i]);
+            $this->DetailDesawisataModel->saveTambah($data['id_desawisata'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
           }else{
-            $this->DetailDesawisataModel->saveEdit($data['id_data_desawisata'.$i],$data['id_desawisata'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i]);
+            $this->DetailDesawisataModel->saveEdit($data['id_data_desawisata'.$i],$data['id_desawisata'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
           }
         }
       }

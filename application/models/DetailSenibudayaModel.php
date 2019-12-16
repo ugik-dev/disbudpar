@@ -6,7 +6,7 @@ class DetailSenibudayaModel extends CI_Model {
 	
 	public function getProfil($filter){
 	
-		$this->db->select('*');
+		$this->db->select('cb.*,js.*,j2s.*,kab.nama_kabupaten');
 		$this->db->from('senibudaya as cb');
 		$this->db->where("id_senibudaya",$filter['id_senibudaya']);
 	
@@ -21,8 +21,9 @@ class DetailSenibudayaModel extends CI_Model {
 
 	
 		public function approv($data){
+			$data['tanggal_approv'] = date('Y-m-d');
 			$data['id_user_approv'] = $this->session->userdata('id_user');
-			$this->db->set(DataStructure::slice($data, ['id_user_approv']));
+			$this->db->set(DataStructure::slice($data, ['tanggal_approv','id_user_approv']));
 			$this->db->where('id_senibudaya', $data['id_senibudaya']);
 			$this->db->update('senibudaya');
 			

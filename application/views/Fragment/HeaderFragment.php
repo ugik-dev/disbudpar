@@ -9,7 +9,7 @@
     <title>Pariwisata BABEL | <?=$title?></title>
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClpVp19rj0I_vp0uOL7e3wpcKzGp3rFAI&callback=initMap"
     async defer></script> -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcoHcoIhaG_ygi5EIdhwt8dRNPHuYJ1mY&callback=initMap" type="text/javascript"></script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcoHcoIhaG_ygi5EIdhwt8dRNPHuYJ1mY&callback=initMap" type="text/javascript"></script> -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link href="<?=base_url('assets/')?>css/bootstrap.min.css" rel="stylesheet">
     <link href="<?=base_url('assets/')?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
@@ -19,7 +19,7 @@
     <link href="<?=base_url('assets/')?>css/style.css" rel="stylesheet">
     <link href="<?=base_url('assets/')?>css/custom.css" rel="stylesheet">
     <script src="<?=base_url('assets/')?>js/jquery-3.1.1.min.js"></script>
-    
+    <script src="<?=base_url('assets/')?>js/googlemap.js"></script>
     <script src="<?=base_url('assets/')?>js/plugins/dataTables/datatables.min.js"></script>
     <script src="<?=base_url('assets/')?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
     <script src="<?=base_url('assets/')?>js/plugins/dataTables/dataTables.rowsGroup.js"></script>
