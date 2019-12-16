@@ -169,8 +169,9 @@ class DetailObjekController extends CI_Controller {
     $config['upload_path']="./upload/file2";
     $config['allowed_types']='gif|jpg|png';
     $config['encrypt_name'] = TRUE;
-   // var_dump('anjay',$this->input->post());
-
+  
+    
+    var_dump($_FILES);
     $this->load->library('upload',$config);
     if($this->upload->do_upload("file2")){
         $data = array('upload_data' => $this->upload->data());
