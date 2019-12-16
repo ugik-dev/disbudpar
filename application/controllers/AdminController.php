@@ -475,7 +475,7 @@ class AdminController extends CI_Controller {
       
     );
     //var_dump($vb);
-    $this->load->view('admin/laporan', $pageData);
+    $this->load->view('admin/Laporan', $pageData);
   }
 
   public function PdfCagarbudaya(){
@@ -638,7 +638,7 @@ class AdminController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('admin/pdfbiro', $pageData);
+    $this->load->view('admin/Pdfbiro', $pageData);
   }
   public function PdfAllCagarbudaya(){
     $this->SecurityModel->roleOnlyGuard('admin');

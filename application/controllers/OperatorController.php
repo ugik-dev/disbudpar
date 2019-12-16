@@ -475,7 +475,7 @@ class OperatorController extends CI_Controller {
       
     );
     //var_dump($vb);
-    $this->load->view('admin/laporan', $pageData);
+    $this->load->view('admin/Laporan', $pageData);
   }
 
   public function PdfCagarbudaya(){
