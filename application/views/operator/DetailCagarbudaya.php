@@ -188,6 +188,9 @@
           <select class="dropdown-item" id="tahun_input" name="tahun_input" required="required"></select>
         </div>
         <div class="form-group mx-sm-3 mb-2" id="header_approv"> </div>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_pengunjung_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
+    
+
       </div>
         <form class="form" id="pengujung_form" onsubmit="return false;">
           <input type="hidden" id="id_cagarbudaya" name="id_cagarbudaya" readonly="readonly">
@@ -862,6 +865,8 @@ function myFunction() {
   }
 
   function getInputPengunjung(){
+  
+    document.getElementById("export_pengunjung_btn").href = '<?= site_url('OperatorController/ExportPengunjung?tb=cagarbudaya&id_data=')?>'+id_cagarbudaya+`&tahun=`+InputModal.tahun.val();
 
     console.log(toolbar.form.serialize());
     $.ajax({

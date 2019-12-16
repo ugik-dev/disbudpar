@@ -188,6 +188,8 @@
           <select class="dropdown-item" id="tahun_input" name="tahun_input" required="required"></select>
         </div>
         <div class="form-group mx-sm-3 mb-2" id="header_approv"> </div>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_pengunjung_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
+    
       </div>
       <form class="form" id="pengujung_form" onsubmit="return false;">
         <input type="hidden" id="id_penginapan" name="id_penginapan" readonly="readonly">
@@ -775,7 +777,7 @@ function myFunction() {
     };
       
     }
-
+ 
   function delPhoto(photo){
     swal(swalDelPhoto).then((result) => {
       if(!result.value){ return; }
@@ -849,7 +851,7 @@ function myFunction() {
   }
 
   function getInputPengunjung(){
-
+    document.getElementById("export_pengunjung_btn").href = '<?= site_url('OperatorController/ExportPengunjung?tb=penginapan&id_data=')?>'+id_penginapan+`&tahun=`+InputModal.tahun.val();
     console.log(toolbar.form.serialize());
     $.ajax({
       url: `<?=site_url('DetailPenginapanController/getAllDetailPenginapan')?>`, 'type': 'GET',
@@ -1181,10 +1183,12 @@ function renderInputPengunjung(data){
       }));  
       InputModal.tahun.val(d['tahun']); 
     });
+    console.log("tahun =",InputModal.tahun.val())
     getInputPengunjung();
    }
 
-     getAllJenis();  
+  
+   getAllJenis();  
   function getAllJenis(){
     return $.ajax({
       url: `<?php echo site_url('PenginapanController/getAllJenisOption/')?>`, 'type': 'GET',

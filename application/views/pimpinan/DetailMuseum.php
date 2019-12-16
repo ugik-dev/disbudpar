@@ -179,6 +179,9 @@
           <select class="dropdown-item" id="tahun_input" name="tahun_input" required="required"></select>
         </div>
         <div class="form-group mx-sm-3 mb-2" id="header_approv"> </div>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_pengunjung_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
+    
+
       </div>
       <form class="form" id="pengujung_form" onsubmit="return false;">
         <input type="hidden" id="id_museum" name="id_museum" readonly="readonly">
@@ -850,6 +853,7 @@ var swalApprovConfigure = {
   }
 
   function getInputPengunjung(){
+    document.getElementById("export_pengunjung_btn").href = '<?= site_url('PimpinanController/ExportPengunjung?tb=museum&id_data=')?>'+id_museum+`&tahun=`+InputModal.tahun.val();
 
     console.log(toolbar.form.serialize());
     $.ajax({
@@ -1126,13 +1130,10 @@ function renderInputPengunjung(data){
   }
 
   $("#tahun_input").click(function(e) {
-    if(dataProfil['id_user_approv']=='0'){
-      console.log('data belum di approv');
-      swal("Data Belum di Approv",'Harap Konformasi ke Pimpinan Untuk Approval', "error");
-    }else{
+   
       registerTahunSelectionChange();
       console.log("fungsi clik tahun aktif approv=",dataProfil['id_user_approv'] )
-    };
+   
   });
     function registerTahunSelectionChange(){
     InputModal.tahun.on('change', function(e){

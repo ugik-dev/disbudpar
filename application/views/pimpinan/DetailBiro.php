@@ -1147,13 +1147,10 @@ document.getElementById("export_pengunjung_btn").href = '<?= site_url('PimpinanC
   }
 
   $("#tahun_input").click(function(e) {
-    if(dataProfil['id_user_approv']=='0'){
-      console.log('data belum di approv');
-      swal("Data Belum di Approv",'Harap Konformasi ke Pimpinan Untuk Approval', "error");
-    }else{
+   
       registerTahunSelectionChange();
       console.log("fungsi clik tahun aktif approv=",dataProfil['id_user_approv'] )
-    };
+
   });
     function registerTahunSelectionChange(){
     InputModal.tahun.on('change', function(e){
