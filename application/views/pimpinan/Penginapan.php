@@ -73,13 +73,9 @@
             <input type="text" placeholder="File" class="form-control" id="file" name="file" required="required">
           </div>
           <div class="form-group">
-            <label for="lokasi">Lokasi</label> 
-            <input type="text" placeholder="Lokasi" class="form-control" id="lokasi" name="lokasi" required="required">
-          </div>
-          <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
-            <input type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required">
-          </div>
+            <textarea rows="4" type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required"></textarea>
+         </div>
 
 
 

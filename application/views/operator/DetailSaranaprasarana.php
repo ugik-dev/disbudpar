@@ -467,12 +467,15 @@ $('#form_uploaddokumen').submit(function(e){
 
 var map;
  // initMap();
-  function initMap() {
+ function initMap() {
+    if(dataProfil['lokasi']){
     var tmp = dataProfil['lokasi'];
     var tmp1  = tmp.split(",");
+    
+    if(!empty(tmp1[1])){
     var myLatLng = {lat: Number(tmp1[0]), lng: Number(tmp1[1])};
     map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 9,
+    zoom: 15,
     center: myLatLng
     });
     var myLatlng2 = new google.maps.LatLng(tmp1[0],tmp1[1]);
@@ -482,6 +485,8 @@ var map;
     title: dataProfil['nama']
     }); 
   }
+  }
+}
 
 //======
 

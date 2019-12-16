@@ -499,9 +499,12 @@ $('#form_uploaddokumen').submit(function(e){
 
 var map;
  // initMap();
-  function initMap() {
+ function initMap() {
+    if(dataProfil['lokasi']){
     var tmp = dataProfil['lokasi'];
     var tmp1  = tmp.split(",");
+    
+    if(!empty(tmp1[1])){
     var myLatLng = {lat: Number(tmp1[0]), lng: Number(tmp1[1])};
     map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
@@ -514,7 +517,8 @@ var map;
     title: dataProfil['nama']
     }); 
   }
-
+  }
+}
 //======
 
 
@@ -643,7 +647,8 @@ function myFunction() {
       success: function (data){
         var json = JSON.parse(data);
         dataProfil = json['data'];
-        initMap();
+         initMap();
+
         var nama = document.getElementById("namaobjek");
         var alamat = document.getElementById("alamat");
        

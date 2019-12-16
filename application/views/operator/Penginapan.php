@@ -69,20 +69,9 @@
             <input type="number" placeholder="Jumlah Tempat Tidur" class="form-control" id="jumlah_tempat_tidur" name="jumlah_tempat_tidur" required="required">
           </div>
           <div class="form-group">
-            <label for="file">File</label> 
-            <input type="text" placeholder="File" class="form-control" id="file" name="file" required="required">
-          </div>
-          <div class="form-group">
-            <label for="lokasi">Lokasi</label> 
-            <input type="text" placeholder="Lokasi" class="form-control" id="lokasi" name="lokasi" required="required">
-          </div>
-          <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
-            <input type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required">
-          </div>
-
-
-
+            <textarea rows="4" type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required"></textarea>
+               </div>
           <button class="btn btn-success my-1 mr-sm-2" type="submit" id="add_btn" data-loading-text="Loading..." onclick="this.form.target='add'"><strong>Tambah Data</strong></button>
           <button class="btn btn-success my-1 mr-sm-2" type="submit" id="save_edit_btn" data-loading-text="Loading..." onclick="this.form.target='edit'"><strong>Simpan Perubahan</strong></button>
         </form>

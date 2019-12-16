@@ -444,7 +444,7 @@ class OperatorController extends CI_Controller {
       'vp' => $vp,
       'vb' => $vb,
       'title' => 'Laporan',
-      'content' => 'operator/LaporanPariwisata',
+      'content' => 'admin/LaporanPariwisata',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -475,7 +475,7 @@ class OperatorController extends CI_Controller {
       
     );
     //var_dump($vb);
-    $this->load->view('operator/Laporan', $pageData);
+    $this->load->view('admin/Laporan', $pageData);
   }
 
   public function PdfCagarbudaya(){
