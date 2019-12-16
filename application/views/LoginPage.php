@@ -5,7 +5,9 @@
     <div class="row">
       <div class="col-md-8">
           <div class="row">
-            <img class="col-md-3" src="<?php echo base_url('assets/img/logo-babel.png');?>" >
+          <div class="col-md-3 col-sm-12">
+            <img  src="<?php echo base_url('assets/img/logo-babel.png');?>" style="width : 100%; height: auto" >
+          </div>
             <div class="col-md-9">
               <h1 class="display-4 shadowed">DINAS KEBUDAYAAN DAN PARIWISATA</h1>
               <p class="lead shadowed">Provinsi Kepulauan Bangka Belitung</p>
