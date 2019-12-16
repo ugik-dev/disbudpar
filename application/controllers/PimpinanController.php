@@ -5,7 +5,7 @@ class PimpinanController extends CI_Controller {
 
   public function __construct(){
     parent::__construct();
-
+    $this->load->model(array('PimpinanModel'));
     $this->load->model(array('DesawisataModel'));
     $this->load->model(array('DetailDesawisataModel'));
     $this->load->model(array('ObjekModel'));
@@ -102,65 +102,6 @@ class PimpinanController extends CI_Controller {
 		);
     $this->load->view('Page', $pageData);
   }
-  public function ExportPengunjung(){
-    $this->SecurityModel->roleOnlyGuard('pimpinan');
-    $getdata = $this->input->get();
-  
-
-
-    if($getdata['tb']=='objek'){
-    $filter['id_objek']=$getdata['id_data'];
-    $data_profil=$this->DetailObjekModel->getProfil($filter);
-    $header_pdf = 'Daya Tarik Wisata';
-    }else if($getdata['tb']=='penginapan'){
-      $filter['id_penginapan']=$getdata['id_data'];
-      $data_profil=$this->DetailPenginapanModel->getProfil($filter);
-      $header_pdf = 'Penginapan';
-    }else if($getdata['tb']=='cagarbudaya'){
-      $filter['id_cagarbudaya']=$getdata['id_data'];
-      $data_profil=$this->DetailCagarbudayaModel->getProfil($filter);
-      $header_pdf = 'Cagar dan Budaya';
-    }else if($getdata['tb']=='museum'){
-      $filter['id_museum']=$getdata['id_data'];
-      $data_profil=$this->DetailMuseumModel->getProfil($filter);
-      $header_pdf = 'Museum';
-    }else if($getdata['tb']=='desawisata'){
-      $filter['id_desawisata']=$getdata['id_data'];
-      $data_profil=$this->DetailDesawisataModel->getProfil($filter);
-      $header_pdf = 'Desa Wisata';
-    }else if($getdata['tb']=='biro'){
-      $filter['id_biro']=$getdata['id_data'];
-      $data_profil=$this->DetailBiroModel->getProfil($filter);
-      $header_pdf = 'Biro dan Agen Wisata';
-    }else if($getdata['tb']=='usaha'){
-      $filter['id_usaha']=$getdata['id_data'];
-      $data_profil=$this->DetailUsahaModel->getProfil($filter);
-      $header_pdf = 'Usaha dan Jasa';
-    };
-    
-    $filter['id_user']=$data_profil['id_user_entry'];
-    $entry=$this->DetailCagarbudayaModel->getUser($filter);
-    //var_dump($approv);
-    if($data_profil['id_user_approv']=='0'){ 
-      $approv['nama'] = 'Data Belum Approv';
-    }else{
-      $filter['id_user']=$data_profil['id_user_approv'];
-      $approv=$this->DetailCagarbudayaModel->getUser($filter);
-    };
-   
-
-    $pageData = array(
-      'getdata' => $getdata,
-       'data' => $this->PengunjungModel->getPengunjung($getdata),
-       'data_profil' => $data_profil,
-       'header' => $header_pdf,
-      'nama_approv' => $approv['nama'],
-      'nama_entry' => $entry['nama'],
-      'tahun' => $getdata['tahun']
-     );
-    $this->load->view('PdfPengunjung', $pageData);
-  }
-
   public function Desawisata(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
 		$pageData = array(
@@ -185,11 +126,11 @@ class PimpinanController extends CI_Controller {
     $this->load->view('Page', $pageData);
   }
 
-  public function cagarbudaya(){
+  public function Cagarbudaya(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
 		$pageData = array(
 			'title' => 'Cagar dan Budaya',
-      'content' => 'pimpinan/cagarbudaya',
+      'content' => 'pimpinan/Cagarbudaya',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -356,7 +297,7 @@ class PimpinanController extends CI_Controller {
     $this->SecurityModel->roleOnlyGuard('pimpinan');
     $pageData = array(
       'title' => 'Seni dan Budaya',
-      'content' => 'pimpinan/senibudaya',
+      'content' => 'pimpinan/Senibudaya',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -368,7 +309,7 @@ class PimpinanController extends CI_Controller {
     $this->SecurityModel->roleOnlyGuard('pimpinan');
     $pageData = array(
       'title' => 'Pagelaran dan Pameran',
-      'content' => 'pimpinan/pagelaran',
+      'content' => 'pimpinan/Pagelaran',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -424,6 +365,65 @@ class PimpinanController extends CI_Controller {
     $this->load->view('Page', $pageData);
   }
 
+  public function ExportPengunjung(){
+    $this->SecurityModel->roleOnlyGuard('pimpinan');
+    $getdata = $this->input->get();
+  
+
+
+    if($getdata['tb']=='objek'){
+    $filter['id_objek']=$getdata['id_data'];
+    $data_profil=$this->DetailObjekModel->getProfil($filter);
+    $header_pdf = 'Daya Tarik Wisata';
+    }else if($getdata['tb']=='penginapan'){
+      $filter['id_penginapan']=$getdata['id_data'];
+      $data_profil=$this->DetailPenginapanModel->getProfil($filter);
+      $header_pdf = 'Penginapan';
+    }else if($getdata['tb']=='cagarbudaya'){
+      $filter['id_cagarbudaya']=$getdata['id_data'];
+      $data_profil=$this->DetailCagarbudayaModel->getProfil($filter);
+      $header_pdf = 'Cagar dan Budaya';
+    }else if($getdata['tb']=='museum'){
+      $filter['id_museum']=$getdata['id_data'];
+      $data_profil=$this->DetailMuseumModel->getProfil($filter);
+      $header_pdf = 'Museum';
+    }else if($getdata['tb']=='desawisata'){
+      $filter['id_desawisata']=$getdata['id_data'];
+      $data_profil=$this->DetailDesawisataModel->getProfil($filter);
+      $header_pdf = 'Desa Wisata';
+    }else if($getdata['tb']=='biro'){
+      $filter['id_biro']=$getdata['id_data'];
+      $data_profil=$this->DetailBiroModel->getProfil($filter);
+      $header_pdf = 'Biro dan Agen Wisata';
+    }else if($getdata['tb']=='usaha'){
+      $filter['id_usaha']=$getdata['id_data'];
+      $data_profil=$this->DetailUsahaModel->getProfil($filter);
+      $header_pdf = 'Usaha dan Jasa';
+    };
+    
+    $filter['id_user']=$data_profil['id_user_entry'];
+    $entry=$this->DetailCagarbudayaModel->getUser($filter);
+    //var_dump($approv);
+    if($data_profil['id_user_approv']=='0'){ 
+      $approv['nama'] = 'Data Belum Approv';
+    }else{
+      $filter['id_user']=$data_profil['id_user_approv'];
+      $approv=$this->DetailCagarbudayaModel->getUser($filter);
+    };
+   
+
+    $pageData = array(
+      'getdata' => $getdata,
+       'data' => $this->PengunjungModel->getPengunjung($getdata),
+       'data_profil' => $data_profil,
+       'header' => $header_pdf,
+      'nama_approv' => $approv['nama'],
+      'nama_entry' => $entry['nama'],
+      'tahun' => $getdata['tahun']
+     );
+    $this->load->view('PdfPengunjung', $pageData);
+  }
+
   public function LaporanPariwisata(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
     $tahun=$this->LaporanModel->getTahun();
@@ -444,7 +444,7 @@ class PimpinanController extends CI_Controller {
       'vp' => $vp,
       'vb' => $vb,
       'title' => 'Laporan',
-      'content' => 'admin/LaporanPariwisata',
+      'content' => 'pimpinan/LaporanPariwisata',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -475,9 +475,8 @@ class PimpinanController extends CI_Controller {
       
     );
     //var_dump($vb);
-    $this->load->view('admin/laporan', $pageData);
+    $this->load->view('pimpinan/Laporan', $pageData);
   }
-
 
   public function PdfCagarbudaya(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -494,7 +493,7 @@ class PimpinanController extends CI_Controller {
     'entry' => $entry['nama'],
     'kabupaten' => $kabupaten
     );
-    $this->load->view('pimpinan/pdfcagarbudaya', $pageData);
+    $this->load->view('pimpinan/Pdfcagarbudaya', $pageData);
   }
   public function PdfSaranaprasarana(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -510,7 +509,7 @@ class PimpinanController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('pimpinan/pdfsaranaprasarana', $pageData);
+    $this->load->view('pimpinan/Pdfsaranaprasarana', $pageData);
   }
   public function PdfDesawisata(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -526,7 +525,7 @@ class PimpinanController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('pimpinan/pdfdesawisata', $pageData);
+    $this->load->view('pimpinan/Pdfdesawisata', $pageData);
   } 
   public function PdfMuseum(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -542,7 +541,7 @@ class PimpinanController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('pimpinan/pdfmuseum', $pageData);
+    $this->load->view('pimpinan/Pdfmuseum', $pageData);
   } 
   public function PdfPenginapan(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -558,7 +557,7 @@ class PimpinanController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('pimpinan/pdfpenginapan', $pageData);
+    $this->load->view('pimpinan/Pdfpenginapan', $pageData);
   }
   public function PdfObjek(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -574,7 +573,7 @@ class PimpinanController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('pimpinan/pdfobjek', $pageData);
+    $this->load->view('pimpinan/Pdfobjek', $pageData);
   }
   
   public function PdfPemugaran(){
@@ -591,7 +590,7 @@ class PimpinanController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('pimpinan/pdfpemugaran', $pageData);
+    $this->load->view('pimpinan/Pdfpemugaran', $pageData);
   }
   public function PdfPagelaran(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -607,7 +606,7 @@ class PimpinanController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('pimpinan/pdfpagelaran', $pageData);
+    $this->load->view('pimpinan/Pdfpagelaran', $pageData);
   }
   public function PdfSenibudaya(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -623,7 +622,7 @@ class PimpinanController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('pimpinan/pdfsenibudaya', $pageData);
+    $this->load->view('pimpinan/Pdfsenibudaya', $pageData);
   }
   public function PdfBiro(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -639,7 +638,7 @@ class PimpinanController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('pimpinan/pdfbiro', $pageData);
+    $this->load->view('pimpinan/Pdfbiro', $pageData);
   }
   public function PdfAllCagarbudaya(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -648,7 +647,7 @@ class PimpinanController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('pimpinan/PdfAllCagarbudaya', $pageData);
+    $this->load->view('pimpinan/Pdfallcagarbudaya', $pageData);
   }
   public function PdfAllMuseum(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -657,7 +656,7 @@ class PimpinanController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('pimpinan/PdfAllMuseum', $pageData);
+    $this->load->view('pimpinan/Pdfallmuseum', $pageData);
   }
   public function PdfAllBiro(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -666,7 +665,7 @@ class PimpinanController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('pimpinan/PdfAllBiro', $pageData);
+    $this->load->view('pimpinan/Pdfallbiro', $pageData);
   }
   public function PdfAllUsaha(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -675,7 +674,7 @@ class PimpinanController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('pimpinan/PdfAllUsaha', $pageData);
+    $this->load->view('pimpinan/Pdfallusaha', $pageData);
   }
   
   public function PdfAllPemugaran(){
@@ -685,7 +684,7 @@ class PimpinanController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('pimpinan/PdfAllpemugaran', $pageData);
+    $this->load->view('pimpinan/Pdfallpemugaran', $pageData);
   }
   public function PdfAllPagelaran(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -694,7 +693,7 @@ class PimpinanController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('pimpinan/pdfallpagelaran', $pageData);
+    $this->load->view('pimpinan/Pdfallpagelaran', $pageData);
   }
   public function PdfAllSaranaprasarana(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -703,7 +702,7 @@ class PimpinanController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('pimpinan/pdfallsaranaprasarana', $pageData);
+    $this->load->view('pimpinan/Pdfallsaranaprasarana', $pageData);
   }
 
   public function PdfAllSenibudaya(){
@@ -713,7 +712,7 @@ class PimpinanController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('pimpinan/pdfallsenibudaya', $pageData);
+    $this->load->view('pimpinan/Pdfallsenibudaya', $pageData);
   }
 
   public function PdfAllDesawisata(){
@@ -723,7 +722,7 @@ class PimpinanController extends CI_Controller {
     $pageData = array(
     'data' => $data, 
     );
-    $this->load->view('pimpinan/pdfalldesawisata', $pageData);
+    $this->load->view('pimpinan/Pdfalldesawisata', $pageData);
   }
   
   public function PdfAllObjek(){
@@ -734,7 +733,7 @@ class PimpinanController extends CI_Controller {
     'data' => $data,
   
     );
-    $this->load->view('pimpinan/pdfallobjek', $pageData);
+    $this->load->view('pimpinan/Pdfallobjek', $pageData);
   }
   public function PdfAllPenginapan(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -744,7 +743,7 @@ class PimpinanController extends CI_Controller {
     'data' => $data,
   
     );
-    $this->load->view('pimpinan/pdfallpenginapan', $pageData);
+    $this->load->view('pimpinan/Pdfallpenginapan', $pageData);
   }
 
   public function Kalender(){
@@ -759,7 +758,7 @@ class PimpinanController extends CI_Controller {
     $this->load->view('Page', $pageData);
   }
 
- 
+
 
   public function test(){
     $this->SecurityModel->roleOnlyGuard('pimpinan');
@@ -789,7 +788,7 @@ class PimpinanController extends CI_Controller {
     $this->SecurityModel->roleOnlyGuard('pimpinan');
     $pageData = array(
       'title' => 'Biro Wisata dan Agen',
-      'content' => 'pimpinan/biro',
+      'content' => 'pimpinan/Biro',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -801,7 +800,7 @@ class PimpinanController extends CI_Controller {
     $this->SecurityModel->roleOnlyGuard('pimpinan');
     $pageData = array(
       'title' => 'Usaha dan Jasa',
-      'content' => 'pimpinan/usaha',
+      'content' => 'pimpinan/Usaha',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),

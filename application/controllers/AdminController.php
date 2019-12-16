@@ -126,11 +126,11 @@ class AdminController extends CI_Controller {
     $this->load->view('Page', $pageData);
   }
 
-  public function cagarbudaya(){
+  public function Cagarbudaya(){
     $this->SecurityModel->roleOnlyGuard('admin');
 		$pageData = array(
 			'title' => 'Cagar dan Budaya',
-      'content' => 'admin/cagarbudaya',
+      'content' => 'admin/Cagarbudaya',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -297,7 +297,7 @@ class AdminController extends CI_Controller {
     $this->SecurityModel->roleOnlyGuard('admin');
     $pageData = array(
       'title' => 'Seni dan Budaya',
-      'content' => 'admin/senibudaya',
+      'content' => 'admin/Senibudaya',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -309,7 +309,7 @@ class AdminController extends CI_Controller {
     $this->SecurityModel->roleOnlyGuard('admin');
     $pageData = array(
       'title' => 'Pagelaran dan Pameran',
-      'content' => 'admin/pagelaran',
+      'content' => 'admin/Pagelaran',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -493,7 +493,7 @@ class AdminController extends CI_Controller {
     'entry' => $entry['nama'],
     'kabupaten' => $kabupaten
     );
-    $this->load->view('admin/pdfcagarbudaya', $pageData);
+    $this->load->view('admin/Pdfcagarbudaya', $pageData);
   }
   public function PdfSaranaprasarana(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -509,7 +509,7 @@ class AdminController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('admin/pdfsaranaprasarana', $pageData);
+    $this->load->view('admin/Pdfsaranaprasarana', $pageData);
   }
   public function PdfDesawisata(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -525,7 +525,7 @@ class AdminController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('admin/pdfdesawisata', $pageData);
+    $this->load->view('admin/Pdfdesawisata', $pageData);
   } 
   public function PdfMuseum(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -541,7 +541,7 @@ class AdminController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('admin/pdfmuseum', $pageData);
+    $this->load->view('admin/Pdfmuseum', $pageData);
   } 
   public function PdfPenginapan(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -557,7 +557,7 @@ class AdminController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('admin/pdfpenginapan', $pageData);
+    $this->load->view('admin/Pdfpenginapan', $pageData);
   }
   public function PdfObjek(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -573,7 +573,7 @@ class AdminController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('admin/pdfobjek', $pageData);
+    $this->load->view('admin/Pdfobjek', $pageData);
   }
   
   public function PdfPemugaran(){
@@ -590,7 +590,7 @@ class AdminController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('admin/pdfpemugaran', $pageData);
+    $this->load->view('admin/Pdfpemugaran', $pageData);
   }
   public function PdfPagelaran(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -606,7 +606,7 @@ class AdminController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('admin/pdfpagelaran', $pageData);
+    $this->load->view('admin/Pdfpagelaran', $pageData);
   }
   public function PdfSenibudaya(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -622,7 +622,7 @@ class AdminController extends CI_Controller {
     'approv' => $approv['nama'],
     'entry' => $entry['nama'],
     );
-    $this->load->view('admin/pdfsenibudaya', $pageData);
+    $this->load->view('admin/Pdfsenibudaya', $pageData);
   }
   public function PdfBiro(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -647,7 +647,7 @@ class AdminController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('admin/PdfAllCagarbudaya', $pageData);
+    $this->load->view('admin/Pdfallcagarbudaya', $pageData);
   }
   public function PdfAllMuseum(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -656,7 +656,7 @@ class AdminController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('admin/PdfAllMuseum', $pageData);
+    $this->load->view('admin/Pdfallmuseum', $pageData);
   }
   public function PdfAllBiro(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -665,7 +665,7 @@ class AdminController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('admin/PdfAllBiro', $pageData);
+    $this->load->view('admin/Pdfallbiro', $pageData);
   }
   public function PdfAllUsaha(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -674,7 +674,7 @@ class AdminController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('admin/PdfAllUsaha', $pageData);
+    $this->load->view('admin/Pdfallusaha', $pageData);
   }
   
   public function PdfAllPemugaran(){
@@ -684,7 +684,7 @@ class AdminController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('admin/PdfAllpemugaran', $pageData);
+    $this->load->view('admin/Pdfallpemugaran', $pageData);
   }
   public function PdfAllPagelaran(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -693,7 +693,7 @@ class AdminController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('admin/pdfallpagelaran', $pageData);
+    $this->load->view('admin/Pdfallpagelaran', $pageData);
   }
   public function PdfAllSaranaprasarana(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -702,7 +702,7 @@ class AdminController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('admin/pdfallsaranaprasarana', $pageData);
+    $this->load->view('admin/Pdfallsaranaprasarana', $pageData);
   }
 
   public function PdfAllSenibudaya(){
@@ -712,7 +712,7 @@ class AdminController extends CI_Controller {
     $pageData = array(
     'data' => $data,
     );
-    $this->load->view('admin/pdfallsenibudaya', $pageData);
+    $this->load->view('admin/Pdfallsenibudaya', $pageData);
   }
 
   public function PdfAllDesawisata(){
@@ -722,7 +722,7 @@ class AdminController extends CI_Controller {
     $pageData = array(
     'data' => $data, 
     );
-    $this->load->view('admin/pdfalldesawisata', $pageData);
+    $this->load->view('admin/Pdfalldesawisata', $pageData);
   }
   
   public function PdfAllObjek(){
@@ -733,7 +733,7 @@ class AdminController extends CI_Controller {
     'data' => $data,
   
     );
-    $this->load->view('admin/pdfallobjek', $pageData);
+    $this->load->view('admin/Pdfallobjek', $pageData);
   }
   public function PdfAllPenginapan(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -743,7 +743,7 @@ class AdminController extends CI_Controller {
     'data' => $data,
   
     );
-    $this->load->view('admin/pdfallpenginapan', $pageData);
+    $this->load->view('admin/Pdfallpenginapan', $pageData);
   }
 
   public function Kalender(){
@@ -788,7 +788,7 @@ class AdminController extends CI_Controller {
     $this->SecurityModel->roleOnlyGuard('admin');
     $pageData = array(
       'title' => 'Biro Wisata dan Agen',
-      'content' => 'admin/biro',
+      'content' => 'admin/Biro',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
@@ -800,7 +800,7 @@ class AdminController extends CI_Controller {
     $this->SecurityModel->roleOnlyGuard('admin');
     $pageData = array(
       'title' => 'Usaha dan Jasa',
-      'content' => 'admin/usaha',
+      'content' => 'admin/Usaha',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),
