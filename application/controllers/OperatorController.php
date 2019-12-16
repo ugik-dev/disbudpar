@@ -84,7 +84,7 @@ class OperatorController extends CI_Controller {
     $this->SecurityModel->roleOnlyGuard('operator');
 		$pageData = array(
 			'title' => 'Tenaga Kerja',
-      'content' => 'operator/Tenagakerja',
+      'content' => 'admin/Tenagakerja',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),

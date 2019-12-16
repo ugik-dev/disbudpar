@@ -63,7 +63,7 @@
             <label for="nama">Nama</label> 
             <input type="text" placeholder="Nama Tenaga Kerja" class="form-control" id="nama_sdm" name="nama_sdm" required="required">
           </div>
-          <div class="form-group">
+          <div class="form-group" id="x_kabupaten">
             <label for="kabupaten">Kabupaten / Kota</label> 
             <select class="form-control mr-sm-2" id="kabupaten" name="id_kabupaten" required="required">
             </select>
@@ -145,7 +145,7 @@
                       </div>
                       <div class="form-group">          
                         <label for="nama"></label> 
-                        <input type="file" placeholder="" class="form-control" name="photo" required="required">
+                        <input type="file" placeholder="" class="form-control"  id="x_photo" name="photo" required="required">
                       </div>
                       <button class="btn btn-success my-1 mr-sm-2" type="submit" id="upload_pohoto_tenagakerja_btn" data-loading-text="Loading..."><strong>Upload Foto</strong></button> * jpg  
                     </form>
@@ -161,9 +161,9 @@
                       </div>
                       <div class="form-group">          
                         <!-- <label for="nama">Dokumen Pelatihan</label>  -->
-                        <input type="file" placeholder="" class="form-control" name="doc_pelatihan" required="required">
+                        <input type="file" placeholder="" class="form-control" name="doc_pelatihan"  id="x_doc_pelatihan" required="required">
                       </div>
-                      <button class="btn btn-success my-1 mr-sm-2" type="submit" id="upload_pelatihan_tenagakerja_btn" data-loading-text="Loading..."><strong>Upload Dokumen Pelatihan</strong></button> * pdf
+                      <button  class="btn btn-success my-1 mr-sm-2" type="submit" id="upload_pelatihan_tenagakerja_btn" data-loading-text="Loading..."><strong>Upload Dokumen Pelatihan</strong></button> * pdf
                     </form>
                     <br>
                      <hr>
@@ -177,7 +177,7 @@
                       </div>
                       <div class="form-group">          
                         <!-- <label for="nama">Dokumen Sertifikasi</label>  -->
-                        <input type="file" placeholder="" class="form-control" name="doc_sertifikasi" required="required">
+                        <input type="file" placeholder="" class="form-control" id="x_doc_sertifikasi" name="doc_sertifikasi" required="required">
                         <input type="text" placeholder="Tahun Sertifikasi" class="form-control" name="tahun_sertifikasi" required="required">
                         <input type="text" placeholder="Penyelenggara Sertifikasi" class="form-control" name="penyelenggara_sertifikasi" required="required">
                       </div>
@@ -201,6 +201,9 @@
 $(document).ready(function() {
 
   $('#tenagakerja').addClass('active');
+  <?php 	if($this->session->userdata('id_role') == '3'){ ?>
+    $('#add_btn').hide();
+  <?php }  ?>
 
   var toolbar = {
     'form': $('#toolbar_form'),
@@ -224,6 +227,7 @@ $(document).ready(function() {
     'id_sdm': $('#tenagakerja_modal').find('#id_sdm'),
     'nama_sdm': $('#tenagakerja_modal').find('#nama_sdm'),
     'kabupaten': $('#tenagakerja_modal').find('#kabupaten'),
+    'x_kabupaten': $('#tenagakerja_modal').find('#x_kabupaten'),
     'id_pendidikan': $('#tenagakerja_modal').find('#id_pendidikan'),
     'no_ktp': $('#tenagakerja_modal').find('#no_ktp'),
     'no_hp': $('#tenagakerja_modal').find('#no_hp'),
@@ -241,6 +245,7 @@ $(document).ready(function() {
     'tahun_sertifikasi': $('#tenagakerja_modal').find('#tahun_sertifikasi'),
     'penyelenggara_sertifikasi': $('#tenagakerja_modal').find('#penyelenggara_sertifikasi'),
   }
+
   resetForm();
   function resetForm(){
   TenagakerjaModal.id_lv2.hide();
@@ -249,6 +254,7 @@ $(document).ready(function() {
   TenagakerjaModal.id_lv2.hide('');
   TenagakerjaModal.id_lv3.val('');
   TenagakerjaModal.id_lv4.val('');
+ 
  }
   var swalSaveConfigure = {
     title: "Konfirmasi simpan",
@@ -363,7 +369,12 @@ $(document).ready(function() {
     
     var renderData = [];
     Object.values(data).forEach((tenagakerja) => {
-      
+      var detailButton =``;
+      var editButton = `
+        <a class="edit dropdown-item" data-id='${tenagakerja['id_sdm']}'><i class='fa fa-pencil'></i>Detail Tenaga Kerja</a>
+      `;
+      var deleteButton =``;
+      <?php if($this->session->userdata('id_role') != '3'){ ?>
       var detailButton =`
       <a class="detail dropdown-item" href='<?=site_url()?>AdminController/DetailTenagakerja?id_sdm=${tenagakerja['id_sdm']}'><i class='fa fa-share'></i> Detail Tenaga Kerja</a>
       `; 
@@ -373,6 +384,8 @@ $(document).ready(function() {
       var deleteButton = `
         <a class="delete dropdown-item" data-id='${tenagakerja['id_sdm']}'><i class='fa fa-trash'></i> Hapus Tenaga Kerja</a>
       `;
+     <?php }; ?>
+
       if(tenagakerja['photo'] == "" || tenagakerja['photo'] == null){    
         tmp = `<?= base_url('upload/profile_small.jpg')?>`;
       }else{
@@ -429,6 +442,36 @@ $(document).ready(function() {
     document.getElementById("old_doc_pelatihan").value = tenagakerja['doc_pelatihan'];
     document.getElementById("id_tenagakerjaz").value = tenagakerja['id_sdm'];
     document.getElementById("old_doc_sertifikasi").value = tenagakerja['doc_sertifikasi'];
+
+  <?php 	if($this->session->userdata('id_role') != '1'){ ?>
+    TenagakerjaModal.x_kabupaten.hide();
+    TenagakerjaModal.kabupaten.prop('disabled',true);
+  <?php }  ?>
+  <?php 	if($this->session->userdata('id_role') == '3'){ ?>
+    TenagakerjaModal.nama_sdm.prop('readonly',true);
+    TenagakerjaModal.kabupaten.prop('readonly',true);
+    TenagakerjaModal.id_pendidikan.prop('disabled',true);
+    TenagakerjaModal.no_ktp.prop('readonly',true);
+    TenagakerjaModal.no_hp.prop('readonly',true);
+    TenagakerjaModal.tempat_lahir.prop('readonly',true);
+    TenagakerjaModal.tanggal_lahir.prop('readonly',true);
+    TenagakerjaModal.alamat.prop('readonly',true);
+    TenagakerjaModal.id_lv1.prop('disabled',true);
+    TenagakerjaModal.id_lv2.prop('disabled',true);
+    TenagakerjaModal.id_lv3.prop('disabled',true);
+    TenagakerjaModal.id_lv4.prop('disabled',true);
+    TenagakerjaModal.id_jenis_kelamin.prop('disabled',true);
+    TenagakerjaModal.id_sertifikasi.prop('disabled',true);
+    TenagakerjaModal.id_pelatihan.prop('disabled',true);
+    TenagakerjaModal.saveEditBtn.hide();
+    $('#upload_pelatihan_tenagakerja_btn').hide()
+    $('#x_doc_pelatihan').hide()
+    $('#upload_sertifikasi_tenagakerja_btn').hide()
+    $('#x_doc_sertifikasi').hide()
+    $('#x_photo').hide()
+    $('#upload_pohoto_tenagakerja_btn').hide()
+
+  <?php }  ?>
     if(tenagakerja['id_sertifikasi']=='1'){
       $('#form_sertifikasi_tenagakerja').show()
     }else{
@@ -624,7 +667,11 @@ $(document).ready(function() {
             TenagakerjaModal.id_lv4.hide(); 
             getLv3OptionX(ten);      
         }
-
+        <?php 	if($this->session->userdata('id_role') == '3'){ ?>
+         TenagakerjaModal.id_lv2.prop('disabled',true);
+         TenagakerjaModal.id_lv3.prop('disabled',true);
+         TenagakerjaModal.id_lv4.prop('disabled',true);
+        <?php } ?>
       },
       error: function(e) {}
     });
@@ -657,6 +704,11 @@ $(document).ready(function() {
             TenagakerjaModal.id_lv3.val(ten['id_lv3']);
             getLv4OptionX(ten); 
         }
+        <?php 	if($this->session->userdata('id_role') == '3'){ ?>
+         TenagakerjaModal.id_lv2.prop('disabled',true);
+         TenagakerjaModal.id_lv3.prop('disabled',true);
+         TenagakerjaModal.id_lv4.prop('disabled',true);
+        <?php } ?>
       },
       error: function(e) {}
     });
@@ -681,6 +733,11 @@ $(document).ready(function() {
             TenagakerjaModal.id_lv4.show();  
             TenagakerjaModal.id_lv4.val(ten['id_lv4']);          
         }
+        <?php 	if($this->session->userdata('id_role') == '3'){ ?>
+         TenagakerjaModal.id_lv2.prop('disabled',true);
+         TenagakerjaModal.id_lv3.prop('disabled',true);
+         TenagakerjaModal.id_lv4.prop('disabled',true);
+        <?php } ?>
       },
       error: function(e) {}
     });
@@ -802,7 +859,11 @@ $(document).ready(function() {
             TenagakerjaModal.id_lv3.hide();
             TenagakerjaModal.id_lv4.hide();       
         }
-
+        <?php 	if($this->session->userdata('id_role') == '3'){ ?>
+         TenagakerjaModal.id_lv2.prop('disabled',true);
+         TenagakerjaModal.id_lv3.prop('disabled',true);
+         TenagakerjaModal.id_lv4.prop('disabled',true);
+        <?php } ?>
       },
       error: function(e) {}
     });
@@ -832,6 +893,11 @@ $(document).ready(function() {
             TenagakerjaModal.id_lv4.hide(); 
             TenagakerjaModal.id_lv4.prop('disabled',true)    
         }
+        <?php 	if($this->session->userdata('id_role') == '3'){ ?>
+         TenagakerjaModal.id_lv2.prop('disabled',true);
+         TenagakerjaModal.id_lv3.prop('disabled',true);
+         TenagakerjaModal.id_lv4.prop('disabled',true);
+        <?php } ?>
       },
       error: function(e) {}
     });
@@ -855,6 +921,11 @@ $(document).ready(function() {
             TenagakerjaModal.id_lv4.prop('disabled',false)
             TenagakerjaModal.id_lv4.show();          
         }
+        <?php 	if($this->session->userdata('id_role') == '3'){ ?>
+         TenagakerjaModal.id_lv2.prop('disabled',true);
+         TenagakerjaModal.id_lv3.prop('disabled',true);
+         TenagakerjaModal.id_lv4.prop('disabled',true);
+        <?php } ?>
       },
       error: function(e) {}
     });
@@ -880,6 +951,10 @@ $(document).ready(function() {
         value: d['id_pendidikan'],
         text: d['id_pendidikan'] + ' :: ' + d['nama_pendidikan'],
       }));
+
+    <?php 	if($this->session->userdata('id_role') == '3'){ ?>
+    TenagakerjaModal.id_pendidikan.prop('readonly',true);
+    <?php }  ?>
      
       });
     }
@@ -939,6 +1014,7 @@ $(document).ready(function() {
         text:  d['nama_lv2'],
       }));
     });
+    
     }
     function renderLv3Selection(data){
         TenagakerjaModal.id_lv3.empty();

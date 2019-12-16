@@ -14,7 +14,9 @@
       <li id="kalender">
         <a href="<?=site_url('PimpinanController/kalender')?>"><i class="fas fa-calendar-alt"></i> <span class="nav-label">Event</span></a>
       </li>
-      
+      <li id="tenagakerja">
+        <a href="<?=site_url('PimpinanController/tenagakerja')?>"><i class="fas fa-user-tie"></i><span class="nav-label">Tenaga Kerja</span></a>
+      </li>
       <li id="pariwisata">
         <a href="#"><i class="fas fa-bus"></i><span class="nav-label">Pariwisata</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" aria-expanded="false">

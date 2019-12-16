@@ -84,7 +84,7 @@ class PimpinanController extends CI_Controller {
     $this->SecurityModel->roleOnlyGuard('pimpinan');
 		$pageData = array(
 			'title' => 'Tenaga Kerja',
-      'content' => 'pimpinan/Tenagakerja',
+      'content' => 'admin/Tenagakerja',
       'breadcrumb' => array(
         'Home' => base_url(),
       ),

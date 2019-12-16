@@ -117,6 +117,11 @@ class TenagakerjaModel extends CI_Model {
 	
 	public function editTenagakerja($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
+		if($this->session->userdata('id_role') == '1'){
+
+		}else{
+		  $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+	    };
         $dataInsert = DataStructure::slice($data, ['id_user_entry','id_kabupaten','id_lv1','id_lv2','id_lv3','id_lv4','id_pelatihan','id_pendidikan','id_sertifikasi','id_jenis_kelamin','nama_sdm','tempat_lahir','tanggal_lahir','alamat','no_ktp','no_hp','tahun_sertifikasi','penyelenggara_sertifikasi']);
         $this->db->set($dataInsert);
         $this->db->where('id_sdm', $data['id_sdm']);
