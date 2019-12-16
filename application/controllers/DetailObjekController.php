@@ -188,6 +188,9 @@ class DetailObjekController extends CI_Controller {
        // $image=$fileold.','.$image;
         $result= $this->DetailObjekModel->simpan_upload1($id,$image,'file2');
         echo json_decode($result);
+    }else{
+      $error = array('error' => $this->upload->display_errors());
+      var_dump($error);
     }
 
  }
