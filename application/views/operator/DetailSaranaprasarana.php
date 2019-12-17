@@ -205,7 +205,7 @@
           </div>
           <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
-            <input type="text" placeholder="Deskripsi" class="form-control" id="edit_deskripsi" name="deskripsi" required="required">
+            <textarea type="text" placeholder="Deskripsi" class="form-control" id="edit_deskripsi" name="deskripsi" required="required"></textarea>
           </div>
 
 
