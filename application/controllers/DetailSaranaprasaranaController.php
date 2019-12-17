@@ -13,7 +13,7 @@ class DetailSaranaprasaranaController extends CI_Controller {
     
     function do_upload(){
       $config['upload_path']="./upload/file";
-      $config['allowed_types']='gif|jpg|png';
+      $config['allowed_types']='gif|jpg|png|jpeg';
       $config['encrypt_name'] = TRUE;
      // var_dump('anjay',$this->input->post());
 
@@ -42,7 +42,7 @@ class DetailSaranaprasaranaController extends CI_Controller {
   }
    function do_upload2(){
     $config['upload_path']="./upload/file2";
-    $config['allowed_types']='gif|jpg|png';
+    $config['allowed_types']='gif|jpg|png|jpeg';
     $config['encrypt_name'] = TRUE;
    // var_dump('anjay',$this->input->post());
 
@@ -67,7 +67,7 @@ class DetailSaranaprasaranaController extends CI_Controller {
  }
  function do_upload3(){
   $config['upload_path']="./upload/file3";
-  $config['allowed_types']='gif|jpg|png';
+  $config['allowed_types']='gif|jpg|png|jpeg';
   $config['encrypt_name'] = TRUE;
  // var_dump('anjay',$this->input->post());
 

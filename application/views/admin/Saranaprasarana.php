@@ -116,7 +116,7 @@ $(document).ready(function() {
     'id_jenis_saranaprasarana': $('#saranaprasarana_modal').find('#id_jenis_saranaprasarana'),
     'nama_jenis': $('#saranaprasarana_modal').find('#nama_jenis'),
     'alamat': $('#saranaprasarana_modal').find('#alamat'),
-    'lokasi': $('#saranaprasarana_modal').find('#lokasi'),
+  
     'deskripsi': $('#saranaprasarana_modal').find('#deskripsi'),
     'kabupaten': $('#saranaprasarana_modal').find('#kabupaten'),
   }
@@ -256,7 +256,7 @@ $(document).ready(function() {
     SaranaprasaranaModal.nama.val(saranaprasarana['nama']);
     SaranaprasaranaModal.id_jenis_saranaprasarana.val(saranaprasarana['id_jenis_saranaprasarana']);
     SaranaprasaranaModal.alamat.val(saranaprasarana['alamat']);
-    SaranaprasaranaModal.lokasi.val(saranaprasarana['lokasi']);
+
     SaranaprasaranaModal.deskripsi.val(saranaprasarana['deskripsi']);
     SaranaprasaranaModal.kabupaten.val(saranaprasarana['id_kabupaten']);
   });
