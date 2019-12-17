@@ -436,6 +436,7 @@ class DashboardModel extends CI_Model {
     public function getAllPajak(){
         //$year = date('Y');
         $year = '2020';
+
         $this->db->select('tahun, Coalesce(sum(pajak),0) AS `pajak`, Coalesce(sum(retribusi),0) AS `retribusi`, Coalesce(sum(mancanegara),0) AS `mancanegara`, Coalesce(sum(domestik),0) AS `domestik`');
         $this->db->from('approv_rec_cagarbudaya');
        $this->db->where('tahun',$year);
@@ -481,6 +482,55 @@ class DashboardModel extends CI_Model {
         $rest['domestik'] =  $pajak[0][0]['domestik'] + $pajak[1][0]['domestik'] + $pajak[2][0]['domestik'] + $pajak[3][0]['domestik'] +$pajak[4][0]['domestik'];
         $rest['mancanegara'] =  $pajak[0][0]['mancanegara'] + $pajak[1][0]['mancanegara'] + $pajak[2][0]['mancanegara'] + $pajak[3][0]['mancanegara'] +$pajak[4][0]['mancanegara'];
         //var_dump($rest); 
+
+        $year = $year-1;
+        
+        $this->db->select('tahun, Coalesce(sum(pajak),0) AS `pajak`, Coalesce(sum(retribusi),0) AS `retribusi`, Coalesce(sum(mancanegara),0) AS `mancanegara`, Coalesce(sum(domestik),0) AS `domestik`');
+        $this->db->from('approv_rec_cagarbudaya');
+       $this->db->where('tahun',$year);
+        $this->db->group_by('tahun');
+       // $this->db->order_by('tahun desc ,bulan desc');
+        $res = $this->db->get();
+        $pajak[0] = $res->result_array();
+
+        $this->db->select('tahun, Coalesce(sum(pajak),0) AS `pajak`, Coalesce(sum(retribusi),0) AS `retribusi`, Coalesce(sum(mancanegara),0) AS `mancanegara`, Coalesce(sum(domestik),0) AS `domestik`');
+        $this->db->from('approv_rec_objek');
+       $this->db->where('tahun',$year);
+        $this->db->group_by('tahun');
+       // $this->db->order_by('tahun desc ,bulan desc');
+        $res = $this->db->get();
+        $pajak[1] = $res->result_array();
+
+        $this->db->select('tahun, Coalesce(sum(pajak),0) AS `pajak`, Coalesce(sum(retribusi),0) AS `retribusi`, Coalesce(sum(mancanegara),0) AS `mancanegara`, Coalesce(sum(domestik),0) AS `domestik`');
+        $this->db->from('approv_rec_museum');
+       $this->db->where('tahun',$year);
+        $this->db->group_by('tahun');
+       // $this->db->order_by('tahun desc ,bulan desc');
+        $res = $this->db->get();
+        $pajak[2] = $res->result_array();
+
+        $this->db->select('tahun, Coalesce(sum(pajak),0) AS `pajak`, Coalesce(sum(retribusi),0) AS `retribusi`, Coalesce(sum(mancanegara_personal),0) AS `mancanegara`, Coalesce(sum(domestik_personal),0) AS `domestik`');
+        $this->db->from('approv_rec_penginapan');
+       $this->db->where('tahun',$year);
+        $this->db->group_by('tahun');
+       // $this->db->order_by('tahun desc ,bulan desc');
+        $res = $this->db->get();
+        $pajak[3] = $res->result_array();
+
+        $this->db->select('tahun, Coalesce(sum(pajak),0) AS `pajak`, Coalesce(sum(retribusi),0) AS `retribusi`, Coalesce(sum(mancanegara),0) AS `mancanegara`, Coalesce(sum(domestik),0) AS `domestik`');
+        $this->db->from('approv_rec_desawisata');
+       $this->db->where('tahun',$year);
+        $this->db->group_by('tahun');
+       // $this->db->order_by('tahun desc ,bulan desc');
+        $res = $this->db->get();
+        $pajak[4] = $res->result_array();
+        //var_dump($pajak[0]);
+        $rest['pajak'] =  $pajak[0][0]['pajak'] + $pajak[1][0]['pajak'] + $pajak[2][0]['pajak'] + $pajak[3][0]['pajak'] +$pajak[4][0]['pajak'];
+        $rest['retribusi'] =  $pajak[0][0]['retribusi'] + $pajak[1][0]['retribusi'] + $pajak[2][0]['retribusi'] + $pajak[3][0]['retribusi'] +$pajak[4][0]['retribusi'];
+        $rest['domestik'] =  $pajak[0][0]['domestik'] + $pajak[1][0]['domestik'] + $pajak[2][0]['domestik'] + $pajak[3][0]['domestik'] +$pajak[4][0]['domestik'];
+        $rest['mancanegara'] =  $pajak[0][0]['mancanegara'] + $pajak[1][0]['mancanegara'] + $pajak[2][0]['mancanegara'] + $pajak[3][0]['mancanegara'] +$pajak[4][0]['mancanegara'];
+        //var_dump($rest); 
+
         return $rest;
         }
     public function getPajakCagarbudaya(){
