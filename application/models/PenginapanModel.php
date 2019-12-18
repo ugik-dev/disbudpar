@@ -42,7 +42,7 @@ class PenginapanModel extends CI_Model {
 	  	};
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 	
-		$dataInsert = DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']);
+		$dataInsert = DataStructure::slice($data, ['tahun_terdata','id_user_entry','id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']);
 	    $this->db->insert('pariwisata_penginapan', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Penginapan", "pariwisata_penginapan");
 	    return $this->db->insert_id();
@@ -52,11 +52,11 @@ class PenginapanModel extends CI_Model {
 		
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		if($this->session->userdata('id_role') == '1'){
-			$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']));
 				
 		}else{
 			$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
-			$this->db->set(DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_user_entry','id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','file','deskripsi']));
 			
 		};
 		$this->db->where('id_penginapan', $data['id_penginapan']);

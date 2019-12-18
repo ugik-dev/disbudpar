@@ -53,8 +53,11 @@
             <label for="nama">Nama Museum</label> 
             <input type="text" placeholder="Nama Museum" class="form-control" id="nama" name="nama" required="required">
           </div>
-          
-
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
           <div class="form-group">
             <label for="id_kepemilikan_museum">Kepemilikan</label> 
             <select class="form-control mr-sm-2" id="id_kepemilikan_museum" name="id_kepemilikan_museum" required="required">
@@ -117,7 +120,7 @@ $(document).ready(function() {
     'file': $('#museum_modal').find('#file'),
     'lokasi': $('#museum_modal').find('#lokasi'),
     'deskripsi': $('#museum_modal').find('#deskripsi'),
-    
+    'terdata': $('#museum_modal').find('#terdata'),
   }
 
   var swalSaveConfigure = {
@@ -269,6 +272,38 @@ $(document).ready(function() {
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
 
+
+
+ getTahun();  
+    function getTahun(){
+    return $.ajax({
+      url: `<?php echo site_url('DetailMuseumController/getTahun/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataTahun = json['data'];
+        renderTahunTerdataSelection(dataTahun);
+      },
+      error: function(e) {}
+    });
+  }
+
+  function renderTahunTerdataSelection(data){
+
+    MuseumModal.terdata.empty();
+    MuseumModal.terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      MuseumModal.terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+   }
+
+
   
   FDataTable.on('click','.edit', function(){
     event.preventDefault();
@@ -285,6 +320,7 @@ $(document).ready(function() {
     MuseumModal.file.val(museum['file']);
     MuseumModal.lokasi.val(museum['lokasi']);
     MuseumModal.deskripsi.val(museum['deskripsi']);
+    MuseumModal.terdata.val(museum['tahun_terdata']);
 
   });
 

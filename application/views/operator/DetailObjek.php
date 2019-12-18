@@ -41,6 +41,10 @@
                                     <input type="text" class="form-control" id="alamat" readonly="readonly">
                                 </div>
                                 <div class="form-group">
+                                  <label for="formGroupExampleInput">Tahun Terdata</label>
+                                  <input type="text" class="form-control" id="terdata" readonly="readonly">
+                                </div>
+                                <div class="form-group">
                                     <label for="formGroupExampleInput">Korninat</label>
                                     <input type="text" class="form-control" id="kordinat" readonly="readonly">
                                 </div>
@@ -219,10 +223,13 @@
             </select>
           </div>
 
-          <!-- <div class="form-group">
-            <label for="file">File</label> 
-            <input type="file" placeholder="File" class="form-control" id="file" name="file" required="required">
-          </div> -->
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="edit_terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
+
+
           <div class="form-group">
             <label for="alamat">Alamat</label> 
             <input type="text" placeholder="Alamat" class="form-control" id="edit_alamat" name="alamat" required="required">
@@ -574,8 +581,7 @@ var map;
     'edit_lokasi': $('#edit_modal').find('#edit_lokasi'),
     'edit_deskripsi': $('#edit_modal').find('#edit_deskripsi'),
     'edit_id_jenis': $('#edit_modal').find('#edit_id_jenis'),
-  
-   
+    'edit_terdata': $('#edit_modal').find('#edit_terdata'),
   }
   // EditModal.edit_id_objek.val(id_objek);
   // EditModal.edit_nama.val(dataProfil['nama']);
@@ -595,7 +601,7 @@ function myFunction() {
     EditModal.edit_lokasi.val(dataProfil['lokasi']);
     EditModal.edit_deskripsi.val(dataProfil['deskripsi']);
     EditModal.edit_id_jenis.val(dataProfil['id_jenis_objek']);
-   
+    EditModal.edit_terdata.val(dataProfil['tahun_terdata']); 
   
 }
 
@@ -669,8 +675,10 @@ function myFunction() {
         var id_upload2 = document.getElementById("id_objektoupload2");
         var id_upload4 = document.getElementById("id_objektoupload4");
         var nama_user_entry = document.getElementById("nama_user_entry");
-      //  var edit_profil_btn = document.getElementById("edit_profil_btn");
+      
 
+        var terdata = document.getElementById("terdata");
+        terdata.value = dataProfil['tahun_terdata'];
         id_upload1.value = id_objek;
         id_upload2.value = id_objek;
        
@@ -703,10 +711,11 @@ function myFunction() {
         file2.value = dataProfil['file2'];
 
         dokumen.value = dataProfil['dokumen'];
-       renderPhoto();
+        if(!empty(dataProfil['file2']))renderPhoto();
+       
        renderPhotoModal()
         renderPdf();
-        //console.log(dataProfil)
+        getTahun(); 
         //renderDetailObjek(dataDetailObjek);
       },
       error: function(e) {}
@@ -1126,18 +1135,32 @@ function renderInputPengunjung(data){
   }); 
 
   }
-   function renderTahunSelection(data){
+  function renderTahunSelection(data){
+     console.log("Masuk Tahun")
     InputModal.tahun.empty();
     InputModal.tahun.append($('<option>', { value: "", text: "Tahun"}));
     data.forEach((d) => {
+      if(d['tahun'] >= dataProfil['tahun_terdata']){
       InputModal.tahun.append($('<option>', {
         value: d['tahun'],
         text: d['tahun'],
       }));  
       InputModal.tahun.val(d['tahun']); 
+    }
     });
+    
+    EditModal.edit_terdata.empty();
+    EditModal.edit_terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      EditModal.edit_terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+
     getInputPengunjung();
    }
+
 
      getAllJenis();  
   function getAllJenis(){

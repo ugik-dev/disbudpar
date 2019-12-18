@@ -43,7 +43,7 @@ class DesawisataModel extends CI_Model {
 		}else{
 		  $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
 	  };
-	    $dataInsert = DataStructure::slice($data, ['id_kabupaten','nama','id_kategori','deskripsi','id_user_entry']);
+	    $dataInsert = DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_kategori','deskripsi','id_user_entry']);
 	    $this->db->insert('desawisata', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Desawisata", "desawisata");
 	    return $this->db->insert_id();
@@ -52,10 +52,10 @@ class DesawisataModel extends CI_Model {
 	public function editDesawisata($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		if($this->session->userdata('id_role') == '1'){
-			$this->db->set(DataStructure::slice($data, ['nama','id_kabupaten','id_kategori','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','nama','id_kabupaten','id_kategori','deskripsi']));
 		
 		}else{
-			$this->db->set(DataStructure::slice($data, ['nama','id_kategori','deskripsi','id_user_entry']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','nama','id_kategori','deskripsi','id_user_entry']));
 		
 		};
 		

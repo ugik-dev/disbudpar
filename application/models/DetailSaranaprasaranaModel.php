@@ -161,7 +161,7 @@ class DetailSaranaprasaranaModel extends CI_Model {
 
 	public function editDetailSaranaprasarana($data){
         $data['id_user_entry'] = $this->session->userdata('id_user');
-       	$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_saranaprasarana','lokasi','deskripsi','alamat','id_user_entry']));
+       	$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_jenis_saranaprasarana','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_saranaprasarana', $data['id_saranaprasarana']);
 		$this->db->update('senibudaya_saranaprasarana');
 

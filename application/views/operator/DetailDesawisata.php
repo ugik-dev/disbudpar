@@ -42,6 +42,11 @@
                                     <input type="text" class="form-control" id="alamat" readonly="readonly">
                                 </div>
                                 <div class="form-group">
+                <label for="formGroupExampleInput">Tahun Terdata</label>
+                <input type="text" class="form-control" id="terdata" readonly="readonly">
+              </div>
+
+                                <div class="form-group">
                                     <label for="formGroupExampleInput">Korninat</label>
                                     <input type="text" class="form-control" id="kordinat" readonly="readonly">
                                 </div>
@@ -219,7 +224,13 @@
             <select class="form-control mr-sm-2" id="edit_id_kategori" name="id_kategori" required="required">
             </select>
           </div>
-          
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="edit_terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
+
+
 
           <div class="form-group">
             <label for="alamat">Alamat</label> 
@@ -517,6 +528,8 @@ var map;
     'edit_lokasi': $('#edit_modal').find('#edit_lokasi'),
     'edit_deskripsi': $('#edit_modal').find('#edit_deskripsi'),
     'edit_id_kategori': $('#edit_modal').find('#edit_id_kategori'),
+    'edit_terdata': $('#edit_modal').find('#edit_terdata'),
+ 
   }
   // EditModal.edit_id_desawisata.val(id_desawisata);
   // EditModal.edit_nama.val(dataProfil['nama']);
@@ -536,7 +549,8 @@ function myFunction() {
     EditModal.edit_lokasi.val(dataProfil['lokasi']);
     EditModal.edit_deskripsi.val(dataProfil['deskripsi']);
     EditModal.edit_id_kategori.val(dataProfil['id_kategori']);
-   
+    EditModal.edit_terdata.val(dataProfil['tahun_terdata']); 
+
 }
 
 
@@ -671,7 +685,9 @@ function myFunction() {
         var id_upload4 = document.getElementById("id_desawisatatoupload4");
         var nama_user_entry = document.getElementById("nama_user_entry");
       //  var edit_profil_btn = document.getElementById("edit_profil_btn");
-
+      var terdata = document.getElementById("terdata");
+      terdata.value = dataProfil['tahun_terdata'];
+       
         id_upload1.value = id_desawisata;
         id_upload2.value = id_desawisata;
        
@@ -708,7 +724,7 @@ function myFunction() {
         renderPhoto();
         renderPhotoModal()
         renderPdf();
-        //console.log(dataProfil)
+        getTahun(); 
         //renderDetailDesawisata(dataDetailDesawisata);
       },
       error: function(e) {}
@@ -1114,19 +1130,30 @@ function renderInputPengunjung(data){
   }); 
 
   }
-   function renderTahunSelection(data){
+  function renderTahunSelection(data){
+     console.log("Masuk Tahun")
     InputModal.tahun.empty();
     InputModal.tahun.append($('<option>', { value: "", text: "Tahun"}));
     data.forEach((d) => {
+      if(d['tahun'] >= dataProfil['tahun_terdata']){
       InputModal.tahun.append($('<option>', {
         value: d['tahun'],
         text: d['tahun'],
-      })); 
-
+      }));  
       InputModal.tahun.val(d['tahun']); 
+    }
     });
-    getInputPengunjung();
     
+    EditModal.edit_terdata.empty();
+    EditModal.edit_terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      EditModal.edit_terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+
+    getInputPengunjung();
    }
 
      getAllKategori();  

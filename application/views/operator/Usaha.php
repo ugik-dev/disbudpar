@@ -53,7 +53,11 @@
             <label for="nama">Nama Usaha</label> 
             <input type="text" placeholder="Nama Usaha" class="form-control" id="nama" name="nama" required="required">
           </div>
-         
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
           <div class="form-group">
             <label for="id_jenis_usaha">Jenis</label> 
             <select class="form-control mr-sm-2" id="id_jenis_usaha" name="id_jenis_usaha" required="required">
@@ -122,7 +126,7 @@ $(document).ready(function() {
     'alamat': $('#usaha_modal').find('#alamat'),
     'lokasi': $('#usaha_modal').find('#lokasi'),
     'deskripsi': $('#usaha_modal').find('#deskripsi'),
-   
+    'terdata': $('#usaha_modal').find('#terdata'),
   }
 
   var swalSaveConfigure = {
@@ -281,7 +285,34 @@ $(document).ready(function() {
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
+  getTahun();  
+    function getTahun(){
+    return $.ajax({
+      url: `<?php echo site_url('DetailUsahaController/getTahun/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataTahun = json['data'];
+        renderTahunTerdataSelection(dataTahun);
+      },
+      error: function(e) {}
+    });
+  }
 
+  function renderTahunTerdataSelection(data){
+
+    UsahaModal.terdata.empty();
+    UsahaModal.terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      UsahaModal.terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+   }
   
   FDataTable.on('click','.edit', function(){
     event.preventDefault();
@@ -298,7 +329,7 @@ $(document).ready(function() {
     UsahaModal.alamat.val(usaha['alamat']);
     UsahaModal.lokasi.val(usaha['lokasi']);
     UsahaModal.deskripsi.val(usaha['deskripsi']);
-   
+    UsahaModal.terdata.val(usaha['tahun_terdata']);
   });
 
   FDataTable.on('click','.delete', function(){

@@ -51,7 +51,7 @@ class SenibudayaModel extends CI_Model {
 		}else{
 		  $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
 	  };
-	    $dataInsert = DataStructure::slice($data, ['id_user_entry','id_kabupaten','id_j_senibudaya','id_j2_senibudaya','nama','jumlahanggota','lokasi','deskripsi']);
+	    $dataInsert = DataStructure::slice($data, ['tahun_terdata','id_user_entry','id_kabupaten','id_j_senibudaya','id_j2_senibudaya','nama','jumlahanggota','lokasi','deskripsi']);
 	    $this->db->insert('senibudaya', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Senibudaya", "senibudaya");
 	    return $this->db->insert_id();
@@ -61,9 +61,9 @@ class SenibudayaModel extends CI_Model {
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		//$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
 		if($this->session->userdata('id_role') == '1'){
-			$this->db->set(DataStructure::slice($data,  ['id_user_entry','id_kabupaten','id_j_senibudaya','id_j2_senibudaya','nama','jumlahanggota','lokasi','file','deskripsi']));
+			$this->db->set(DataStructure::slice($data,  ['tahun_terdata','id_user_entry','id_kabupaten','id_j_senibudaya','id_j2_senibudaya','nama','jumlahanggota','lokasi','file','deskripsi']));
 		}else{
-			$this->db->set(DataStructure::slice($data,  ['id_user_entry','id_j_senibudaya','id_j2_senibudaya','nama','jumlahanggota','lokasi','file','deskripsi']));
+			$this->db->set(DataStructure::slice($data,  ['tahun_terdata','id_user_entry','id_j_senibudaya','id_j2_senibudaya','nama','jumlahanggota','lokasi','file','deskripsi']));
 			
 		}
 			$this->db->where('id_senibudaya', $data['id_senibudaya']);

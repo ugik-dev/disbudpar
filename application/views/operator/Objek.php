@@ -51,8 +51,11 @@
             <label for="nama">Nama Daya Tarik Wisata</label> 
             <input type="text" placeholder="Nama Objek" class="form-control" id="nama" name="nama" required="required">
           </div>
-          
-
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
           <div class="form-group">
             <label for="id_jenis_objek">Jenis</label> 
             <select class="form-control mr-sm-2" id="id_jenis_objek" name="id_jenis_objek" required="required">
@@ -108,9 +111,9 @@ $(document).ready(function() {
     'nama_jenis': $('#objek_modal').find('#nama_jenis'),
     'file': $('#objek_modal').find('#file'),
     'lokasi': $('#objek_modal').find('#lokasi'),
-    'deskripsi': $('#objek_modal').find('#deskripsi'),
-   
-  }
+    'deskripsi': $('#objek_modal').find('#deskripsi'), 
+    'terdata': $('#objek_modal').find('#terdata'),
+ }
 
   var swalSaveConfigure = {
     title: "Konfirmasi simpan",
@@ -234,6 +237,35 @@ $(document).ready(function() {
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
 
+ getTahun();  
+    function getTahun(){
+    return $.ajax({
+      url: `<?php echo site_url('DetailObjekController/getTahun/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataTahun = json['data'];
+        renderTahunTerdataSelection(dataTahun);
+      },
+      error: function(e) {}
+    });
+  }
+
+  function renderTahunTerdataSelection(data){
+
+    ObjekModal.terdata.empty();
+    ObjekModal.terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      ObjekModal.terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+   }
+
   
   FDataTable.on('click','.edit', function(){
     event.preventDefault();
@@ -249,7 +281,10 @@ $(document).ready(function() {
     ObjekModal.file.val(objek['file']);
     ObjekModal.lokasi.val(objek['lokasi']);
     ObjekModal.deskripsi.val(objek['deskripsi']);
-   
+    ObjekModal.terdata.val(objek['tahun_terdata']);
+
+
+
   });
 
   FDataTable.on('click','.delete', function(){

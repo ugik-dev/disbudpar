@@ -40,6 +40,13 @@
                 <label for="formGroupExampleInput">Alamat</label>
                 <input type="text" class="form-control" id="alamat" readonly="readonly">
               </div>
+              
+            <div class="form-group">
+                <label for="formGroupExampleInput">Tahun Terdata</label>
+                <input type="text" class="form-control" id="terdata" readonly="readonly">
+              </div>
+
+
               <div class="form-group">
                 <label for="formGroupExampleInput">Korninat</label>
                 <input type="text" class="form-control" id="kordinat" readonly="readonly">
@@ -146,8 +153,8 @@
                             Lihat Foto
                           </div>
                         </div>
-                          <div class="form-group col-md-12">
-                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                          <div class="form-group col-md-12" id='fileimg'>
+                            <!-- <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'> -->
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -223,10 +230,12 @@
             <select class="form-control mr-sm-2" id="edit_id_status" name="id_status_museum" required="required">
             </select>
           </div>
-          <!-- <div class="form-group">
-            <label for="file">File</label> 
-            <input type="file" placeholder="File" class="form-control" id="file" name="file" required="required">
-          </div> -->
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="edit_terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
+
           <div class="form-group">
             <label for="alamat">Alamat</label> 
             <input type="text" placeholder="Alamat" class="form-control" id="edit_alamat" name="alamat" required="required">
@@ -580,7 +589,8 @@ var map;
     'edit_alamat': $('#edit_modal').find('#edit_alamat'),
     'edit_lokasi': $('#edit_modal').find('#edit_lokasi'),
     'edit_deskripsi': $('#edit_modal').find('#edit_deskripsi'),
-   
+    'edit_terdata': $('#edit_modal').find('#edit_terdata'),
+
     'edit_id_kepemilikan': $('#edit_modal').find('#edit_id_kepemilikan'),
     'edit_id_status': $('#edit_modal').find('#edit_id_status'),
   }
@@ -603,7 +613,8 @@ function myFunction() {
     EditModal.edit_deskripsi.val(dataProfil['deskripsi']);
     EditModal.edit_id_kepemilikan.val(dataProfil['id_kepemilikan_museum']);
     EditModal.edit_id_status.val(dataProfil['id_status_museum']); 
-    
+    EditModal.edit_terdata.val(dataProfil['tahun_terdata']); 
+
 }
 
 
@@ -690,15 +701,21 @@ function myFunction() {
         };
         kordinat.value = dataProfil['lokasi'];
         file.value = dataProfil['file'];
-        fileimg.src = `<?= base_url('upload/file/')?>`+dataProfil['file'];
-        file2.value = dataProfil['file2'];
+         file2.value = dataProfil['file2'];
        // file2img.src = `<?= base_url('upload/file2/')?>`+dataProfil['file2'];
-      
+       var terdata = document.getElementById("terdata");
+      terdata.value = dataProfil['tahun_terdata'];
+     
         dokumen.value = dataProfil['dokumen'];
-        renderPhoto();
+
+        if(!empty(dataProfil['file'])){
+          tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+        fileimg.innerHTML = `<img src="${tmp}" class="zoom"  alt="Responsive image" style='height: 200px; width : 100%'>`;
+        };
+        if(!empty(dataProfil['file2']))renderPhoto();
         renderPhotoModal();
         renderPdf();
-        //console.log(dataProfil)
+        getTahun(); 
         //renderDetailMuseum(dataDetailMuseum);
       },
       error: function(e) {}
@@ -1134,16 +1151,29 @@ function renderInputPengunjung(data){
   }); 
 
   }
-   function renderTahunSelection(data){
+  function renderTahunSelection(data){
+     console.log("Masuk Tahun")
     InputModal.tahun.empty();
     InputModal.tahun.append($('<option>', { value: "", text: "Tahun"}));
     data.forEach((d) => {
+      if(d['tahun'] >= dataProfil['tahun_terdata']){
       InputModal.tahun.append($('<option>', {
         value: d['tahun'],
         text: d['tahun'],
       }));  
       InputModal.tahun.val(d['tahun']); 
+    }
     });
+    
+    EditModal.edit_terdata.empty();
+    EditModal.edit_terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      EditModal.edit_terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+
     getInputPengunjung();
    }
 

@@ -43,7 +43,7 @@ class ObjekModel extends CI_Model {
 		}else{
 		  $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
 	  };
-	    $dataInsert = DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_objek','deskripsi','id_user_entry']);
+	    $dataInsert = DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_jenis_objek','deskripsi','id_user_entry']);
 	    $this->db->insert('pariwisata_objek', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Objek", "pariwisata_objek");
 	    return $this->db->insert_id();
@@ -52,10 +52,10 @@ class ObjekModel extends CI_Model {
 	public function editObjek($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		if($this->session->userdata('id_role') == '1'){
-			$this->db->set(DataStructure::slice($data, ['nama','id_kabupaten','id_jenis_objek','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','nama','id_kabupaten','id_jenis_objek','deskripsi']));
 		
 		}else{
-			$this->db->set(DataStructure::slice($data, ['nama','id_jenis_objek','deskripsi','id_user_entry']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','nama','id_jenis_objek','deskripsi','id_user_entry']));
 		
 		};
 		

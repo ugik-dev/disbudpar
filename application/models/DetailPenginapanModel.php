@@ -178,7 +178,7 @@ class DetailPenginapanModel extends CI_Model {
 
 	public function editDetailPenginapan($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','deskripsi','alamat','id_user_entry']));
+		$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_jenis_penginapan','jumlah_kamar','jumlah_tempat_tidur','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_penginapan', $data['id_penginapan']);
 		$this->db->update('pariwisata_penginapan');
 

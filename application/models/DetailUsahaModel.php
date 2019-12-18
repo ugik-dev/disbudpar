@@ -177,7 +177,7 @@ class DetailUsahaModel extends CI_Model {
 
 	public function editDetailUsaha($data){
         $data['id_user_entry'] = $this->session->userdata('id_user');
-       $this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_usaha','id_item_usaha','lokasi','deskripsi','alamat','id_user_entry']));
+       $this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_jenis_usaha','id_item_usaha','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_usaha', $data['id_usaha']);
 		$this->db->update('pariwisata_usaha');
 

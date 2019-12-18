@@ -200,9 +200,9 @@ class DetailCagarbudayaModel extends CI_Model {
 	public function editDetailCagarbudaya($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		if($this->session->userdata('id_role') == '1'){
-		$this->db->set(DataStructure::slice($data, ['nama','id_kabupaten','id_jenis_cagarbudaya','id_kepemilikan_cagarbudaya','id_status_penetapan_cagarbudaya','lokasi','deskripsi','alamat','id_user_entry']));
+		$this->db->set(DataStructure::slice($data, ['tahun_terdata','nama','id_kabupaten','id_jenis_cagarbudaya','id_kepemilikan_cagarbudaya','id_status_penetapan_cagarbudaya','lokasi','deskripsi','alamat','id_user_entry']));
 		}else{
-			$this->db->set(DataStructure::slice($data, ['nama','id_jenis_cagarbudaya','id_kepemilikan_cagarbudaya','id_status_penetapan_cagarbudaya','lokasi','deskripsi','alamat','id_user_entry']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','nama','id_jenis_cagarbudaya','id_kepemilikan_cagarbudaya','id_status_penetapan_cagarbudaya','lokasi','deskripsi','alamat','id_user_entry']));
 			
 		}
 		$this->db->where('id_cagarbudaya', $data['id_cagarbudaya']);

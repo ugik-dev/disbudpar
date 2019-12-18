@@ -173,7 +173,7 @@ class DetailMuseumModel extends CI_Model {
 
 	public function editDetailMuseum($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_kepemilikan_museum','id_status_museum','lokasi','deskripsi','alamat','id_user_entry']));
+		$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_kepemilikan_museum','id_status_museum','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_museum', $data['id_museum']);
 		$this->db->update('museum');
 

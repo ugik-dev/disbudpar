@@ -180,7 +180,7 @@ class DetailBiroModel extends CI_Model {
 
 	public function editDetailBiro($data){
         $data['id_user_entry'] = $this->session->userdata('id_user');
-       	$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_biro','id_sertifikat_biro','lokasi','deskripsi','alamat','id_user_entry']));
+       	$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_jenis_biro','id_sertifikat_biro','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_biro', $data['id_biro']);
 		$this->db->update('pariwisata_biro');
 

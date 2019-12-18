@@ -50,7 +50,7 @@ class BiroModel extends CI_Model {
 		}else{
 		  $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
 	  };
-	    $dataInsert = DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_jenis_biro','id_sertifikat_biro','alamat','lokasi','deskripsi']);
+	    $dataInsert = DataStructure::slice($data, ['tahun_terdata','id_user_entry','id_kabupaten','nama','id_jenis_biro','id_sertifikat_biro','alamat','lokasi','deskripsi']);
 	    $this->db->insert('pariwisata_biro', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Biro", "pariwisata_biro");
 	    return $this->db->insert_id();
@@ -60,12 +60,12 @@ class BiroModel extends CI_Model {
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		
 		if($this->session->userdata('id_role') == '1'){
-			$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_biro','id_sertifikat_biro','alamat','lokasi','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_jenis_biro','id_sertifikat_biro','alamat','lokasi','deskripsi']));
 	
 		}else{
 			$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
 
-			$this->db->set(DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_jenis_biro','id_sertifikat_biro','alamat','lokasi','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_user_entry','id_kabupaten','nama','id_jenis_biro','id_sertifikat_biro','alamat','lokasi','deskripsi']));
 		
 		};
 

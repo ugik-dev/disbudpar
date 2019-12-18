@@ -36,7 +36,10 @@
                 <label for="formGroupExampleInput">Nama Cagar Budaya</label>
                 <input type="text" class="form-control" id="namacagarbudaya"  readonly="readonly">
               </div>
-           
+              <div class="form-group">
+                <label for="formGroupExampleInput">Tahun Terdata</label>
+                <input type="text" class="form-control" id="terdata" readonly="readonly">
+              </div>
               <div class="form-group">
                 <label for="formGroupExampleInput">Alamat</label>
                 <input type="text" class="form-control" id="alamat" readonly="readonly">
@@ -156,8 +159,8 @@
                           </div>
                               
                         </div>
-                          <div class="form-group col-md-12">
-                            <img src="" class="img-fluid" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                          <div class="form-group col-md-12" id='fileimg'>
+                            
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -238,6 +241,14 @@
             <select class="form-control mr-sm-2" id="edit_id_status_penetapan" name="id_status_penetapan_cagarbudaya" required="required">
             </select>
           </div>
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label>  <br><span> <small> *Hati-hati jika merubah data, data sebelum tahun yang dipilih akan dihapus.</small></span>
+            <select class="form-control mr-sm-2" id="edit_terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
+
+
+
           <!-- <div class="form-group">
             <label for="file">File</label> 
             <input type="file" placeholder="File" class="form-control" id="file" name="file" required="required">
@@ -605,7 +616,7 @@ function initMap() {
     'edit_id_jenis': $('#edit_modal').find('#edit_id_jenis'),
     'edit_id_kepemilikan': $('#edit_modal').find('#edit_id_kepemilikan'),
     'edit_id_status': $('#edit_modal').find('#edit_id_status_penetapan'),
-
+    'edit_terdata': $('#edit_modal').find('#edit_terdata'),
   }
   // EditModal.edit_id_cagarbudaya.val(id_cagarbudaya);
   // EditModal.edit_nama.val(dataProfil['nama']);
@@ -629,7 +640,7 @@ function myFunction() {
     EditModal.edit_id_jenis.val(dataProfil['id_jenis_cagarbudaya']);
     EditModal.edit_id_kepemilikan.val(dataProfil['id_kepemilikan_cagarbudaya']);
     EditModal.edit_id_status.val(dataProfil['id_status_penetapan_cagarbudaya']); 
-
+    EditModal.edit_terdata.val(dataProfil['tahun_terdata']); 
 }
 
 
@@ -701,13 +712,14 @@ function myFunction() {
         var id_upload4 = document.getElementById("id_cagarbudayatoupload4");
         var nama_user_entry = document.getElementById("nama_user_entry");
       //  var edit_profil_btn = document.getElementById("edit_profil_btn");
-        
+      var terdata = document.getElementById("terdata");
+      terdata.value = dataProfil['tahun_terdata'];
+       
         id_upload1.value = id_cagarbudaya;
         id_upload2.value = id_cagarbudaya;
         id_upload4.value = id_cagarbudaya;
         nama.value = dataProfil['nama'];
         alamat.value = dataProfil['alamat'];
- 
         
         kepemilikan.value = dataProfil['nama_kepemilikan_cagarbudaya'];
         penetapan.value = dataProfil['nama_status_penetapan_cagarbudaya'];
@@ -725,16 +737,19 @@ function myFunction() {
         };
         kordinat.value = dataProfil['lokasi'];
         file.value = dataProfil['file'];
-        fileimg.src = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+    
         file2.value = dataProfil['file2'];
 
         dokumen.value = dataProfil['dokumen'];
       
-
-        renderPhoto();
+        if(!empty(dataProfil['file'])){
+          tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+        fileimg.innerHTML = `<img src="${tmp}" class="zoom"  alt="Responsive image" style='height: 200px; width : 100%'>`;
+        };
+        if(!empty(dataProfil['file2']))renderPhoto();
         renderPhotoModal()
         renderPdf();
-      
+        getTahun(); 
       },
       error: function(e) {}
     });
@@ -767,7 +782,7 @@ function myFunction() {
       imgHTML +=`
                 <div class='form-group col-md-6'>
                   <a type="submit" id="del_photo${i}" >             
-                  <img src="${tmp}" class="img-fluid" id='file2img' alt="Responsive image" style='height: 200px;'>            
+                  <img src="${tmp}" class="zoom" id='file2img' alt="Responsive image" style='height: 200px;'>            
                   </a>
                 </div>
                 `;
@@ -1161,12 +1176,24 @@ function renderInputPengunjung(data){
     InputModal.tahun.empty();
     InputModal.tahun.append($('<option>', { value: "", text: "Tahun"}));
     data.forEach((d) => {
+      if(d['tahun'] >= dataProfil['tahun_terdata']){
       InputModal.tahun.append($('<option>', {
         value: d['tahun'],
         text: d['tahun'],
       }));  
       InputModal.tahun.val(d['tahun']); 
+    }
     });
+    
+    EditModal.edit_terdata.empty();
+    EditModal.edit_terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      EditModal.edit_terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+
     getInputPengunjung();
    }
 

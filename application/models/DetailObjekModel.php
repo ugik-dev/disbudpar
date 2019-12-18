@@ -174,7 +174,7 @@ class DetailObjekModel extends CI_Model {
 
 	public function editDetailObjek($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_objek','lokasi','deskripsi','alamat','id_user_entry']));
+		$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_jenis_objek','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_objek', $data['id_objek']);
 		$this->db->update('pariwisata_objek');
 

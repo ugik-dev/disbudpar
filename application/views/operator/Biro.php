@@ -60,6 +60,11 @@
             </select>
           </div>
           <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
+          <div class="form-group">
             <label for="id_sertifikat_biro">Sertifikat</label> 
             <select class="form-control mr-sm-2" id="id_sertifikat_biro" name="id_sertifikat_biro" required="required">
             </select>
@@ -121,7 +126,7 @@ $(document).ready(function() {
     'alamat': $('#biro_modal').find('#alamat'),
     'lokasi': $('#biro_modal').find('#lokasi'),
     'deskripsi': $('#biro_modal').find('#deskripsi'),
-   
+    'terdata': $('#biro_modal').find('#terdata'),   
   }
 
   var swalSaveConfigure = {
@@ -274,7 +279,36 @@ $(document).ready(function() {
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
 
-  
+   getTahun();  
+    function getTahun(){
+    return $.ajax({
+      url: `<?php echo site_url('DetailCagarbudayaController/getTahun/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataTahun = json['data'];
+        renderTahunTerdataSelection(dataTahun);
+      },
+      error: function(e) {}
+    });
+  }
+
+  function renderTahunTerdataSelection(data){
+
+    BiroModal.terdata.empty();
+    BiroModal.terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      BiroModal.terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+   }
+
+
   FDataTable.on('click','.edit', function(){
     event.preventDefault();
     BiroModal.form.trigger('reset');
@@ -291,7 +325,7 @@ $(document).ready(function() {
     BiroModal.file.val(biro['file']);
     BiroModal.lokasi.val(biro['lokasi']);
     BiroModal.deskripsi.val(biro['deskripsi']);
-   
+    BiroModal.terdata.val(biro['tahun_terdata']);
   });
 
   FDataTable.on('click','.delete', function(){

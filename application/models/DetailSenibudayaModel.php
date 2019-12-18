@@ -150,9 +150,9 @@ class DetailSenibudayaModel extends CI_Model {
 	public function editDetailSenibudaya($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		if($this->session->userdata('id_role') == '1'){
-			$this->db->set(DataStructure::slice($data, ['nama','id_kabupaten','id_j_senibudaya','id_j2_senibudaya','lokasi','deskripsi','alamat','id_user_entry','jumlahanggota']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','nama','id_kabupaten','id_j_senibudaya','id_j2_senibudaya','lokasi','deskripsi','alamat','id_user_entry','jumlahanggota']));
 		}else{
-			$this->db->set(DataStructure::slice($data, ['nama','id_j_senibudaya','id_j2_senibudaya','lokasi','deskripsi','alamat','id_user_entry','jumlahanggota']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','nama','id_j_senibudaya','id_j2_senibudaya','lokasi','deskripsi','alamat','id_user_entry','jumlahanggota']));
 				
 		}
 		$this->db->where('id_senibudaya', $data['id_senibudaya']);

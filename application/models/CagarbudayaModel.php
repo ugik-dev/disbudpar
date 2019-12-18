@@ -72,7 +72,7 @@ class CagarbudayaModel extends CI_Model {
 		  }else{
 		    $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
 		};
-	    $dataInsert = DataStructure::slice($data, ['id_user_entry','id_kabupaten', 'nama','id_jenis_cagarbudaya','id_kepemilikan_cagarbudaya','id_status_penetapan_cagarbudaya','lokasi','deskripsi']);
+	    $dataInsert = DataStructure::slice($data, ['tahun_terdata','id_user_entry','id_kabupaten', 'nama','id_jenis_cagarbudaya','id_kepemilikan_cagarbudaya','id_status_penetapan_cagarbudaya','lokasi','deskripsi']);
 	    $this->db->insert('cagarbudaya', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Cagarbudaya", "cagarbudaya");
 	    return $this->db->insert_id();
@@ -81,10 +81,10 @@ class CagarbudayaModel extends CI_Model {
 	public function editCagarbudaya($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		if($this->session->userdata('id_role') == '1'){
-			$this->db->set(DataStructure::slice($data, ['nama','id_kabupaten','id_jenis_cagarbudaya','id_kepemilikan_cagarbudaya','id_status_penetapan_cagarbudaya','lokasi','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','nama','id_kabupaten','id_jenis_cagarbudaya','id_kepemilikan_cagarbudaya','id_status_penetapan_cagarbudaya','lokasi','deskripsi']));
 	
 		}else{
-			$this->db->set(DataStructure::slice($data, ['nama','id_jenis_cagarbudaya','id_kepemilikan_cagarbudaya','id_status_penetapan_cagarbudaya','lokasi','deskripsi','id_user_entry']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','nama','id_jenis_cagarbudaya','id_kepemilikan_cagarbudaya','id_status_penetapan_cagarbudaya','lokasi','deskripsi','id_user_entry']));
 		
 		};
 		$this->db->where('id_cagarbudaya', $data['id_cagarbudaya']);

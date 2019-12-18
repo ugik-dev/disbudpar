@@ -37,6 +37,11 @@
                 <input type="text" class="form-control" id="namausaha"  readonly="readonly">
               </div>
               <div class="form-group">
+                <label for="formGroupExampleInput">Tahun Terdata</label>
+                <input type="text" class="form-control" id="terdata" readonly="readonly">
+              </div>
+
+              <div class="form-group">
                 <label for="formGroupExampleInput">Alamat</label>
                 <input type="text" class="form-control" id="alamat" readonly="readonly">
               </div>
@@ -142,8 +147,8 @@
                             </div>
                               
                         </div>
-                          <div class="form-group col-md-12">
-                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                          <div class="form-group col-md-12" id='fileimg'>
+                            <!-- <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'> -->
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -211,7 +216,11 @@
             <label for="nama">Nama Usaha</label> 
             <input type="text" placeholder="Nama Usaha" class="form-control" id="edit_nama" name="nama" required="required">
           </div>
-    
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="edit_terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
           <div class="form-group">
             <label for="jenis">Jenis</label> 
             <select class="form-control mr-sm-2" id="edit_id_jenis" name="id_jenis_usaha" required="required">
@@ -616,7 +625,7 @@ var map;
     'edit_tanggal_kegiatan': $('#edit_modal').find('#edit_tanggal_kegiatan'),
     'edit_tanggal_kegiatan_end': $('#edit_modal').find('#edit_tanggal_kegiatan_end'),
     'edit_id_kabupaten': $('#edit_modal').find('#edit_id_kabupaten'),
-    
+    'edit_terdata': $('#edit_modal').find('#edit_terdata'),
   }
   // EditModal.edit_id_usaha.val(id_usaha);
   // EditModal.edit_nama.val(dataProfil['nama']);
@@ -641,7 +650,7 @@ function myFunction() {
     EditModal.edit_id_jenis.val(dataProfil['id_jenis_usaha']); 
     EditModal.edit_id_item.val(dataProfil['id_item_usaha']);  
     EditModal.edit_id_kabupaten.val(dataProfil['id_kabupaten']);  
-   
+    EditModal.edit_terdata.val(dataProfil['tahun_terdata']); 
 }
 
 
@@ -713,11 +722,9 @@ function myFunction() {
         
         var id_upload4 = document.getElementById("id_usahatoupload4");
         var nama_user_entry = document.getElementById("nama_user_entry");
-      //  var edit_profil_btn = document.getElementById("edit_profil_btn");
-        
-        id_upload1.value = id_usaha;
+        var terdata = document.getElementById("terdata");
+        terdata.value = dataProfil['tahun_terdata'];    id_upload1.value = id_usaha;
         id_upload2.value = id_usaha;
-     
         id_upload4.value = id_usaha;
         item.value = dataProfil['nama_item_usaha'];
         nama.value = dataProfil['nama'];
@@ -736,13 +743,16 @@ function myFunction() {
         };
         kordinat.value = dataProfil['lokasi'];
         file.value = dataProfil['file'];
-        fileimg.src = `<?= base_url('upload/file/')?>`+dataProfil['file'];
         file2.value = dataProfil['file2'];
          dokumen.value = dataProfil['dokumen'];
-       renderPhoto();
-       renderPhotoModal();
+         if(!empty(dataProfil['file'])){
+          tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+        fileimg.innerHTML = `<img src="${tmp}" class="zoom"  alt="Responsive image" style='height: 200px; width : 100%'>`;
+        };
+        if(!empty(dataProfil['file2']))renderPhoto();
+        renderPhotoModal();
         renderPdf();
-        //console.log(dataProfil)
+        getTahun(); 
         //renderDetailUsaha(dataDetailUsaha);
       },
       error: function(e) {}
@@ -1155,19 +1165,33 @@ document.getElementById("export_pengunjung_btn").href = '<?= site_url('OperatorC
   }); 
 
   }
-   function renderTahunSelection(data){
+
+    function renderTahunSelection(data){
+     console.log("Masuk Tahun")
     InputModal.tahun.empty();
     InputModal.tahun.append($('<option>', { value: "", text: "Tahun"}));
     data.forEach((d) => {
+      if(d['tahun'] >= dataProfil['tahun_terdata']){
       InputModal.tahun.append($('<option>', {
         value: d['tahun'],
         text: d['tahun'],
       }));  
-     InputModal.tahun.val(d['tahun']); 
-      console.log(d['tahun']);
+      InputModal.tahun.val(d['tahun']); 
+    }
     });
-   getInputPengunjung();
+    
+    EditModal.edit_terdata.empty();
+    EditModal.edit_terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      EditModal.edit_terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+
+    getInputPengunjung();
    }
+
 
 
   //

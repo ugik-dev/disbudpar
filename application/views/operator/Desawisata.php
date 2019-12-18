@@ -56,7 +56,14 @@
             <label for="nama">Tahun Berdiri</label> 
             <input type="number" placeholder="" class="form-control" id="nama" name="tahun_berdiri" required="required">
           </div> -->
-          
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
+
+
+
           <div class="form-group">
             <label for="id_kategori">Kategori</label> 
             <select class="form-control mr-sm-2" id="id_kategori" name="id_kategori" required="required">
@@ -113,6 +120,10 @@ $(document).ready(function() {
     'file': $('#desawisata_modal').find('#file'),
     'lokasi': $('#desawisata_modal').find('#lokasi'),
     'deskripsi': $('#desawisata_modal').find('#deskripsi'),
+    'terdata': $('#desawisata_modal').find('#terdata'),
+
+
+
    
   }
 
@@ -240,6 +251,36 @@ $(document).ready(function() {
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
 
+ getTahun();  
+    function getTahun(){
+    return $.ajax({
+      url: `<?php echo site_url('DetailDesawisataController/getTahun/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataTahun = json['data'];
+        renderTahunTerdataSelection(dataTahun);
+      },
+      error: function(e) {}
+    });
+  }
+
+  function renderTahunTerdataSelection(data){
+
+    DesawisataModal.terdata.empty();
+    DesawisataModal.terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      DesawisataModal.terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+   }
+
+
   
   FDataTable.on('click','.edit', function(){
     event.preventDefault();
@@ -255,6 +296,8 @@ $(document).ready(function() {
     DesawisataModal.file.val(desawisata['file']);
     DesawisataModal.lokasi.val(desawisata['lokasi']);
     DesawisataModal.deskripsi.val(desawisata['deskripsi']);
+    
+    DesawisataModal.terdata.val(desawisata['tahun_terdata']);
 
   });
 

@@ -54,7 +54,11 @@
             <label for="nama">Nama Penginapan</label> 
             <input type="text" placeholder="Nama Penginapan" class="form-control" id="nama" name="nama" required="required">
           </div>
-         
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
           <div class="form-group">
             <label for="id_jenis_penginapan">Jenis</label> 
             <select class="form-control mr-sm-2" id="id_jenis_penginapan" name="id_jenis_penginapan" required="required">
@@ -116,7 +120,7 @@ $(document).ready(function() {
     'file': $('#penginapan_modal').find('#file'),
     'lokasi': $('#penginapan_modal').find('#lokasi'),
     'deskripsi': $('#penginapan_modal').find('#deskripsi'),
-   
+    'terdata': $('#penginapan_modal').find('#terdata'),
   }
 
   var swalSaveConfigure = {
@@ -238,6 +242,35 @@ $(document).ready(function() {
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
+  getTahun();  
+    function getTahun(){
+    return $.ajax({
+      url: `<?php echo site_url('DetailPenginapanController/getTahun/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataTahun = json['data'];
+        renderTahunTerdataSelection(dataTahun);
+      },
+      error: function(e) {}
+    });
+  }
+
+  function renderTahunTerdataSelection(data){
+
+    PenginapanModal.terdata.empty();
+    PenginapanModal.terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      PenginapanModal.terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+   }
+
 
   
   FDataTable.on('click','.edit', function(){
@@ -256,7 +289,7 @@ $(document).ready(function() {
     PenginapanModal.file.val(penginapan['file']);
     PenginapanModal.lokasi.val(penginapan['lokasi']);
     PenginapanModal.deskripsi.val(penginapan['deskripsi']);
-
+    PenginapanModal.terdata.val(penginapan['tahun_terdata']);
   });
   
   document.getElementById("export_btn").href = '<?= site_url('OperatorController/PdfAllPenginapan')?>';

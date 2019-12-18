@@ -54,7 +54,11 @@
             <label for="nama">Nama Seni Budaya</label> 
             <input type="text" placeholder="Nama Seni Budaya" class="form-control" id="nama" name="nama" required="required">
           </div>
-          
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
           <div class="form-group">
             <label for="id_j_senibudaya">Jenis Seni Budaya</label> 
             <select class="form-control mr-sm-2" id="id_j_senibudaya" name="id_j_senibudaya" required="required">
@@ -126,7 +130,7 @@ $(document).ready(function() {
     'file': $('#senibudaya_modal').find('#file'),
     'lokasi': $('#senibudaya_modal').find('#lokasi'),
     'deskripsi': $('#senibudaya_modal').find('#deskripsi'),
-   
+    'terdata': $('#senibudaya_modal').find('#terdata'), 
   }
 
   var swalSaveConfigure = {
@@ -285,6 +289,36 @@ $(document).ready(function() {
 
   document.getElementById("export_btn").href = '<?= site_url('OperatorController/PdfAllSenibudaya')?>';
 
+
+ getTahun();  
+    function getTahun(){
+    return $.ajax({
+      url: `<?php echo site_url('DetailSenibudayaController/getTahun/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataTahun = json['data'];
+        renderTahunTerdataSelection(dataTahun);
+      },
+      error: function(e) {}
+    });
+  }
+
+  function renderTahunTerdataSelection(data){
+
+    SenibudayaModal.terdata.empty();
+    SenibudayaModal.terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      SenibudayaModal.terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+   }
+
   FDataTable.on('click','.edit', function(){
     event.preventDefault();
     SenibudayaModal.form.trigger('reset');
@@ -301,7 +335,7 @@ $(document).ready(function() {
     SenibudayaModal.file.val(senibudaya['file']);
     SenibudayaModal.lokasi.val(senibudaya['lokasi']);
     SenibudayaModal.deskripsi.val(senibudaya['deskripsi']);
-
+    SenibudayaModal.terdata.val(senibudaya['tahun_terdata']);
   });
 
   FDataTable.on('click','.delete', function(){

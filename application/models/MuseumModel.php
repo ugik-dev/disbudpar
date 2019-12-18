@@ -50,7 +50,7 @@ class MuseumModel extends CI_Model {
 		}else{
 		  $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
 	  	};
-	    $dataInsert = DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_kepemilikan_museum','id_status_museum','file','lokasi','deskripsi']);
+	    $dataInsert = DataStructure::slice($data, ['tahun_terdata','id_user_entry','id_kabupaten','nama','id_kepemilikan_museum','id_status_museum','file','lokasi','deskripsi']);
 	    $this->db->insert('museum', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Museum", "museum");
 	    return $this->db->insert_id();
@@ -59,14 +59,14 @@ class MuseumModel extends CI_Model {
 	public function editMuseum($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		if($this->session->userdata('id_role') == '1'){
-			$this->db->set(DataStructure::slice($data, ['id_kabupaten','id_user_entry','nama','id_kepemilikan_museum','id_status_museum','file','lokasi','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','id_user_entry','nama','id_kepemilikan_museum','id_status_museum','file','lokasi','deskripsi']));
 		}else{
 			$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
-			$this->db->set(DataStructure::slice($data, ['id_user_entry','nama','id_kepemilikan_museum','id_status_museum','file','lokasi','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_user_entry','nama','id_kepemilikan_museum','id_status_museum','file','lokasi','deskripsi']));
 		
 		}
 
-		$this->db->set(DataStructure::slice($data, ['id_user_entry','nama','id_kepemilikan_museum','id_status_museum','file','lokasi','deskripsi']));
+		$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_user_entry','nama','id_kepemilikan_museum','id_status_museum','file','lokasi','deskripsi']));
 		$this->db->where('id_museum', $data['id_museum']);
 		$this->db->update('museum');
 

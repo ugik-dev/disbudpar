@@ -161,7 +161,7 @@ class DetailDesawisataModel extends CI_Model {
 
 	public function editDetailDesawisata($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_kategori','lokasi','deskripsi','alamat','id_user_entry']));
+		$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_kategori','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_desawisata', $data['id_desawisata']);
 		$this->db->update('desawisata');
 

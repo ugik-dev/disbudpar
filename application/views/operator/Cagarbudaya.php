@@ -83,6 +83,11 @@
             <label for="nama">Nama Cagarbudaya</label> 
             <input type="text" placeholder="Nama Cagarbudaya" class="form-control" id="nama" name="nama" required="required">
           </div>
+          <div class="form-group">
+            <label for="terdata">Tahun Terdata</label> 
+            <select class="form-control mr-sm-2" id="terdata" name="tahun_terdata" required="required">
+            </select>
+          </div>
           
           <div class="form-group">
             <label for="jenis">Jenis Cagar budaya</label> 
@@ -157,7 +162,7 @@ $(document).ready(function() {
     'id_cagarbudaya': $('#cagarbudaya_modal').find('#id_cagarbudaya'),
     'nama': $('#cagarbudaya_modal').find('#nama'),
     'jenis': $('#cagarbudaya_modal').find('#jenis'),
-
+    'terdata': $('#cagarbudaya_modal').find('#terdata'),
     'kepemilikan': $('#cagarbudaya_modal').find('#kepemilikan'),
     'status_penetapan': $('#cagarbudaya_modal').find('#status_penetapan'),
     'file': $('#cagarbudaya_modal').find('#file'),
@@ -205,6 +210,37 @@ $(document).ready(function() {
       break;
     }
   });
+
+   getTahun();  
+    function getTahun(){
+    return $.ajax({
+      url: `<?php echo site_url('DetailCagarbudayaController/getTahun/')?>`, 'type': 'GET',
+      data: {},
+      success: function (data){
+        var json = JSON.parse(data);
+        if(json['error']){
+          return;
+        }
+        dataTahun = json['data'];
+        renderTahunTerdataSelection(dataTahun);
+      },
+      error: function(e) {}
+    });
+  }
+
+  function renderTahunTerdataSelection(data){
+
+    CagarbudayaModal.terdata.empty();
+    CagarbudayaModal.terdata.append($('<option>', { value: "", text: "-- Pilih Tahun --"}));
+    data.forEach((d) => {
+      CagarbudayaModal.terdata.append($('<option>', {
+        value: d['tahun'],
+        text: d['tahun'],
+      }));  
+    });
+   }
+
+
 
   getAllJenis();  
   function getAllJenis(){
@@ -370,7 +406,7 @@ $(document).ready(function() {
     CagarbudayaModal.file.val(cagarbudaya['file']);
     CagarbudayaModal.lokasi.val(cagarbudaya['lokasi']);
     CagarbudayaModal.deskripsi.val(cagarbudaya['deskripsi']);
-   
+    CagarbudayaModal.terdata.val(cagarbudaya['tahun_terdata']);
   });
 
   FDataTable.on('click','.delete', function(){

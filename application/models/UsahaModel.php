@@ -49,7 +49,7 @@ class UsahaModel extends CI_Model {
 		}else{
 		  $data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
 	  };
-	    $dataInsert = DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_jenis_usaha','id_item_usaha','alamat','lokasi','file','deskripsi']);
+	    $dataInsert = DataStructure::slice($data, ['tahun_terdata','id_user_entry','id_kabupaten','nama','id_jenis_usaha','id_item_usaha','alamat','lokasi','file','deskripsi']);
 	    $this->db->insert('pariwisata_usaha', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Usaha", "pariwisata_usaha");
 	    return $this->db->insert_id();
@@ -59,10 +59,10 @@ class UsahaModel extends CI_Model {
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		
 		if($this->session->userdata('id_role') == '1'){
-			$this->db->set(DataStructure::slice($data, ['id_kabupaten','nama','id_jenis_usaha','id_item_usaha','alamat','lokasi','file','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_kabupaten','nama','id_jenis_usaha','id_item_usaha','alamat','lokasi','file','deskripsi']));
 		}else{
 			$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
-			$this->db->set(DataStructure::slice($data, ['id_user_entry','id_kabupaten','nama','id_jenis_usaha','id_item_usaha','alamat','lokasi','file','deskripsi']));
+			$this->db->set(DataStructure::slice($data, ['tahun_terdata','id_user_entry','id_kabupaten','nama','id_jenis_usaha','id_item_usaha','alamat','lokasi','file','deskripsi']));
 		
 		}
 		$this->db->where('id_usaha', $data['id_usaha']);
