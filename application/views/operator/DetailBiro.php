@@ -38,7 +38,7 @@
               </div>
               
 
- <div class="form-group">
+              <div class="form-group">
                 <label for="formGroupExampleInput">Tahun Terdata</label>
                 <input type="text" class="form-control" id="terdata" readonly="readonly">
               </div>
@@ -835,6 +835,7 @@ function myFunction() {
   }
 
   function getInputPengunjung(){
+    document.getElementById("export_pengunjung_btn").href = '<?= site_url('OperatorController/ExportPengunjung?tb=biro&id_data=')?>'+id_biro+`&tahun=`+InputModal.tahun.val();
 
     console.log(toolbar.form.serialize());
     $.ajax({
@@ -855,14 +856,11 @@ function myFunction() {
       error: function(e) {}
     });
   }
-
-function renderInputPengunjung(data){
+  function renderInputPengunjung(data){
     if(data == null || typeof data != "object"){
       console.log("User::UNKNOWN DATA");
       return;
     }
-    
-document.getElementById("export_pengunjung_btn").href = '<?= site_url('OperatorController/ExportPengunjung?tb=biro&id_data=')?>'+id_biro+`&tahun=`+InputModal.tahun.val();
     var i = 1;
     var tmpdl = 0;
     var tmpdp = 0;
@@ -890,12 +888,7 @@ document.getElementById("export_pengunjung_btn").href = '<?= site_url('OperatorC
           <div class="col">
           <label>Total Pengunjung</label>
           </div>
-          <div class="col">
-          <label>Pajak</label>
-          </div>
-          <div class="col">
-          <label>Retribusi</label>
-          </div>
+          
         </div>`;
     Object.values(data).forEach((d) => {
       tmpdl += Number(d['domestik_l']);
@@ -903,8 +896,7 @@ document.getElementById("export_pengunjung_btn").href = '<?= site_url('OperatorC
       tmpml += Number(d['mancanegara_l']);
       tmpmp += Number(d['mancanegara_p']);
       tmpjumlah += Number(d['jumlah']);
-      tmppajak += Number(d['pajak']);
-      tmpretribusi += Number(d['retribusi']);
+     
        intputhtml +=`
       <div class="form-row">
           <div class="col-2">
@@ -928,12 +920,7 @@ document.getElementById("export_pengunjung_btn").href = '<?= site_url('OperatorC
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${d['jumlah']}" disabled>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" name="pajak${i}" placeholder=""  value="${d['pajak']}">
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="retribusi${i}" placeholder=""  value="${d['retribusi']}">
-          </div>
+         
         </div>
       `;
       i++;
@@ -959,26 +946,35 @@ document.getElementById("export_pengunjung_btn").href = '<?= site_url('OperatorC
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${tmpjumlah}" disabled>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmppajak}" disabled>
+          
+        </div>
+        <div class="form-row" style=" padding-top: 10px;">
+          <div class="col-2">
+            <label> Pajak : </label>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmpretribusi}" disabled>
+          <div class="col-4">
+            <input type="number" class="form-control" name="pajak12" placeholder=""  value="${data[tmpapprov]['pajak']}">
+          </div>
+          <div class="col-2">
+            <label> Retribusi : </label>
+          </div>
+          <div class="col-4">
+            <input type="number" class="form-control" name="retribusi12" placeholder=""  value="${data[tmpapprov]['retribusi']}">
           </div>
         </div>
       `;
     intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> 
-    <button type="submit" class="btn btn-info my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='approv'" hidden><i class="fal fa-save"></i> Approv Data</button>`;
+  `;
       var input_data_pengunjung = document.getElementById("input_data_pengunjung");  
         input_data_pengunjung.innerHTML = intputhtml;
-        var header_approv = document.getElementById("header_approv");  
+
+      var header_approv = document.getElementById("header_approv");  
       if(data[tmpapprov]['approv'] == '0' || data[tmpapprov]['approv'] == null  ){
         header_approv.innerHTML = `<h5><span class="badge badge-warning">Data Belum di Approv</span></h5>`;
       }else{
         header_approv.innerHTML = `<h5><span class="badge badge-info">Data Sudah Approv</span></h5>`;  
       };
   }
-
     InputModal.form.submit(function(event){
     event.preventDefault();
     switch(InputModal.form[0].target){

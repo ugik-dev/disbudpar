@@ -165,11 +165,19 @@ function do_upload4(){
         }
       }else{
         for($i=1; $i <= 12; $i++){
-          if(empty($data['id_data_usaha'.$i])){      
-            $this->DetailUsahaModel->saveTambah($data['id_usaha'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+          if(empty($data['id_data_usaha'.$i])){
+            if($i == 12){
+              $this->DetailUsahaModel->saveTambah($data['id_usaha'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            }else{
+              $this->DetailUsahaModel->saveTambah($data['id_usaha'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],null,null);
+            }          
           }else{
-            $this->DetailUsahaModel->saveEdit($data['id_data_usaha'.$i],$data['id_usaha'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
-          }
+            if($i == 12){
+              $this->DetailUsahaModel->saveEdit($data['id_data_usaha'.$i],$data['id_usaha'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            }else{
+              $this->DetailUsahaModel->saveEdit($data['id_data_usaha'.$i],$data['id_usaha'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],null,null);
+           }    
+         }
         }
       }
       echo json_encode('succes');

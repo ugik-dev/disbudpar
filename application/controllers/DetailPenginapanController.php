@@ -86,10 +86,18 @@ class DetailPenginapanController extends CI_Controller {
         }
       }else{
         for($i=1; $i <= 12; $i++){
-          if(empty($data['id_data_penginapan'.$i])){      
-            $this->DetailPenginapanModel->saveTambah($data['id_penginapan'],$data['tahun'],$data['bulan'.$i],$data['domestik_personal_l'.$i],$data['domestik_personal_p'.$i],$data['mancanegara_personal_l'.$i],$data['mancanegara_personal_p'.$i],$data['domestik_durasi'.$i],$data['mancanegara_durasi'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+          if(empty($data['id_data_penginapan'.$i])){
+            if($i == 12){
+              $this->DetailPenginapanModel->saveTambah($data['id_penginapan'],$data['tahun'],$data['bulan'.$i],$data['domestik_personal_l'.$i],$data['domestik_personal_p'.$i],$data['mancanegara_personal_l'.$i],$data['mancanegara_personal_p'.$i],$data['domestik_durasi'.$i],$data['mancanegara_durasi'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            }else{
+              $this->DetailPenginapanModel->saveTambah($data['id_penginapan'],$data['tahun'],$data['bulan'.$i],$data['domestik_personal_l'.$i],$data['domestik_personal_p'.$i],$data['mancanegara_personal_l'.$i],$data['mancanegara_personal_p'.$i],$data['domestik_durasi'.$i],$data['mancanegara_durasi'.$i],null,null);
+            }          
           }else{
-            $this->DetailPenginapanModel->saveEdit($data['id_data_penginapan'.$i],$data['id_penginapan'],$data['tahun'],$data['bulan'.$i],$data['domestik_personal_l'.$i],$data['domestik_personal_p'.$i],$data['mancanegara_personal_l'.$i],$data['mancanegara_personal_p'.$i],$data['domestik_durasi'.$i],$data['mancanegara_durasi'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            if($i == 12){
+              $this->DetailPenginapanModel->saveEdit($data['id_data_penginapan'.$i],$data['id_penginapan'],$data['tahun'],$data['bulan'.$i],$data['domestik_personal_l'.$i],$data['domestik_personal_p'.$i],$data['mancanegara_personal_l'.$i],$data['mancanegara_personal_p'.$i],$data['domestik_durasi'.$i],$data['mancanegara_durasi'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            }else{
+              $this->DetailPenginapanModel->saveEdit($data['id_data_penginapan'.$i],$data['id_penginapan'],$data['tahun'],$data['bulan'.$i],$data['domestik_personal_l'.$i],$data['domestik_personal_p'.$i],$data['mancanegara_personal_l'.$i],$data['mancanegara_personal_p'.$i],$data['domestik_durasi'.$i],$data['mancanegara_durasi'.$i],null,null);
+            }    
           }
         }
       }

@@ -186,9 +186,17 @@ class DetailCagarbudayaController extends CI_Controller {
       }else{
         for($i=1; $i <= 12; $i++){
           if(empty($data['id_data_cagarbudaya'.$i])){      
-            $this->DetailCagarbudayaModel->saveTambah($data['id_cagarbudaya'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            if($i == 12){
+              $this->DetailCagarbudayaModel->saveTambah($data['id_cagarbudaya'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            }else{
+              $this->DetailCagarbudayaModel->saveTambah($data['id_cagarbudaya'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],null,null);
+            }  
           }else{
-            $this->DetailCagarbudayaModel->saveEdit($data['id_data_cagarbudaya'.$i],$data['id_cagarbudaya'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            if($i == 12){
+              $this->DetailCagarbudayaModel->saveEdit($data['id_data_cagarbudaya'.$i],$data['id_cagarbudaya'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            }else{
+              $this->DetailCagarbudayaModel->saveEdit($data['id_data_cagarbudaya'.$i],$data['id_cagarbudaya'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],null,null);
+            }  
           }
         }
 

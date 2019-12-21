@@ -903,127 +903,125 @@ function myFunction() {
     });
   }
 
-function renderInputPengunjung(data){
-    if(data == null || typeof data != "object"){
-      console.log("User::UNKNOWN DATA");
-      return;
-    }
-    var i = 1;
-    var tmpdl = 0;
-    var tmpdp = 0;
-    var tmpml = 0;
-    var tmpmp = 0;
-    var tmpjumlah = 0;
-    var tmppajak = 0;
-    var tmpretribusi = 0;
-    var intputhtml = `<div class="form-row">
-          <div class="col-2">
-          <label>Bulan </label>
-          </div>
-          <div class="col">
-            <label>Domestik Laki-laki </label>
-          </div>
-          <div class="col">
-          <label>Domestik Perempuan </label>
-          </div>
-          <div class="col">
-          <label>Mancanegara Laki-laki </label>
-          </div>
-          <div class="col">
-          <label>Mancanegara Perempuan </label>
-          </div>
-          <div class="col">
-          <label>Total Pengunjung</label>
-          </div>
-          <div class="col">
-          <label>Pajak</label>
-          </div>
-          <div class="col">
-          <label>Retribusi</label>
-          </div>
+    function renderInputPengunjung(data){
+        if(data == null || typeof data != "object"){
+          console.log("User::UNKNOWN DATA");
+          return;
+        }
+        var i = 1;
+        var tmpdl = 0;
+        var tmpdp = 0;
+        var tmpml = 0;
+        var tmpmp = 0;
+        var tmpjumlah = 0;
+        var tmppajak = 0;
+        var tmpretribusi = 0;
+        var intputhtml = `<div class="form-row">
+              <div class="col-2">
+              <label>Bulan </label>
+              </div>
+              <div class="col">
+                <label>Domestik Laki-laki </label>
+              </div>
+              <div class="col">
+              <label>Domestik Perempuan </label>
+              </div>
+              <div class="col">
+              <label>Mancanegara Laki-laki </label>
+              </div>
+              <div class="col">
+              <label>Mancanegara Perempuan </label>
+              </div>
+              <div class="col">
+              <label>Total Pengunjung</label>
+              </div>
+              
+            </div>`;
+        Object.values(data).forEach((d) => {
+          tmpdl += Number(d['domestik_l']);
+          tmpdp += Number(d['domestik_p']);
+          tmpml += Number(d['mancanegara_l']);
+          tmpmp += Number(d['mancanegara_p']);
+          tmpjumlah += Number(d['jumlah']);
+        
+          intputhtml +=`
+          <div class="form-row">
+              <div class="col-2">
+                <label>${d['nama_bulan']} :</label>
+                <input type="number" class="form-control" name="id_data_cagarbudaya${i}" value="${d['id_data_cagarbudaya']}" hidden>
+                <input type="number" class="form-control" name="bulan${d['bulan']}" placeholder="id_bulan" value="${d['bulan']}" hidden>
+                <input type="number" class="form-control" name="tahun" placeholder="tahun" value="${d['tahun']}" hidden>
+              </div>
+              <div class="col">  
+                <input type="number" class="form-control" name="domestik_l${i}" placeholder="" value="${d['domestik_l']}">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" name="domestik_p${i}" placeholder="" value="${d['domestik_p']}">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" name="mancanegara_l${i}" placeholder="" value="${d['mancanegara_l']}">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" name="mancanegara_p${i}" placeholder=""  value="${d['mancanegara_p']}">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" placeholder="0"  value="${d['jumlah']}" disabled>
+              </div>
+            
+            </div>
+          `;
+          i++;
+          tmpapprov=d['nomor'];
+        });
+        intputhtml +=`
+          <div class="form-row">
+              <div class="col-2">
+                <label>Jumlah :</label>
+              </div>
+              <div class="col">  
+                <input type="number" class="form-control" name="domestik_l${i}" placeholder="0" value="${tmpdl}" disabled>
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" name="domestik_p${i}" placeholder="0" value="${tmpdp}" disabled>
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" name="mancanegara_l${i}" placeholder="0" value="${tmpml}" disabled>
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" name="mancanegara_p${i}" placeholder="0"  value="${tmpmp}" disabled>
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" placeholder="0"  value="${tmpjumlah}" disabled>
+              </div>
+              
+            </div>
+            <div class="form-row" style=" padding-top: 10px;">
+              <div class="col-2">
+                <label> Pajak : </label>
+              </div>
+              <div class="col-4">
+                <input type="number" class="form-control" name="pajak12" placeholder=""  value="${data[tmpapprov]['pajak']}">
+              </div>
+              <div class="col-2">
+                <label> Retribusi : </label>
+              </div>
+              <div class="col-4">
+                <input type="number" class="form-control" name="retribusi12" placeholder=""  value="${data[tmpapprov]['retribusi']}">
+              </div>
+            </div>
+          `;
+        intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> 
+      `;
+          var input_data_pengunjung = document.getElementById("input_data_pengunjung");  
+            input_data_pengunjung.innerHTML = intputhtml;
 
-        </div>`;
-    Object.values(data).forEach((d) => {
-      tmpdl += Number(d['domestik_l']);
-      tmpdp += Number(d['domestik_p']);
-      tmpml += Number(d['mancanegara_l']);
-      tmpmp += Number(d['mancanegara_p']);
-      tmpjumlah += Number(d['jumlah']);
-      tmppajak += Number(d['pajak']);
-      tmpretribusi += Number(d['retribusi']);
-       intputhtml +=`
-      <div class="form-row">
-          <div class="col-2">
-            <label>${d['nama_bulan']} :</label>
-            <input type="number" class="form-control" name="id_data_cagarbudaya${i}" value="${d['id_data_cagarbudaya']}" hidden>
-            <input type="number" class="form-control" name="bulan${d['bulan']}" placeholder="id_bulan" value="${d['bulan']}" hidden>
-            <input type="number" class="form-control" name="tahun" placeholder="tahun" value="${d['tahun']}" hidden>
-          </div>
-          <div class="col">  
-            <input type="number" class="form-control" name="domestik_l${i}" placeholder="" value="${d['domestik_l']}">
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="domestik_p${i}" placeholder="" value="${d['domestik_p']}">
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="mancanegara_l${i}" placeholder="" value="${d['mancanegara_l']}">
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="mancanegara_p${i}" placeholder=""  value="${d['mancanegara_p']}">
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${d['jumlah']}" disabled>
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="pajak${i}" placeholder=""  value="${d['pajak']}">
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="retribusi${i}" placeholder=""  value="${d['retribusi']}">
-          </div>
-        </div>
-      `;
-      i++;
-      tmpapprov=d['nomor'];
-    });
-    intputhtml +=`
-      <div class="form-row">
-          <div class="col-2">
-            <label>Jumlah :</label>
-          </div>
-          <div class="col">  
-            <input type="number" class="form-control" name="domestik_l${i}" placeholder="0" value="${tmpdl}" disabled>
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="domestik_p${i}" placeholder="0" value="${tmpdp}" disabled>
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="mancanegara_l${i}" placeholder="0" value="${tmpml}" disabled>
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="mancanegara_p${i}" placeholder="0"  value="${tmpmp}" disabled>
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmpjumlah}" disabled>
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmppajak}" disabled>
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmpretribusi}" disabled>
-          </div>
-        </div>
-      `;
-    intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> 
-                    `;
-      var input_data_pengunjung = document.getElementById("input_data_pengunjung");  
-        input_data_pengunjung.innerHTML = intputhtml;
-      var header_approv = document.getElementById("header_approv");  
-      if(data[tmpapprov]['approv'] == '0' || data[tmpapprov]['approv'] == null  ){
-        header_approv.innerHTML = `<h5><span class="badge badge-warning">Data Belum di Approv</span></h5>`;
-      }else{
-        header_approv.innerHTML = `<h5><span class="badge badge-info">Data Sudah Approv</span></h5>`;  
-      };
-  }
+          var header_approv = document.getElementById("header_approv");  
+          if(data[tmpapprov]['approv'] == '0' || data[tmpapprov]['approv'] == null  ){
+            header_approv.innerHTML = `<h5><span class="badge badge-warning">Data Belum di Approv</span></h5>`;
+          }else{
+            header_approv.innerHTML = `<h5><span class="badge badge-info">Data Sudah Approv</span></h5>`;  
+          };
+      }
 
     InputModal.form.submit(function(event){
     event.preventDefault();

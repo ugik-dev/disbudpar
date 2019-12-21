@@ -157,9 +157,17 @@ class DetailBiroController extends CI_Controller {
       }else{
         for($i=1; $i <= 12; $i++){
           if(empty($data['id_data_biro'.$i])){      
-            $this->DetailBiroModel->saveTambah($data['id_biro'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            if($i == 12){
+              $this->DetailBiroModel->saveTambah($data['id_biro'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            }else{
+              $this->DetailBiroModel->saveTambah($data['id_biro'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],null,null);
+            }   
           }else{
-            $this->DetailBiroModel->saveEdit($data['id_data_biro'.$i],$data['id_biro'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            if($i == 12){
+              $this->DetailBiroModel->saveEdit($data['id_data_biro'.$i],$data['id_biro'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],$data['pajak'.$i],$data['retribusi'.$i]);
+            }else{
+              $this->DetailBiroModel->saveEdit($data['id_data_biro'.$i],$data['id_biro'],$data['tahun'],$data['bulan'.$i],$data['domestik_l'.$i],$data['domestik_p'.$i],$data['mancanegara_l'.$i],$data['mancanegara_p'.$i],null,null);
+            }   
           }
         }
       }

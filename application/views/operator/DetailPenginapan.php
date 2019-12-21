@@ -884,8 +884,7 @@ function myFunction() {
       error: function(e) {}
     });
   }
-
-function renderInputPengunjung(data){
+  function renderInputPengunjung(data){
     if(data == null || typeof data != "object"){
       console.log("User::UNKNOWN DATA");
       return;
@@ -896,8 +895,6 @@ function renderInputPengunjung(data){
     var tmpml = 0;
     var tmpmp = 0;
     var tmpjumlah = 0;
-    var tmppajak = 0;
-    var tmpretribusi = 0;
     var tmpjumlahdurasi = 0;
     var tmpdd = 0;
     var tmpdm = 0;
@@ -929,13 +926,7 @@ function renderInputPengunjung(data){
           <div class="col">
           <label>Total Lama Penginapan (Hari) </label>
           </div>
-          
-          <div class="col">
-          <label>Pajak</label>
-          </div>
-          <div class="col">
-          <label>Retribusi</label>
-          </div>
+
         </div>`;
     Object.values(data).forEach((d) => {
       tmpdl += Number(d['domestik_personal_l']);
@@ -943,8 +934,6 @@ function renderInputPengunjung(data){
       tmpml += Number(d['mancanegara_personal_l']);
       tmpmp += Number(d['mancanegara_personal_p']);
       tmpjumlah += Number(d['jumlah_personal']);
-      tmppajak += Number(d['pajak']);
-      tmpretribusi += Number(d['retribusi']);
       tmpdd += Number(d['domestik_durasi']);
       tmpdm += Number(d['mancanegara_durasi']);
       tmpjumlahdurasi += Number(d['jumlah_durasi']);
@@ -980,12 +969,7 @@ function renderInputPengunjung(data){
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${d['jumlah_durasi']}" disabled>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" name="pajak${i}" placeholder=""  value="${d['pajak']}">
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="retribusi${i}" placeholder=""  value="${d['retribusi']}">
-          </div>
+         
         </div>
       `;
       i++;
@@ -1020,13 +1004,21 @@ function renderInputPengunjung(data){
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${tmpjumlahdurasi}" disabled>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmppajak}" disabled>
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmpretribusi}" disabled>
-          </div>
         </div>
+        <div class="form-row" style=" padding-top: 10px;">
+              <div class="col-2">
+                <label> Pajak : </label>
+              </div>
+              <div class="col-4">
+                <input type="number" class="form-control" name="pajak12" placeholder=""  value="${data[tmpapprov]['pajak']}">
+              </div>
+              <div class="col-2">
+                <label> Retribusi : </label>
+              </div>
+              <div class="col-4">
+                <input type="number" class="form-control" name="retribusi12" placeholder=""  value="${data[tmpapprov]['retribusi']}">
+              </div>
+            </div>
       `;
     intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> 
    `;
@@ -1040,6 +1032,7 @@ function renderInputPengunjung(data){
       };
   }
 
+      
     InputModal.form.submit(function(event){
     event.preventDefault();
     switch(InputModal.form[0].target){

@@ -38,6 +38,10 @@
                 <input type="text" class="form-control" id="namapenginapan"  readonly="readonly">
               </div>
               <div class="form-group">
+                <label for="formGroupExampleInput">Tahun Terdata</label>
+                <input type="text" class="form-control" id="terdata" readonly="readonly">
+              </div>
+              <div class="form-group">
                 <label for="formGroupExampleInput">Alamat</label>
                 <input type="text" class="form-control" id="alamat" readonly="readonly">
               </div>
@@ -79,7 +83,7 @@
       </div><!-- profil -->
           </div><!-- ibox content -->
       </div> <!-- ibox -->
-      <div class="ibox">
+      <div class="ibox" hidden>
         <div class="ibox-content">
               <label for="formGroupExampleInput">Photo </label>
               
@@ -155,8 +159,8 @@
                                             </div>
                         </div>
                         
-                          <div class="form-group col-md-12">
-                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                          <div class="form-group col-md-12" id='fileimg'>
+                            <!-- <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'> -->
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -708,7 +712,8 @@ function myFunction() {
         
         var id_upload4 = document.getElementById("id_penginapantoupload4");
         var nama_user_entry = document.getElementById("nama_user_entry");
-      //  var edit_profil_btn = document.getElementById("edit_profil_btn");
+        var terdata = document.getElementById("terdata");
+        terdata.value = dataProfil['tahun_terdata'];
         nama_user_entry
         id_upload1.value = id_penginapan;
         id_upload2.value = id_penginapan;
@@ -734,11 +739,14 @@ function myFunction() {
         };
         kordinat.value = dataProfil['lokasi'];
         file.value = dataProfil['file'];
-        fileimg.src = `<?= base_url('upload/file/')?>`+dataProfil['file'];
         file2.value = dataProfil['file2'];
         dokumen.value = dataProfil['dokumen'];
-        if(dataProfil['file2'] != ""){renderPhoto()};
-         
+        if(!empty(dataProfil['file'])){
+          tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+        fileimg.innerHTML = `<img src="${tmp}" class="zoom"  alt="Responsive image" style='height: 200px; width : 100%'>`;
+        };
+        if(!empty(dataProfil['file2']))renderPhoto();
+        
         renderPdf();
         renderPhotoModal()
         //console.log(dataProfil)
@@ -902,8 +910,7 @@ function renderInputPengunjung(data){
     var tmpml = 0;
     var tmpmp = 0;
     var tmpjumlah = 0;
-    var tmppajak = 0;
-    var tmpretribusi = 0;
+   
     var tmpjumlahdurasi = 0;
     var tmpdd = 0;
     var tmpdm = 0;
@@ -936,12 +943,7 @@ function renderInputPengunjung(data){
           <label>Total Lama Penginapan (Hari) </label>
           </div>
           
-          <div class="col">
-          <label>Pajak</label>
-          </div>
-          <div class="col">
-          <label>Retribusi</label>
-          </div>
+         
 
         </div>`;
     Object.values(data).forEach((d) => {
@@ -950,8 +952,7 @@ function renderInputPengunjung(data){
       tmpml += Number(d['mancanegara_personal_l']);
       tmpmp += Number(d['mancanegara_personal_p']);
       tmpjumlah += Number(d['jumlah_personal']);
-      tmppajak += Number(d['pajak']);
-      tmppajak += Number(d['retribusi']);
+     
       tmpdd += Number(d['domestik_durasi']);
       tmpdm += Number(d['mancanegara_durasi']);
       tmpjumlahdurasi += Number(d['jumlah_durasi']);
@@ -987,12 +988,7 @@ function renderInputPengunjung(data){
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${d['jumlah_durasi']}" disabled>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" name="pajak${i}" placeholder=""  value="${d['pajak']}" disabled>
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="retribusi${i}" placeholder=""  value="${d['retribusi']}" disabled>
-          </div>
+          
         </div>
       `;
       i++;
@@ -1027,13 +1023,22 @@ function renderInputPengunjung(data){
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${tmpjumlahdurasi}" disabled>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmppajak}" disabled>
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmpretribusi}" disabled>
-          </div>
+          
         </div>
+        <div class="form-row" style=" padding-top: 10px;">
+              <div class="col-2">
+                <label> Pajak : </label>
+              </div>
+              <div class="col-4">
+                <input type="number" class="form-control" name="pajak12" placeholder=""  value="${data[tmpapprov]['pajak']}" readonly>
+              </div>
+              <div class="col-2">
+                <label> Retribusi : </label>
+              </div>
+              <div class="col-4">
+                <input type="number" class="form-control" name="retribusi12" placeholder=""  value="${data[tmpapprov]['retribusi']}" readonly>
+              </div>
+            </div>
       `;
     intputhtml +=` 
     <button type="submit" class="btn btn-info my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='approv'"><i class="fal fa-save"></i> Approv Data</button>`;
