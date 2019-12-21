@@ -38,6 +38,10 @@
                                     <input type="text" class="form-control" id="namadesawisata"  readonly="readonly">
                                 </div>
                                 <div class="form-group">
+                <label for="formGroupExampleInput">Tahun Terdata</label>
+                <input type="text" class="form-control" id="terdata" readonly="readonly">
+              </div>
+                                <div class="form-group">
                                     <label for="formGroupExampleInput">Alamat</label>
                                     <input type="text" class="form-control" id="alamat" readonly="readonly">
                                 </div>
@@ -65,14 +69,14 @@
                                 </form>
                     <!-- -->             <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button>
          
-                                <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data</strong></button>
-                                <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil</strong></button>
+                                <button hidden class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data</strong></button>
+                                <button hidden class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil</strong></button>
            <!-- -->                     <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
     
                             </div><!-- profil -->
                             </div><!-- ibox content -->
                         </div> <!-- ibox -->
-                        <div class="ibox">
+                        <div class="ibox" hidden>
                             <div class="ibox-content">
                                 <label for="formGroupExampleInput">Photo Header</label>
                                 <div class="form-row">
@@ -177,9 +181,8 @@
           <select class="dropdown-item" id="tahun_input" name="tahun_input" required="required"></select>
         </div>
         <div class="form-group mx-sm-3 mb-2" id="header_approv"> </div>
-        <div class="form-group mb-2">
-          <a type="" class="btn btn-light my-1 mr-sm-2" id="export_pengunjung_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
-        </div>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_pengunjung_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
+    
       </div>
       <form class="form" id="pengujung_form" onsubmit="return false;">
         <input type="hidden" id="id_desawisata" name="id_desawisata" readonly="readonly">
@@ -214,17 +217,14 @@
             <label for="nama">Nama Desa Wisata</label> 
             <input type="text" placeholder="Nama Desawisata" class="form-control" id="edit_nama" name="nama" required="required">
           </div>
+
           <div class="form-group">
             <label for="kategori">Kategori Desa Wisata</label> 
             <select class="form-control mr-sm-2" id="edit_id_kategori" name="id_kategori" required="required">
             </select>
           </div>
           
-  <!-- -->        <div class="form-group">
-            <label for="kabupaten">Kabupaten / Kota</label> 
-            <select class="form-control mr-sm-2" id="edit_id_kabupaten" name="id_kabupaten" required="required">
-            </select>
-          </div>
+ 
           <div class="form-group">
             <label for="alamat">Alamat</label> 
             <input type="text" placeholder="Alamat" class="form-control" id="edit_alamat" name="alamat" required="required">
@@ -520,7 +520,7 @@ var map;
     'edit_lokasi': $('#edit_modal').find('#edit_lokasi'),
     'edit_deskripsi': $('#edit_modal').find('#edit_deskripsi'),
     'edit_id_kategori': $('#edit_modal').find('#edit_id_kategori'),
-    'edit_id_kabupaten': $('#edit_modal').find('#edit_id_kabupaten'),
+    
   }
   // EditModal.edit_id_desawisata.val(id_desawisata);
   // EditModal.edit_nama.val(dataProfil['nama']);
@@ -540,8 +540,7 @@ function myFunction() {
     EditModal.edit_lokasi.val(dataProfil['lokasi']);
     EditModal.edit_deskripsi.val(dataProfil['deskripsi']);
     EditModal.edit_id_kategori.val(dataProfil['id_kategori']);
-    EditModal.edit_id_kabupaten.val(dataProfil['id_kabupaten']);
-   
+  
 }
 
 document.getElementById("approv_profil_btn").onclick = function() {ApprovProfil()};
@@ -689,8 +688,9 @@ function ApprovProfil() {
         var id_upload2 = document.getElementById("id_desawisatatoupload2");
         var id_upload4 = document.getElementById("id_desawisatatoupload4");
         var nama_user_entry = document.getElementById("nama_user_entry");
-      //  var edit_profil_btn = document.getElementById("edit_profil_btn");
-
+        var terdata = document.getElementById("terdata");
+        terdata.value = dataProfil['tahun_terdata'];
+       
         id_upload1.value = id_desawisata;
         id_upload2.value = id_desawisata;
        
@@ -758,9 +758,9 @@ function ApprovProfil() {
       if (dataProfil['file2'] != ""){
       imgHTML +=`
                 <div class='form-group col-md-6'>
-                  <a type="submit" id="del_photo${i}" >             
+                       
                   <img src="${tmp}" class="zoom" id='file2img' alt="Responsive image" style='height: 200px;'>            
-                  </a>
+                
                 </div>
                 `;
       i++;
@@ -769,16 +769,7 @@ function ApprovProfil() {
     var photo = document.getElementById("photo");  
     imgHTML +=`</div>`;
     photo.innerHTML = imgHTML;
-    i=0;
-    if (dataProfil['file2'] != ""){
-      ph1.forEach((e) => {
-        document.getElementById("del_photo"+String(i)).onclick = function() {
-          console.log('hapus foto foto',e)
-          delPhoto(e);
-        };
-        i++;
-      });
-    };
+    
       
     }
 
@@ -848,6 +839,8 @@ function ApprovProfil() {
   }
 
   function getInputPengunjung(){
+   
+    document.getElementById("export_pengunjung_btn").href = '<?= site_url('AdminController/ExportPengunjung?tb=desawisata&id_data=')?>'+id_desawisata+`&tahun=`+InputModal.tahun.val();
 
     console.log(toolbar.form.serialize());
     $.ajax({
@@ -874,9 +867,6 @@ function renderInputPengunjung(data){
       console.log("User::UNKNOWN DATA");
       return;
     }
-    
-    document.getElementById("export_pengunjung_btn").href = '<?= site_url('AdminController/ExportPengunjung?tb=desawisata&id_data=')?>'+id_desawisata+`&tahun=`+InputModal.tahun.val();
-
     var i = 1;
     var tmpdl = 0;
     var tmpdp = 0;
@@ -904,12 +894,7 @@ function renderInputPengunjung(data){
           <div class="col">
           <label>Total Pengunjung</label>
           </div>
-          <div class="col">
-          <label>Pajak</label>
-          </div>
-          <div class="col">
-          <label>Retribusi</label>
-          </div>
+          
         </div>`;
     Object.values(data).forEach((d) => {
       tmpdl += Number(d['domestik_l']);
@@ -917,8 +902,7 @@ function renderInputPengunjung(data){
       tmpml += Number(d['mancanegara_l']);
       tmpmp += Number(d['mancanegara_p']);
       tmpjumlah += Number(d['jumlah']);
-      tmppajak += Number(d['pajak']);
-      tmpretribusi += Number(d['retribusi']);
+     
        intputhtml +=`
       <div class="form-row">
           <div class="col-2">
@@ -928,26 +912,21 @@ function renderInputPengunjung(data){
             <input type="number" class="form-control" name="tahun" placeholder="tahun" value="${d['tahun']}" hidden>
           </div>
           <div class="col">  
-            <input type="number" class="form-control" name="domestik_l${i}" placeholder="" value="${d['domestik_l']}">
+            <input type="number" class="form-control" name="domestik_l${i}" placeholder="" value="${d['domestik_l']}" readonly>
           </div>
           <div class="col">
-            <input type="number" class="form-control" name="domestik_p${i}" placeholder="" value="${d['domestik_p']}">
+            <input type="number" class="form-control" name="domestik_p${i}" placeholder="" value="${d['domestik_p']}" readonly>
           </div>
           <div class="col">
-            <input type="number" class="form-control" name="mancanegara_l${i}" placeholder="" value="${d['mancanegara_l']}">
+            <input type="number" class="form-control" name="mancanegara_l${i}" placeholder="" value="${d['mancanegara_l']}" readonly>
           </div>
           <div class="col">
-            <input type="number" class="form-control" name="mancanegara_p${i}" placeholder=""  value="${d['mancanegara_p']}">
+            <input type="number" class="form-control" name="mancanegara_p${i}" placeholder=""  value="${d['mancanegara_p']}" readonly>
           </div>
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${d['jumlah']}" disabled>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" name="pajak${i}" placeholder=""  value="${d['pajak']}">
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="retribusi${i}" placeholder=""  value="${d['retribusi']}">
-          </div>
+         
         </div>
       `;
       i++;
@@ -973,16 +952,26 @@ function renderInputPengunjung(data){
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${tmpjumlah}" disabled>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmppajak}" disabled>
+          
+        </div>
+        <div class="form-row" style=" padding-top: 10px;">
+          <div class="col-2">
+            <label> Pajak : </label>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmpretribusi}" disabled>
+          <div class="col-4">
+            <input type="number" class="form-control" name="pajak12" placeholder=""  value="${data[tmpapprov]['pajak']}" readonly>
+          </div>
+          <div class="col-2">
+            <label> Retribusi : </label>
+          </div>
+          <div class="col-4">
+            <input type="number" class="form-control" name="retribusi12" placeholder=""  value="${data[tmpapprov]['retribusi']}" readonly>
           </div>
         </div>
       `;
-    intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> 
-                    <button type="submit" class="btn btn-info my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='approv'"><i class="fal fa-save"></i> Approv Data</button>`;
+      intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'" hidden><i class="fal fa-save"></i> Simpan Data</button> 
+    <button type="submit" class="btn btn-info my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='approv'" hidden ><i class="fal fa-save" ></i> Approv Data</button>`;
+  
       var input_data_pengunjung = document.getElementById("input_data_pengunjung");  
         input_data_pengunjung.innerHTML = intputhtml;
 
@@ -993,6 +982,7 @@ function renderInputPengunjung(data){
         header_approv.innerHTML = `<h5><span class="badge badge-info">Data Sudah Approv</span></h5>`;  
       };
   }
+  
 
     InputModal.form.submit(function(event){
     event.preventDefault();
@@ -1065,33 +1055,6 @@ function renderInputPengunjung(data){
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
-  getAllKabupaten();  
-  function getAllKabupaten(){
-    return $.ajax({
-      url: `<?php echo site_url('AdminController/getAllKabupaten/')?>`, 'type': 'GET',
-      data: {},
-      success: function (data){
-        var json = JSON.parse(data);
-        if(json['error']){
-          return;
-        }
-        dataKabupaten = json['data'];
-        renderKabupatenSelection(dataKabupaten);
-      },
-      error: function(e) {}
-    });
-  }
-  function renderKabupatenSelection(data){
-    EditModal.edit_id_kabupaten.empty();
-    EditModal.edit_id_kabupaten.append($('<option>', { value: "", text: "-- Pilih Kabupaten --"}));
-    Object.values(data).forEach((d) => {
-      EditModal.edit_id_kabupaten.append($('<option>', {
-        value: d['id_kabupaten'],
-        text: d['id_kabupaten'] + ' :: ' + d['nama_kabupaten'],
-      }));
-    });
-  }
-
 
   EditModal.form.submit(function(event){
     event.preventDefault();
@@ -1147,10 +1110,10 @@ function renderInputPengunjung(data){
   }
 
   $("#tahun_input").click(function(e) {
-   
+
       registerTahunSelectionChange();
       console.log("fungsi clik tahun aktif approv=",dataProfil['id_user_approv'] )
-    
+
   });
     function registerTahunSelectionChange(){
     InputModal.tahun.on('change', function(e){
@@ -1163,12 +1126,15 @@ function renderInputPengunjung(data){
     InputModal.tahun.empty();
     InputModal.tahun.append($('<option>', { value: "", text: "Tahun"}));
     data.forEach((d) => {
+      if(d['tahun'] >= dataProfil['tahun_terdata']){
+    
       InputModal.tahun.append($('<option>', {
         value: d['tahun'],
         text: d['tahun'],
       })); 
 
       InputModal.tahun.val(d['tahun']); 
+      }
     });
     getInputPengunjung();
     

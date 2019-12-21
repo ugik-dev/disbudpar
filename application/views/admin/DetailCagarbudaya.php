@@ -21,8 +21,7 @@
             <div class="tab-content">
               <div role="tabpanel"  id="tab-11" class="tab-pane active">
                 <div class="panel-body">
-                 
-  <div class="row">
+                 <div class="row">
     <div class="col-lg-6">
       <div class="ibox">
         <div class="ibox-content">
@@ -37,8 +36,8 @@
                 <input type="text" class="form-control" id="namacagarbudaya"  readonly="readonly">
               </div>
               <div class="form-group">
-                <label for="formGroupExampleInput">Kabupaten / Kota</label>
-                <input type="text" class="form-control" id="kabupaten" readonly="readonly">
+                <label for="formGroupExampleInput">Tahun Terdata</label>
+                <input type="text" class="form-control" id="terdata" readonly="readonly">
               </div>
               <div class="form-group">
                 <label for="formGroupExampleInput">Alamat</label>
@@ -76,15 +75,15 @@
               </div>
             </form>
             <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button>
-                                <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button>
-                                <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button>
+                                <!-- <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button> -->
+                                <button hidden class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil</strong></button>
                                 <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
     
           </div><!-- profil -->
           </div><!-- ibox content -->
       </div> <!-- ibox -->
     
-      <div class="ibox">
+      <div class="ibox" hidden>
         <div class="ibox-content">
               <label for="formGroupExampleInput">Photo Header</label>
               <div class="form-row">
@@ -159,8 +158,8 @@
                           </div>
                               
                         </div>
-                          <div class="form-group col-md-12">
-                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                          <div class="form-group col-md-12" id='fileimg'>
+                            <!-- <img src="" class="img-fluid"  alt="Responsive image" style='height: 200px;'> -->
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -179,23 +178,20 @@
           </div>
         </div>
         </div>
-         </div>
+  </div>
               </div>
               <div role="tabpanel" id="tab-22" class="tab-pane">
                  <div class="panel-body" >
-
-
-  <div class="col-lg-12">
-    <div class="ibox">
+                 <div class="ibox">
       <div class="ibox-content" id="input_modal">
       <div class="form-inline">
         <div class="form-group mb-2">
           <select class="dropdown-item" id="tahun_input" name="tahun_input" required="required"></select>
         </div>
         <div class="form-group mx-sm-3 mb-2" id="header_approv"> </div>
-        <div class="form-group mb-2">
-          <a type="" class="btn btn-light my-1 mr-sm-2" id="export_pengunjung_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
-        </div>
+        <a type="" class="btn btn-light my-1 mr-sm-2" id="export_pengunjung_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
+    
+
       </div>
         <form class="form" id="pengujung_form" onsubmit="return false;">
           <input type="hidden" id="id_cagarbudaya" name="id_cagarbudaya" readonly="readonly">
@@ -206,7 +202,7 @@
         </form>
       </div>
     </div>
-  </div>
+
   </div>
               </div>
     </div>
@@ -228,11 +224,7 @@
             <label for="nama">Nama Cagarbudaya</label> 
             <input type="text" placeholder="Nama Cagarbudaya" class="form-control" id="edit_nama" name="nama" required="required">
           </div>
-          <div class="form-group">
-            <label for="kabupaten">Kabupaten / Kota</label> 
-            <select class="form-control mr-sm-2" id="edit_id_kabupaten" name="id_kabupaten" required="required">
-            </select>
-          </div>
+          
           <div class="form-group">
             <label for="jenis">Jenis Cagar budaya</label> 
             <select class="form-control mr-sm-2" id="edit_id_jenis" name="id_jenis_cagarbudaya" required="required">
@@ -573,6 +565,7 @@ function initMap() {
   }
   }
 }
+
 //======
 
 
@@ -627,7 +620,7 @@ function initMap() {
     'edit_id_jenis': $('#edit_modal').find('#edit_id_jenis'),
     'edit_id_kepemilikan': $('#edit_modal').find('#edit_id_kepemilikan'),
     'edit_id_status': $('#edit_modal').find('#edit_id_status_penetapan'),
-    'edit_id_kabupaten': $('#edit_modal').find('#edit_id_kabupaten'),
+    
   }
   // EditModal.edit_id_cagarbudaya.val(id_cagarbudaya);
   // EditModal.edit_nama.val(dataProfil['nama']);
@@ -637,7 +630,7 @@ function initMap() {
 
 
 
-document.getElementById("edit_profil_btn").onclick = function() {myFunction()};
+// document.getElementById("edit_profil_btn").onclick = function() {myFunction()};
 function myFunction() {
   console.log('cok');
     EditModal.self.modal('show');
@@ -651,7 +644,7 @@ function myFunction() {
     EditModal.edit_id_jenis.val(dataProfil['id_jenis_cagarbudaya']);
     EditModal.edit_id_kepemilikan.val(dataProfil['id_kepemilikan_cagarbudaya']);
     EditModal.edit_id_status.val(dataProfil['id_status_penetapan_cagarbudaya']); 
-    EditModal.edit_id_kabupaten.val(dataProfil['id_kabupaten']);  
+   
 }
 
 
@@ -716,20 +709,21 @@ function myFunction() {
         var fileimg = document.getElementById("fileimg");
         var fil2 = document.getElementById("file2");
         var file2img = document.getElementById("file2img");
-        var kabupaten = document.getElementById("kabupaten");
+        
         var dokumen = document.getElementById("dokumen");
          var id_upload1 = document.getElementById("id_cagarbudayatoupload1");
         var id_upload2 = document.getElementById("id_cagarbudayatoupload2");
         var id_upload4 = document.getElementById("id_cagarbudayatoupload4");
         var nama_user_entry = document.getElementById("nama_user_entry");
-      //  var edit_profil_btn = document.getElementById("edit_profil_btn");
-        
+        var terdata = document.getElementById("terdata");
+        terdata.value = dataProfil['tahun_terdata'];
+       
         id_upload1.value = id_cagarbudaya;
         id_upload2.value = id_cagarbudaya;
         id_upload4.value = id_cagarbudaya;
         nama.value = dataProfil['nama'];
         alamat.value = dataProfil['alamat'];
-        kabupaten.value = dataProfil['nama_kabupaten'];
+      
         
         kepemilikan.value = dataProfil['nama_kepemilikan_cagarbudaya'];
         penetapan.value = dataProfil['nama_status_penetapan_cagarbudaya'];
@@ -747,13 +741,17 @@ function myFunction() {
         };
         kordinat.value = dataProfil['lokasi'];
         file.value = dataProfil['file'];
-        fileimg.src = `<?= base_url('upload/file/')?>`+dataProfil['file'];
         file2.value = dataProfil['file2'];
 
         dokumen.value = dataProfil['dokumen'];
       
 
-        renderPhoto();
+        if(!empty(dataProfil['file'])){
+          tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+        fileimg.innerHTML = `<img src="${tmp}" class="zoom"  alt="Responsive image" style='height: 200px; width : 100%'>`;
+        };
+        if(!empty(dataProfil['file2']))renderPhoto();
+       
         renderPhotoModal()
         renderPdf();
       
@@ -788,9 +786,9 @@ function myFunction() {
       if (dataProfil['file2'] != ""){
       imgHTML +=`
                 <div class='form-group col-md-6'>
-                  <a type="submit" id="del_photo${i}" >             
-                  <img src="${tmp}" class="zoom" id='file2img' alt="Responsive image" style='height: 200px;'>            
-                  </a>
+                          
+                  <img src="${tmp}" class="img-fluid" id='file2img' alt="Responsive image" style='height: 200px;'>            
+           
                 </div>
                 `;
       i++;
@@ -800,16 +798,7 @@ function myFunction() {
     var photo = document.getElementById("photo");  
     imgHTML +=`</div>`;
     photo.innerHTML = imgHTML;
-    i=0;
-    if (dataProfil['file2'] != ""){
-      ph1.forEach((e) => {
-        document.getElementById("del_photo"+String(i)).onclick = function() {
-          console.log('hapus foto foto',e)
-          delPhoto(e);
-        };
-        i++;
-      });
-    };
+   
       
     }
 
@@ -887,6 +876,7 @@ function myFunction() {
   }
 
   function getInputPengunjung(){
+    document.getElementById("export_pengunjung_btn").href = '<?= site_url('AdminController/ExportPengunjung?tb=cagarbudaya&id_data=')?>'+id_cagarbudaya+`&tahun=`+InputModal.tahun.val();
 
     console.log(toolbar.form.serialize());
     $.ajax({
@@ -908,12 +898,12 @@ function myFunction() {
     });
   }
 
+
 function renderInputPengunjung(data){
     if(data == null || typeof data != "object"){
       console.log("User::UNKNOWN DATA");
       return;
     }
-    document.getElementById("export_pengunjung_btn").href = '<?= site_url('AdminController/ExportPengunjung?tb=cagarbudaya&id_data=')?>'+id_cagarbudaya+`&tahun=`+InputModal.tahun.val();
     var i = 1;
     var tmpdl = 0;
     var tmpdp = 0;
@@ -941,13 +931,7 @@ function renderInputPengunjung(data){
           <div class="col">
           <label>Total Pengunjung</label>
           </div>
-          <div class="col">
-          <label>Pajak</label>
-          </div>
-          <div class="col">
-          <label>Retribusi</label>
-          </div>
-
+          
         </div>`;
     Object.values(data).forEach((d) => {
       tmpdl += Number(d['domestik_l']);
@@ -955,8 +939,7 @@ function renderInputPengunjung(data){
       tmpml += Number(d['mancanegara_l']);
       tmpmp += Number(d['mancanegara_p']);
       tmpjumlah += Number(d['jumlah']);
-      tmppajak += Number(d['pajak']);
-      tmpretribusi += Number(d['retribusi']);
+     
        intputhtml +=`
       <div class="form-row">
           <div class="col-2">
@@ -966,26 +949,21 @@ function renderInputPengunjung(data){
             <input type="number" class="form-control" name="tahun" placeholder="tahun" value="${d['tahun']}" hidden>
           </div>
           <div class="col">  
-            <input type="number" class="form-control" name="domestik_l${i}" placeholder="" value="${d['domestik_l']}">
+            <input type="number" class="form-control" name="domestik_l${i}" placeholder="" value="${d['domestik_l']}" readonly>
           </div>
           <div class="col">
-            <input type="number" class="form-control" name="domestik_p${i}" placeholder="" value="${d['domestik_p']}">
+            <input type="number" class="form-control" name="domestik_p${i}" placeholder="" value="${d['domestik_p']}" readonly>
           </div>
           <div class="col">
-            <input type="number" class="form-control" name="mancanegara_l${i}" placeholder="" value="${d['mancanegara_l']}">
+            <input type="number" class="form-control" name="mancanegara_l${i}" placeholder="" value="${d['mancanegara_l']}" readonly>
           </div>
           <div class="col">
-            <input type="number" class="form-control" name="mancanegara_p${i}" placeholder=""  value="${d['mancanegara_p']}">
+            <input type="number" class="form-control" name="mancanegara_p${i}" placeholder=""  value="${d['mancanegara_p']}" readonly>
           </div>
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${d['jumlah']}" disabled>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" name="pajak${i}" placeholder=""  value="${d['pajak']}">
-          </div>
-          <div class="col">
-            <input type="number" class="form-control" name="retribusi${i}" placeholder=""  value="${d['retribusi']}">
-          </div>
+         
         </div>
       `;
       i++;
@@ -1011,18 +989,29 @@ function renderInputPengunjung(data){
           <div class="col">
             <input type="number" class="form-control" placeholder="0"  value="${tmpjumlah}" disabled>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmppajak}" disabled>
+          
+        </div>
+        <div class="form-row" style=" padding-top: 10px;">
+          <div class="col-2">
+            <label> Pajak : </label>
           </div>
-          <div class="col">
-            <input type="number" class="form-control" placeholder="0"  value="${tmpretribusi}" disabled>
+          <div class="col-4">
+            <input type="number" class="form-control" name="pajak12" placeholder=""  value="${data[tmpapprov]['pajak']}" readonly>
+          </div>
+          <div class="col-2">
+            <label> Retribusi : </label>
+          </div>
+          <div class="col-4">
+            <input type="number" class="form-control" name="retribusi12" placeholder=""  value="${data[tmpapprov]['retribusi']}" readonly>
           </div>
         </div>
       `;
-    intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'"><i class="fal fa-save"></i> Simpan Data</button> 
-                    <button type="submit" class="btn btn-info my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='approv'"><i class="fal fa-save"></i> Approv Data</button> `;
+      intputhtml +=`  <button type="submit" class="btn btn-success my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='save'" hidden><i class="fal fa-save"></i> Simpan Data</button> 
+    <button type="submit" class="btn btn-info my-1 mr-sm-2" id="save_pengunjung"  data-loading-text="Loading..." onclick="this.form.target='approv'" hidden ><i class="fal fa-save"></i> Approv Data</button>`;
+  
       var input_data_pengunjung = document.getElementById("input_data_pengunjung");  
         input_data_pengunjung.innerHTML = intputhtml;
+
       var header_approv = document.getElementById("header_approv");  
       if(data[tmpapprov]['approv'] == '0' || data[tmpapprov]['approv'] == null  ){
         header_approv.innerHTML = `<h5><span class="badge badge-warning">Data Belum di Approv</span></h5>`;
@@ -1030,6 +1019,7 @@ function renderInputPengunjung(data){
         header_approv.innerHTML = `<h5><span class="badge badge-info">Data Sudah Approv</span></h5>`;  
       };
   }
+  
 
     InputModal.form.submit(function(event){
     event.preventDefault();
@@ -1141,33 +1131,7 @@ function renderInputPengunjung(data){
       });
     });
     }
-    getAllKabupaten();  
-  function getAllKabupaten(){
-    return $.ajax({
-      url: `<?php echo site_url('AdminController/getAllKabupaten/')?>`, 'type': 'GET',
-      data: {},
-      success: function (data){
-        var json = JSON.parse(data);
-        if(json['error']){
-          return;
-        }
-        dataKabupaten = json['data'];
-        renderKabupatenSelection(dataKabupaten);
-      },
-      error: function(e) {}
-    });
-  }
-
-  function renderKabupatenSelection(data){
-    EditModal.edit_id_kabupaten.empty();
-    EditModal.edit_id_kabupaten.append($('<option>', { value: "", text: "-- Pilih Kabupaten --"}));
-    Object.values(data).forEach((d) => {
-      EditModal.edit_id_kabupaten.append($('<option>', {
-        value: d['id_kabupaten'],
-        text: d['id_kabupaten'] + ' :: ' + d['nama_kabupaten'],
-      }));
-    });
-  }
+  
     getTahun();  
     function getTahun(){
     return $.ajax({
@@ -1208,11 +1172,13 @@ function renderInputPengunjung(data){
     InputModal.tahun.empty();
     InputModal.tahun.append($('<option>', { value: "", text: "Tahun"}));
     data.forEach((d) => {
+      if(d['tahun'] >= dataProfil['tahun_terdata']){
       InputModal.tahun.append($('<option>', {
         value: d['tahun'],
         text: d['tahun'],
       }));  
       InputModal.tahun.val(d['tahun']); 
+      }
     });
     getInputPengunjung();
    }

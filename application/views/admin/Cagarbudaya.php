@@ -5,7 +5,7 @@
 
         <!-- <button type="submit" class="btn btn-success my-1 mr-sm-2" id="statistik_btn"  data-loading-text="Loading..." onclick="this.form.target='statistik'"><i class="fal fa-eye"></i> Statistik Data</button>  -->
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
-        <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <button hidden type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
         <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
     
       </form>
@@ -26,7 +26,7 @@
                   <th style="width: 12%; text-align:center!important">Jenis Cagar Budaya</th>
                   <th style="width: 20%; text-align:center!important">Kabupaten</th>
                   <th style="width: 12%; text-align:center!important">Kepemilikan</th>
-                  <th style="width: 12%; text-align:center!important">Status Penetapan</th>
+                  <th style="width: 12%; text-align:center!important">Tahun Terdata</th>
                   <th style="width: 12%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
@@ -377,12 +377,11 @@ $(document).ready(function() {
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
             ${detailButton}
-            ${editButton}
-            ${deleteButton}
+           
           </div>
         </div>
       `;
-      renderData.push([cagarbudaya['nama'], cagarbudaya['nama_jenis_cagarbudaya'], cagarbudaya['nama_kabupaten'], cagarbudaya['nama_kepemilikan_cagarbudaya'], cagarbudaya['nama_status_penetapan_cagarbudaya'],apprv, button]);
+      renderData.push([cagarbudaya['nama'], cagarbudaya['nama_jenis_cagarbudaya'], cagarbudaya['nama_kabupaten'], cagarbudaya['nama_kepemilikan_cagarbudaya'], cagarbudaya['tahun_terdata'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }

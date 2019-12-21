@@ -30,6 +30,10 @@
                 <input type="text" class="form-control" id="namasaranaprasarana"  readonly="readonly">
               </div>
               <div class="form-group">
+                <label for="formGroupExampleInput">Kabupaten / Kota</label>
+                <input type="text" class="form-control" id="kabupaten" readonly="readonly">
+              </div>
+              <div class="form-group">
                 <label for="formGroupExampleInput">Alamat</label>
                 <input type="text" class="form-control" id="alamat" readonly="readonly">
               </div>
@@ -52,13 +56,13 @@
               </div>
             </form>
             <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button>
-                                <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button>
-                                <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button>
+                                <button hidden class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button>
+                                <button hidden class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button>
                                 <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
     </div><!-- profil -->
           </div><!-- ibox content -->
       </div> <!-- ibox -->
-      <div class="ibox">
+      <div class="ibox" hidden>
         <div class="ibox-content">
               <label for="formGroupExampleInput">Photo Header</label>
               <div class="form-row">
@@ -131,9 +135,8 @@
                           </div>
             
                         </div>
-                          <div class="form-group col-md-12">
-                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 400px;'>
-                          </div>            
+                          <div class="form-group col-md-12"  id='fileimg'>
+                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
                     </div> 
@@ -686,7 +689,8 @@ function myFunction() {
         var id_upload4 = document.getElementById("id_saranaprasaranatoupload4");
         var nama_user_entry = document.getElementById("nama_user_entry");
       //  var edit_profil_btn = document.getElementById("edit_profil_btn");
-        
+      var kabupaten = document.getElementById("kabupaten");
+      kabupaten.value = dataProfil['nama_kabupaten'];
         id_upload1.value = id_saranaprasarana;
         id_upload2.value = id_saranaprasarana;
      
@@ -707,12 +711,14 @@ function myFunction() {
         };
         kordinat.value = dataProfil['lokasi'];
         file.value = dataProfil['file'];
-        fileimg.src = `<?= base_url('upload/file/')?>`+dataProfil['file'];
-        file2.value = dataProfil['file2'];
-       // file2img.src = `<?= base_url('upload/file2/')?>`+dataProfil['file2'];
+         file2.value = dataProfil['file2'];
        
         dokumen.value = dataProfil['dokumen'];
-        renderPhoto();
+        if(!empty(dataProfil['file'])){
+          tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+        fileimg.innerHTML = `<img src="${tmp}" class="zoom"  alt="Responsive image" style='height: 200px; width : 100%'>`;
+        };
+        if(!empty(dataProfil['file2']))renderPhoto();
         renderPhotoModal();
         renderPdf();
         //console.log(dataProfil)

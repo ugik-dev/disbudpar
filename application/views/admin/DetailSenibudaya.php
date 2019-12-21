@@ -66,13 +66,13 @@
               </div>
             </form>
             <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button>
-            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button>
-            <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button>
+            <!-- <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button> -->
+            <button hidden class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv</strong></button>
             <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
        </div><!-- profil -->
           </div><!-- ibox content -->
       </div> <!-- ibox -->
-      <div class="ibox">
+      <div class="ibox" hidden>
         <div class="ibox-content">
               <label for="formGroupExampleInput">Photo Header</label>
               <div class="form-row">
@@ -146,8 +146,8 @@
                                             </div>
                              
                         </div>
-                          <div class="form-group col-md-12">
-                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                          <div class="form-group col-md-12" id='fileimg'>
+                            <!-- <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'> -->
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -198,11 +198,7 @@
             <label for="nama">Nama Senibudaya</label> 
             <input type="text" placeholder="Nama Senibudaya" class="form-control" id="edit_nama" name="nama" required="required">
           </div>
-          <div class="form-group">
-                <label for="kabupaten">Kabupaten / Kota</label> 
-                <select class="form-control mr-sm-2" id="edit_id_kabupaten" name="id_kabupaten" required="required">
-                </select>
-              </div>
+          
           <div class="form-group">
             <label for="j">Jenis Seni budaya</label> 
             <select class="form-control mr-sm-2" id="edit_id_j" name="id_j_senibudaya" required="required">
@@ -582,8 +578,7 @@ var map;
     'edit_deskripsi': $('#edit_modal').find('#edit_deskripsi'),
     'edit_id_j': $('#edit_modal').find('#edit_id_j'),
     'edit_id_j2': $('#edit_modal').find('#edit_id_j2'),
-    'edit_id_kabupaten': $('#edit_modal').find('#edit_id_kabupaten'),
-    
+   
   }
   // EditModal.edit_id_senibudaya.val(id_senibudaya);
   // EditModal.edit_nama.val(dataProfil['nama']);
@@ -591,7 +586,7 @@ var map;
   // EditModal.edit_alamat.val(dataProfil['alamat']);
   // EditModal.edit_deskripsi.val(dataProfil['deskripsi']);
 
-document.getElementById("edit_profil_btn").onclick = function() {myFunction()};
+// document.getElementById("edit_profil_btn").onclick = function() {myFunction()};
 function myFunction() {
   console.log('cok');
     EditModal.self.modal('show');
@@ -606,9 +601,7 @@ function myFunction() {
     renderJ2Selection(dataJ2, EditModal.edit_id_j.val());
     EditModal.edit_id_j2.val(dataProfil['id_j2_senibudaya']);
     EditModal.edit_jumlahanggota.val(dataProfil['jumlahanggota']);
-    EditModal.edit_id_kabupaten.val(dataProfil['id_kabupaten']);
-  
-   
+    
 }
 
 
@@ -686,12 +679,12 @@ function myFunction() {
         nama_user_entry
         id_upload1.value = id_senibudaya;
         id_upload2.value = id_senibudaya;
-     
+        kabupaten.value = dataProfil['nama_kabupaten'];
         id_upload4.value = id_senibudaya;
         nama.value = dataProfil['nama'];
         alamat.value = dataProfil['alamat'];
         jumlahanggota.value = dataProfil['jumlahanggota'];
-        kabupaten.value = dataProfil['nama_kabupaten'];
+      
         
         j.value = dataProfil['nama_j_senibudaya'];
         j2.value = dataProfil['nama_j2_senibudaya'];
@@ -708,12 +701,15 @@ function myFunction() {
         };
         kordinat.value = dataProfil['lokasi'];
         file.value = dataProfil['file'];
-        fileimg.src = `<?= base_url('upload/file/')?>`+dataProfil['file'];
-        file2.value = dataProfil['file2'];
+         file2.value = dataProfil['file2'];
        // file2img.src = `<?= base_url('upload/file2/')?>`+dataProfil['file2'];
        
         dokumen.value = dataProfil['dokumen'];
-         renderPhoto();
+        if(!empty(dataProfil['file'])){
+          tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+        fileimg.innerHTML = `<img src="${tmp}" class="zoom"  alt="Responsive image" style='height: 200px; width : 100%'>`;
+        };
+        if(!empty(dataProfil['file2']))renderPhoto();
          renderPhotoModal();
          renderPdf();
         //console.log(dataProfil)
@@ -973,33 +969,6 @@ function renderInputPengunjung(data){
 
 
   }
-  getAllKabupaten();  
-  function getAllKabupaten(){
-    return $.ajax({
-      url: `<?php echo site_url('AdminController/getAllKabupaten/')?>`, 'type': 'GET',
-      data: {},
-      success: function (data){
-        var json = JSON.parse(data);
-        if(json['error']){
-          return;
-        }
-        dataKabupaten = json['data'];
-        renderKabupatenSelection(dataKabupaten);
-      },
-      error: function(e) {}
-    });
-  }
-
-  function renderKabupatenSelection(data){
-    EditModal.edit_id_kabupaten.empty();
-    EditModal.edit_id_kabupaten.append($('<option>', { value: "", text: "-- Pilih Kabupaten --"}));
-    Object.values(data).forEach((d) => {
-      EditModal.edit_id_kabupaten.append($('<option>', {
-        value: d['id_kabupaten'],
-        text: d['id_kabupaten'] + ' :: ' + d['nama_kabupaten'],
-      }));
-    });
-  }
   function delPhoto(photo){
     swal(swalDelPhoto).then((result) => {
       if(!result.value){ return; }
@@ -1091,8 +1060,14 @@ function renderInputPengunjung(data){
     });
   }
 
- $("#tahun_input").click(function(e) {
-     registerTahunSelectionChange();
+  $("#tahun_input").click(function(e) {
+    if(dataProfil['id_user_approv']=='0'){
+      console.log('data belum di approv');
+      swal("Data Belum di Approv",'Harap Konformasi ke Admin Untuk Approval', "error");
+    }else{
+      registerTahunSelectionChange();
+      console.log("fungsi clik tahun aktif approv=",dataProfil['id_user_approv'] )
+    };
   });
     function registerTahunSelectionChange(){
     InputModal.tahun.on('change', function(e){

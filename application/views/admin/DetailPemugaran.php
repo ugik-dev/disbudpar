@@ -61,14 +61,14 @@
             </form>
           
             <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button>
-            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data</strong></button>
-            <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Data</strong></button>
+            <button hidden class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data</strong></button>
+            <button hidden class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Data</strong></button>
             <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
 
           </div><!-- profil -->
           </div><!-- ibox content -->
       </div> <!-- ibox -->
-      <div class="ibox">
+      <div class="ibox" hidden>
         <div class="ibox-content">
               <label for="formGroupExampleInput">Photo Header</label>
               <div class="form-row">
@@ -143,8 +143,8 @@
                           </div>
             
                         </div>
-                          <div class="form-group col-md-12">
-                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                          <div class="form-group col-md-12" id='fileimg'>
+                            <!-- <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'> -->
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -657,13 +657,15 @@ function myFunction() {
         };
       
         file.value = dataProfil['file'];
-        fileimg.src = `<?= base_url('upload/file/')?>`+dataProfil['file'];
         file2.value = dataProfil['file2'];
-       // file2img.src = `<?= base_url('upload/file2/')?>`+dataProfil['file2'];
-       
+        
         dokumen.value = dataProfil['dokumen'];
        
-        renderPhoto();
+        if(!empty(dataProfil['file'])){
+          tmp = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+        fileimg.innerHTML = `<img src="${tmp}" class="zoom"  alt="Responsive image" style='height: 200px; width : 100%'>`;
+        };
+        if(!empty(dataProfil['file2']))renderPhoto();
         renderPhotoModal();
         renderPdf();
         //console.log(dataProfil)
@@ -902,9 +904,9 @@ function renderInputPengunjung(data){
       tmp = `<?= base_url('upload/file2/')?>`+d;
       imgHTML +=`
                 <div class='form-group col-md-6'>
-                  <a type="submit" id="del_photo${i}" >             
+                            
                   <img src="${tmp}" class="zoom" id='file2img' alt="Responsive image" style='height: 200px;'>            
-                  </a>
+                 
                 </div>
                 `;
       i++;
@@ -912,15 +914,7 @@ function renderInputPengunjung(data){
     var photo = document.getElementById("photo");  
     imgHTML +=`</div>`;
     photo.innerHTML = imgHTML;
-    i=0;
-      ph1.forEach((e) => {
-        document.getElementById("del_photo"+String(i)).onclick = function() {
-          console.log('hapus foto foto',e)
-          delPhoto(e);
-        };
-        i++;
-      });
-
+   
 
   }
 

@@ -4,7 +4,7 @@
       <form class="form-inline" id="toolbar_form" onsubmit="return false;">
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
-        <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <button hidden type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
         <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
    
       </form>
@@ -23,6 +23,7 @@
                   <th style="width: 15%; text-align:center!important">Nama Desa Wisata</th>
                   <th style="width: 12%; text-align:center!important">Kategori</th>
                   <th style="width: 12%; text-align:center!important">Kabupaten / Kota</th>
+                  <th style="width: 12%; text-align:center!important">Tahun Terdata</th>
                   <th style="width: 10%; text-align:center!important">Approval</th>
                   <th style="width: 7%; text-align:center!important">Action</th>
                 </tr>
@@ -235,12 +236,11 @@ $(document).ready(function() {
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
             ${detailButton}
-            ${editButton}
-            ${deleteButton}
+           
           </div>
         </div>
       `;
-      renderData.push([desawisata['nama'], desawisata['nama_kategori'], desawisata['nama_kabupaten'],apprv, button]);
+      renderData.push([desawisata['nama'], desawisata['nama_kategori'], desawisata['nama_kabupaten'],desawisata['tahun_terdata'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
