@@ -238,6 +238,9 @@ function do_upload4(){
       unlink("./upload/dokumen/".$dokumenlama);
       $result= $this->DetailObjekModel->simpan_upload1($id,$image,'dokumen');
       echo json_decode($result);
+  }else{
+    $error = array('error' => $this->upload->display_errors());
+    var_dump($error);
   }
 }
   public function delPhoto(){
