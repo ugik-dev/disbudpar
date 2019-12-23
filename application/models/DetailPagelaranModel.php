@@ -6,12 +6,11 @@ class DetailPagelaranModel extends CI_Model {
 	
 	public function getProfil($filter){
 	
-		$this->db->select('sp.alamat as alamat , sp.deskripsi  as deskripsi , sp.dokumen as dokumen , sp.file as file ,  sp.file2 as file2 , sp.id_jenis_pagelaran as id_jenis_pagelaran ,kab.id_kabupaten as id_kabupaten ,sp.id_pagelaran as id_pagelaran ,sp.id_senibudaya as id_senibudaya ,sp.id_user_approv as id_user_approv ,sp.id_user_entry as id_user_entry ,sp.jumlah_penonton as jumlah_penonton, sp.lokasi as lokasi ,sp.nama as nama ,sb.nama as nama_senibudaya ,nama_jenis_pagelaran ,tanggal_kegiatan,tanggal_kegiatan_end');
+		$this->db->select('sp.alamat as alamat , sp.deskripsi  as deskripsi , sp.dokumen as dokumen , sp.file as file ,  sp.file2 as file2 , sp.id_jenis_pagelaran as id_jenis_pagelaran ,sp.id_kabupaten as id_kabupaten,kab.nama_kabupaten as nama_kabupaten ,sp.id_pagelaran as id_pagelaran ,sp.pelaksana as pelaksana ,sp.id_user_approv as id_user_approv ,sp.id_user_entry as id_user_entry ,sp.jumlah_penonton as jumlah_penonton, sp.lokasi as lokasi ,sp.nama as nama ,nama_jenis_pagelaran ,tanggal_kegiatan,tanggal_kegiatan_end');
 		$this->db->from('senibudaya_pagelaranpameran as sp');
 		$this->db->where("id_pagelaran",$filter['id_pagelaran']);
         $this->db->join("jenis_pagelaran as jp", "jp.id_jenis_pagelaran = sp.id_jenis_pagelaran");
-		$this->db->join("senibudaya as sb", "sb.id_senibudaya = sp.id_senibudaya");
-		$this->db->join("kabupaten as kab", "sb.id_kabupaten = kab.id_kabupaten");
+		$this->db->join("kabupaten as kab", "sp.id_kabupaten = kab.id_kabupaten");
 		
 	//	$this->db->join("j_pagelaran as js", "js.id_j_pagelaran = cb.id_j_pagelaran");
 	//	$this->db->join("j2_pagelaran as j2s", "j2s.id_j2_pagelaran = cb.id_j2_pagelaran");	
@@ -150,7 +149,8 @@ class DetailPagelaranModel extends CI_Model {
 
 	public function editDetailPagelaran($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-		$this->db->set(DataStructure::slice($data, ['tanggal_kegiatan','tanggal_kegiatan_end','nama','id_jenis_pagelaran','id_senibudaya','jumlah_penonton','lokasi','deskripsi','alamat','id_user_entry']));
+		$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+		$this->db->set(DataStructure::slice($data, ['id_kabupaten','tanggal_kegiatan','tanggal_kegiatan_end','nama','id_jenis_pagelaran','pelaksana','jumlah_penonton','lokasi','deskripsi','alamat','id_user_entry']));
 		$this->db->where('id_pagelaran', $data['id_pagelaran']);
 		$this->db->update('senibudaya_pagelaranpameran');
 

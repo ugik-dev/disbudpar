@@ -176,6 +176,7 @@ class DetailObjekController extends CI_Controller {
    function do_upload2(){
     //'upload_path' => ,
     $config['upload_path']=realpath(APPPATH . '../upload/file2/');
+    
     $config['allowed_types']='gif|jpg|png';
     $config['encrypt_name'] = TRUE;
   

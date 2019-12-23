@@ -14,24 +14,15 @@ class PagelaranModel extends CI_Model {
     }
 	
 
-	public function getAllSenibudayaOption($filter = []){
-		$this->db->select('sb.id_senibudaya,sb.nama as nama_senibudaya');
-		$this->db->from('senibudaya as sb');
-		if(!empty($this->session->userdata('id_kabupaten'))) $this->db->where('sb.id_kabupaten', $this->session->userdata('id_kabupaten'));
-	 
-		$res=$this->db->get();
-
-		return DataStructure::keyValue($res->result_array(), 'id_senibudaya');
-	}
 
   public function getAllPagelaran($filter = []){
-		$this->db->select('kab.nama_kabupaten,sb.id_kabupaten,cb.id_pagelaran, cb.id_jenis_pagelaran,jp.nama_jenis_pagelaran, cb.id_senibudaya, sb.nama as nama_senibudaya, cb.nama,cb.tanggal_kegiatan,cb.tanggal_kegiatan_end,cb.jumlah_penonton,cb.alamat,cb.lokasi,cb.deskripsi,cb.id_user_approv as id_user_approv ,cb.id_user_entry as id_user_entry');
+		$this->db->select('kab.nama_kabupaten,cb.id_kabupaten,cb.id_pagelaran, cb.id_jenis_pagelaran,jp.nama_jenis_pagelaran, cb.pelaksana, cb.nama,cb.tanggal_kegiatan,cb.tanggal_kegiatan_end,cb.jumlah_penonton,cb.alamat,cb.lokasi,cb.deskripsi,cb.id_user_approv as id_user_approv ,cb.id_user_entry as id_user_entry');
 		$this->db->from('senibudaya_pagelaranpameran as cb');
 		$this->db->join("jenis_pagelaran as jp", "jp.id_jenis_pagelaran = cb.id_jenis_pagelaran");
-		$this->db->join("senibudaya as sb", "sb.id_senibudaya = cb.id_senibudaya");
-		//$this->db->join("senibudaya as sb", "sb.id_senibudaya = cb.id_senibudaya");
-		$this->db->join("kabupaten as kab", "sb.id_kabupaten = kab.id_kabupaten");
-		if(!empty($this->session->userdata('id_kabupaten'))) $this->db->where('sb.id_kabupaten', $this->session->userdata('id_kabupaten'));
+		
+	
+		$this->db->join("kabupaten as kab", "cb.id_kabupaten = kab.id_kabupaten");
+		if(!empty($this->session->userdata('id_kabupaten'))) $this->db->where('cb.id_kabupaten', $this->session->userdata('id_kabupaten'));
 		if(!empty($filter['id_pagelaran'])) $this->db->where('cb.id_pagelaran', $filter['id_pagelaran']);
 
 	    $res = $this->db->get();
@@ -48,8 +39,8 @@ class PagelaranModel extends CI_Model {
 
 	  public function addPagelaran($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
-	
-	    $dataInsert = DataStructure::slice($data, ['id_user_entry','id_jenis_pagelaran','id_senibudaya','nama','tanggal_kegiatan','tanggal_kegiatan_end','jumlah_penonton','deskripsi']);
+		$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
+	    $dataInsert = DataStructure::slice($data, ['id_user_entry','id_jenis_pagelaran','pelaksana','nama','tanggal_kegiatan','tanggal_kegiatan_end','jumlah_penonton','deskripsi','id_kabupaten']);
 	    $this->db->insert('senibudaya_pagelaranpameran', $dataInsert);
 	    ExceptionHandler::handleDBError($this->db->error(), "Insert Pagelaran", "senibudaya_pagelaranpameran");
 	    return $this->db->insert_id();
@@ -58,7 +49,7 @@ class PagelaranModel extends CI_Model {
 	public function editPagelaran($data){
 		$data['id_user_entry'] = $this->session->userdata('id_user');
 		$data['id_kabupaten'] = $this->session->userdata('id_kabupaten');
-		$this->db->set(DataStructure::slice($data,  ['id_kabupaten','id_user_entry','id_jenis_pagelaran','id_senibudaya','nama','tanggal_kegiatan','tanggal_kegiatan_end','jumlah_penonton','deskripsi']));
+		$this->db->set(DataStructure::slice($data,  ['id_kabupaten','id_user_entry','id_jenis_pagelaran','pelaksana','nama','tanggal_kegiatan','tanggal_kegiatan_end','jumlah_penonton','deskripsi']));
 		$this->db->where('id_pagelaran', $data['id_pagelaran']);
 		$this->db->update('senibudaya_pagelaranpameran');
 
