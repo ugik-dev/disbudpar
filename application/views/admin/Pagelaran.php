@@ -4,7 +4,7 @@
       <form class="form-inline" id="toolbar_form" onsubmit="return false;">
         
         <button type="submit" class="btn btn-success my-1 mr-sm-2" id="show_btn"  data-loading-text="Loading..." onclick="this.form.target='show'"><i class="fal fa-eye"></i> Tampilkan</button>
-        <button type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
+        <button hidden type="submit" class="btn btn-primary my-1 mr-sm-2" id="add_btn"  data-loading-text="Loading..." onclick="this.form.target='add'"><i class="fal fa-plus"></i> Tambah</button>
         <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn"  data-loading-text="Loading..."><i class="fal fa-download"></i> Export PDF</a>
    
       </form>
@@ -63,9 +63,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="id_senibudaya">Pelaksana</label> 
-            <select class="form-control mr-sm-2" id="id_senibudaya" name="id_senibudaya" required="required">
-            </select>
+            <label for="pelaksana">Pelaksana</label> 
+            <input type="text" placeholder="Pelaksana" class="form-control" id="pelaksana" name="pelaksana" required="required">
           </div>
           <div class="form-group">
             <label for="tanggal_kegiatan">Tanggal Kegiatan</label> 
@@ -82,7 +81,7 @@
           <div class="form-group">
             <label for="deskripsi">Deskripsi</label> 
             <textarea rows="4" type="text" placeholder="Deskripsi" class="form-control" id="deskripsi" name="deskripsi" required="required"></textarea>
-          </div>
+            </div>
 
 
 
@@ -125,7 +124,7 @@ $(document).ready(function() {
     'nama': $('#pagelaran_modal').find('#nama'),
     'id_jenis_pagelaran': $('#pagelaran_modal').find('#id_jenis_pagelaran'),
     'nama_jenis_pagelaran': $('#pagelaran_modal').find('#nama_jenis_pagelaran'),
-    'id_senibudaya': $('#pagelaran_modal').find('#id_senibudaya'),
+    'pelaksana': $('#pagelaran_modal').find('#pelaksana'),
     'nama_senibudaya': $('#pagelaran_modal').find('#nama_senibudaya'),
     'jumlah_penonton': $('#pagelaran_modal').find('#jumlah_penonton'),
     'tanggal_kegiatan': $('#pagelaran_modal').find('#tanggal_kegiatan'),
@@ -217,16 +216,7 @@ $(document).ready(function() {
   document.getElementById("export_btn").href = '<?= site_url('AdminController/PdfAllPagelaran')?>';
 
 
-   function renderSenibudayaSelection(data){
-    PagelaranModal.id_senibudaya.empty();
-    PagelaranModal.id_senibudaya.append($('<option>', { value: "", text: "-- Pilih Pelaksana --"}));
-    Object.values(data).forEach((d) => {
-      PagelaranModal.id_senibudaya.append($('<option>', {
-        value: d['id_senibudaya'],
-        text: d['id_senibudaya'] + ' :: ' + d['nama_senibudaya'],
-      }));
-    });
-  }
+
 
   
 
@@ -278,12 +268,11 @@ $(document).ready(function() {
           <button id="action" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-bars'></i></button>
           <div class="dropdown-menu" aria-labelledby="action">
           ${detailButton}
-            ${editButton}
-            ${deleteButton}
+           
           </div>
         </div>
       `;
-      renderData.push([ pagelaran['nama'], pagelaran['nama_jenis_pagelaran'], pagelaran['nama_senibudaya'],pagelaran['tanggal_kegiatan'],pagelaran['alamat'],apprv, button]);
+      renderData.push([ pagelaran['nama'], pagelaran['nama_jenis_pagelaran'], pagelaran['pelaksana'],pagelaran['tanggal_kegiatan'],pagelaran['alamat'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }
@@ -301,7 +290,7 @@ $(document).ready(function() {
     PagelaranModal.nama.val(pagelaran['nama']);
     PagelaranModal.jumlah_penonton.val(pagelaran['jumlah_penonton']);
     PagelaranModal.id_jenis_pagelaran.val(pagelaran['id_jenis_pagelaran']);
-    PagelaranModal.id_senibudaya.val(pagelaran['id_senibudaya']);
+    PagelaranModal.pelaksana.val(pagelaran['pelaksana']);
     PagelaranModal.tanggal_kegiatan.val(pagelaran['tanggal_kegiatan']);
     PagelaranModal.tanggal_kegiatan_end.val(pagelaran['tanggal_kegiatan_end']);
     PagelaranModal.file.val(pagelaran['file']);
