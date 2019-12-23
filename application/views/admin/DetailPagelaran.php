@@ -60,7 +60,7 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label for="formGroupExampleInput">Pelaksana</label>
-                  <input type="text" class="form-control" id="namasenibudaya" readonly="readonly">
+                  <input type="text" class="form-control" id="pelaksana" readonly="readonly">
                 </div>
               </div>
               <div class="form-group">
@@ -74,13 +74,13 @@
               </div>
             </form>
             <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button>
-            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button>
-            <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button>
+            <button hidden class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data </strong></button>
+            <button hidden class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button>
             <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
              </div><!-- profil -->
           </div><!-- ibox content -->
       </div> <!-- ibox -->
-      <div class="ibox">
+      <div class="ibox" hidden>
         <div class="ibox-content">
               <label for="formGroupExampleInput">Photo Header</label>
               <div class="form-row">
@@ -205,7 +205,7 @@
           </div>
           <div class="form-group">
             <label for="j">Pelaksana </label> 
-            <select class="form-control mr-sm-2" id="edit_id_senibudaya" name="id_senibudaya" required="required">
+            <select class="form-control mr-sm-2" id="edit_pelaksana" name="pelaksana" required="required">
             </select>
           </div>
           
@@ -586,7 +586,7 @@ var map;
     'edit_lokasi': $('#edit_modal').find('#edit_lokasi'),
     'edit_deskripsi': $('#edit_modal').find('#edit_deskripsi'),
     'edit_id_jenis': $('#edit_modal').find('#edit_id_jenis'),
-    'edit_id_senibudaya': $('#edit_modal').find('#edit_id_senibudaya'),
+    'edit_pelaksana': $('#edit_modal').find('#edit_pelaksana'),
     'edit_tanggal_kegiatan': $('#edit_modal').find('#edit_tanggal_kegiatan'),
     'edit_tanggal_kegiatan_end': $('#edit_modal').find('#edit_tanggal_kegiatan_end'),
     
@@ -612,7 +612,7 @@ function myFunction() {
     EditModal.edit_lokasi.val(dataProfil['lokasi']);
     EditModal.edit_deskripsi.val(dataProfil['deskripsi']);
     EditModal.edit_id_jenis.val(dataProfil['id_jenis_pagelaran']);
-    EditModal.edit_id_senibudaya.val(dataProfil['id_senibudaya']);
+    EditModal.edit_pelaksana.val(dataProfil['pelaksana']);
   
    
 }
@@ -671,7 +671,7 @@ function myFunction() {
         var alamat = document.getElementById("alamat");
        
         var jenis = document.getElementById("jenis");
-        var senibudaya = document.getElementById("namasenibudaya");
+        var pelaksana = document.getElementById("pelaksana");
         var deskripsi = document.getElementById("deskripsi");
         var approv = document.getElementById("approv");
         var kordinat = document.getElementById("kordinat");
@@ -703,7 +703,7 @@ function myFunction() {
         
         jumlah_penonton.value = dataProfil['jumlah_penonton'];
         jenis.value = dataProfil['nama_jenis_pagelaran'];
-        senibudaya.value = dataProfil['nama_senibudaya'];
+        pelaksana.value = dataProfil['pelaksana'];
         deskripsi.value = dataProfil['deskripsi'];
         if(dataProfil['id_user_approv']=='0'){
           approv.value = "Belum Di Approv"
@@ -963,9 +963,9 @@ function renderInputPengunjung(data){
       tmp = `<?= base_url('upload/file2/')?>`+d;
       imgHTML +=`
                 <div class='form-group col-md-6'>
-                  <a type="submit" id="del_photo${i}" >             
+                          
                   <img src="${tmp}" class="zoom" id='file2img' alt="Responsive image" style='height: 200px;'>            
-                  </a>
+                 
                 </div>
                 `;
       i++;
@@ -973,16 +973,6 @@ function renderInputPengunjung(data){
     var photo = document.getElementById("photo");  
     imgHTML +=`</div>`;
     photo.innerHTML = imgHTML;
-    i=0;
-      ph1.forEach((e) => {
-        document.getElementById("del_photo"+String(i)).onclick = function() {
-          console.log('hapus foto foto',e)
-          delPhoto(e);
-        };
-        i++;
-      });
-
-
   }
 
   function delPhoto(photo){
@@ -1157,17 +1147,7 @@ function renderInputPengunjung(data){
       }));
     });
   }
-
-   function renderSenibudayaSelection(data, idj){
-    EditModal.edit_id_senibudaya.empty();
-    EditModal.edit_id_senibudaya.append($('<option>', { value: "", text: "-- Pilih Sub Jenis --"}));
-    Object.values(data).filter((e) => e['id_j_pagelaran'] == idj).forEach((d) => {
-      EditModal.edit_id_senibudaya.append($('<option>', {
-        value: d['id_senibudaya'],
-        text: d['id_senibudaya'] + ' :: ' + d['nama_senibudaya'],
-      }));
-    });
-  }  
+ 
 // 
   //   getAllJenisenis();  
   //   function getAllJenisenis(){

@@ -125,7 +125,7 @@ $(document).ready(function() {
     'id_jenis_pagelaran': $('#pagelaran_modal').find('#id_jenis_pagelaran'),
     'nama_jenis_pagelaran': $('#pagelaran_modal').find('#nama_jenis_pagelaran'),
     'pelaksana': $('#pagelaran_modal').find('#pelaksana'),
-    'nama_senibudaya': $('#pagelaran_modal').find('#nama_senibudaya'),
+    'pelaksana': $('#pagelaran_modal').find('#pelaksana'),
     'jumlah_penonton': $('#pagelaran_modal').find('#jumlah_penonton'),
     'tanggal_kegiatan': $('#pagelaran_modal').find('#tanggal_kegiatan'),
     'tanggal_kegiatan_end': $('#pagelaran_modal').find('#tanggal_kegiatan_end'),
@@ -197,22 +197,6 @@ $(document).ready(function() {
     });
   }
   
-  getAllSenibudaya();  
-  function getAllSenibudaya(){
-    return $.ajax({
-      url: `<?php echo site_url('PagelaranController/getAllSenibudayaOption/')?>`, 'type': 'GET',
-      data: {},
-      success: function (data){
-        var json = JSON.parse(data);
-        if(json['error']){
-          return;
-        }
-        dataJenis = json['data'];
-        renderSenibudayaSelection(dataJenis);
-      },
-      error: function(e) {}
-    });
-  }
   document.getElementById("export_btn").href = '<?= site_url('AdminController/PdfAllPagelaran')?>';
 
 
@@ -272,7 +256,7 @@ $(document).ready(function() {
           </div>
         </div>
       `;
-      renderData.push([ pagelaran['nama'], pagelaran['nama_jenis_pagelaran'], pagelaran['pelaksana'],pagelaran['tanggal_kegiatan'],pagelaran['alamat'],apprv, button]);
+      renderData.push([ pagelaran['nama'], pagelaran['nama_jenis_pagelaran'], pagelaran['pelaksana'],pagelaran['tanggal_kegiatan'],pagelaran['nama_kabupaten'],apprv, button]);
     });
     FDataTable.clear().rows.add(renderData).draw('full-hold');
   }

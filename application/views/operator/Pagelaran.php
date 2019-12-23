@@ -197,22 +197,6 @@ $(document).ready(function() {
     });
   }
   
-  getAllSenibudaya();  
-  function getAllSenibudaya(){
-    return $.ajax({
-      url: `<?php echo site_url('PagelaranController/getAllSenibudayaOption/')?>`, 'type': 'GET',
-      data: {},
-      success: function (data){
-        var json = JSON.parse(data);
-        if(json['error']){
-          return;
-        }
-        dataJenis = json['data'];
-        renderSenibudayaSelection(dataJenis);
-      },
-      error: function(e) {}
-    });
-  }
   document.getElementById("export_btn").href = '<?= site_url('OperatorController/PdfAllPagelaran')?>';
 
 
