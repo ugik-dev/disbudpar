@@ -50,8 +50,8 @@
                                                     <p id="tanggal"></p>
                                                 </div>
                                                 </br>
-                                                <div class="zoom">
-                                                    <img class="" id='headerphoto' style="width: 100%">
+                                                <div class="zoom" id='headerphoto'>
+                                                    <!-- <img class=""  style="width: 100%"> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -98,8 +98,8 @@
                                                     <p id="tanggal2"></p>
                                                 </div>
                                                 <br>
-                                                <div class="zoom">
-                                                    <img class="" id='headerphoto2' style="width: 100%">
+                                                <div class="zoom" id='headerphoto2'>
+                                                    <!-- <img class=""  style="width: 100%"> -->
                                                 </div>
                                                 <div class="zoom" id='file22'>
                                                     
@@ -199,9 +199,14 @@ $(document).ready(function() {
     function renderDetail(row){
         console.log(dataPagelaran[row])
        // console.log(row);
-        var headerphoto = document.getElementById("headerphoto"); 
-        
-        headerphoto.src = `<?= base_url('upload/file/')?>`+dataPagelaran[row]['file'];
+       if(!empty(dataPagelaran2[row]['file'])){
+            
+            document.getElementById("headerphoto").innerHTML = `<img src="<?= base_url('upload/file2/')?>${dataPagelaran2[row]['file']}" id='' style="width: 100%">`
+                console.log('ada foto',d)
+            
+        }else{
+            document.getElementById("headerphoto").innerHTML = ' '
+        }
         document.getElementById('nameevent').innerHTML = `${dataPagelaran[row]['nama']} !!`;
         document.getElementById('deskripsi').innerHTML = `${dataPagelaran[row]['deskripsi']} `;
         document.getElementById('alamat').innerHTML = `${dataPagelaran[row]['alamat']} `;
@@ -257,10 +262,15 @@ $(document).ready(function() {
 
     function renderDetail2(row){
         console.log(dataPagelaran[row])
-       // console.log(row);
-        var headerphoto2 = document.getElementById("headerphoto2"); 
-        
-        headerphoto2.src = `<?= base_url('upload/file/')?>`+dataPagelaran2[row]['file'];
+      
+        if(!empty(dataPagelaran2[row]['file'])){
+            
+            document.getElementById("headerphoto2").innerHTML = `<img src="<?= base_url('upload/file2/')?>${dataPagelaran2[row]['file']}" id='' style="width: 100%">`
+                console.log('ada foto',d)
+            
+        }else{
+            document.getElementById("headerphoto2").innerHTML = ' '
+        }
         document.getElementById('nameevent2').innerHTML = `${dataPagelaran2[row]['nama']} !!`;
         document.getElementById('deskripsi2').innerHTML = `${dataPagelaran2[row]['deskripsi']} `;
         document.getElementById('alamat2').innerHTML = `${dataPagelaran2[row]['alamat']} `;
