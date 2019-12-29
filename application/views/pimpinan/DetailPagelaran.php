@@ -160,8 +160,8 @@
                           </div>
             
                         </div>
-                          <div class="form-group col-md-12">
-                            <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>
+                          <div class="form-group col-md-12" id='fileimg' >
+                            <!-- <img src="" class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'> -->
                           </div>            
                         <div class="form-group col-md-12" id="photo"></div>
                       </div>
@@ -718,13 +718,20 @@ function myFunction() {
         };
         kordinat.value = dataProfil['lokasi'];
         file.value = dataProfil['file'];
-        fileimg.src = `<?= base_url('upload/file/')?>`+dataProfil['file'];
+        
         file2.value = dataProfil['file2'];
-       // file2img.src = `<?= base_url('upload/file2/')?>`+dataProfil['file2'];
+       
        
         dokumen.value = dataProfil['dokumen'];
        
-        renderPhoto();
+        if(!empty(dataProfil['file'])){
+            urlphoto= `<?= base_url('upload/file/')?>`+dataProfil['file'];
+            fileimg.innerHTML = ` <img src='${urlphoto}'class="zoom" id='fileimg' alt="Responsive image" style='height: 200px;'>`
+                          
+            console.log('ada file header')
+       
+        }
+        if(!empty(dataProfil['file2']))renderPhoto();
         renderPhotoModal();
         renderPdf();
         //console.log(dataProfil)
