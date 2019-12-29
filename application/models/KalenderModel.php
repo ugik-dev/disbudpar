@@ -13,7 +13,7 @@ class KalenderModel extends CI_Model{
         $this->db->join('jenis_pagelaran as jp','sp.id_jenis_pagelaran=jp.id_jenis_pagelaran');
        $this->db->join('kabupaten as kab','sp.id_kabupaten=kab.id_kabupaten');
         $this->db->order_by('tanggal_kegiatan');
-      //  $this->db->where('sp.id_user_approv != 0');
+       $this->db->where('sp.id_user_approv != 0');
         $this->db->where('sp.tanggal_kegiatan >= current_date()');
         $res=$this->db->get();
         return $res->result_array();
@@ -26,7 +26,7 @@ class KalenderModel extends CI_Model{
         $this->db->join('jenis_pagelaran as jp','sp.id_jenis_pagelaran=jp.id_jenis_pagelaran');
         $this->db->join('kabupaten as kab','sp.id_kabupaten=kab.id_kabupaten');
         $this->db->order_by('tanggal_kegiatan');
-      //  $this->db->where('sp.id_user_approv != 0');
+        $this->db->where('sp.id_user_approv != 0');
         $this->db->where('sp.tanggal_kegiatan < current_date()');
         $res=$this->db->get();
         return $res->result_array();
