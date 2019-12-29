@@ -71,9 +71,9 @@
       <li id="desawisata">
         <a href="<?=site_url('AdminController/desawisata')?>"><i class="fab fa-accusoft"></i> <span class="nav-label">Desa Wisata</span></a>
       </li>
-      <li id="panduan">
+      <!-- <li id="panduan">
         <a href="<?=site_url('AdminController/panduan')?>"><i class="fa fa-question"></i> <span class="nav-label">Panduan</span></a>
-      </li>
+      </li> -->
       <li id="logout">
         <a href="<?=site_url('AdminController')?>" class="logout"><i class="fa fa-sign-out"></i> <span class="nav-label">Logout</span></a>
       </li>
