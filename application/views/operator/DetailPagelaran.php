@@ -711,13 +711,13 @@ function myFunction() {
             console.log('ada file header')
        
         }
-        
+
         file2.value = dataProfil['file2'];
         
        
         dokumen.value = dataProfil['dokumen'];
        
-        renderPhoto();
+         if(!empty(dataProfil['file2']))renderPhoto();
         renderPhotoModal();
         renderPdf();
         //console.log(dataProfil)
