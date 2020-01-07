@@ -3,7 +3,7 @@
         Pemprov Babel
     </div>
     <div>
-        <strong>Copyright</strong> Pemerintah Provinsi Bangka Belitung &copy; 2019
+        <strong>Copyright</strong> Dinas Kebudayaan dan Pariwisata Provinsi Bangka Belitung &copy; 2019
     </div>
 </div>
 

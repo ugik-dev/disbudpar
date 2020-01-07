@@ -403,7 +403,7 @@ class OperatorController extends CI_Controller {
     
     $filter['id_user']=$data_profil['id_user_entry'];
     $entry=$this->DetailCagarbudayaModel->getUser($filter);
-    //var_dump($approv);
+    // var_dump($approv);
     if($data_profil['id_user_approv']=='0'){ 
       $approv['nama'] = 'Data Belum Approv';
     }else{
