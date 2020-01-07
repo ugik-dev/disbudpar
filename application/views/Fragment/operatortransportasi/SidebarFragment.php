@@ -14,9 +14,9 @@
       <li id="kalender">
         <a href="<?=site_url('OperatorTransportasiController/kalender')?>"><i class="fas fa-calendar-alt"></i> <span class="nav-label">Event</span></a>
       </li>
-      <li id="tenagakerja">
+      <!-- <li id="tenagakerja">
         <a href="<?=site_url('OperatorTransportasiController/tenagakerja')?>"><i class="fas fa-user-tie"></i><span class="nav-label">Tenaga Kerja</span></a>
-      </li>
+      </li> -->
 
       <li id="profil">
         <a href="<?=site_url('OperatorTransportasiController/Profil')?>"><i class="fas fa-ethernet"></i> <span class="nav-label">Profil</span></a>
