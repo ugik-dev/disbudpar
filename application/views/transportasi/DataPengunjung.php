@@ -407,21 +407,17 @@ $(document).ready(function() {
     });
   }
 
-  // $("#tahun_input").click(function(e) {
-  //    registerTahunSelectionChange();
-  // });
-  //   function registerTahunSelectionChange(){
-  //   InputModal.tahun.on('change', function(e){
-  //     getInputPengunjung();
-  //     //var input_data_pengunjung = document.getElementById("input_data_pengunjung");
-        
-      
-  //       //input_data_pengunjung.innerHTML = test;
-  //   //  getChart1cb(); 
-  //     console.log('regis run thun :',InputModal.tahun.val())
-  // }); 
+  $("#tahun_input").click(function(e) {
+     registerTahunSelectionChange();
+  });
 
-  // }
+  function registerTahunSelectionChange(){
+    InputModal.tahun.on('change', function(e){
+      getInputPengunjung();
+     
+  }); 
+
+  }
   function renderTahunSelection(data){
      console.log("Masuk Tahun")
     InputModal.tahun.empty();
