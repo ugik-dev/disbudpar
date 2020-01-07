@@ -232,7 +232,7 @@ $(document).ready(function() {
           <div class="form-row">
               <div class="col-2">
                 <label>${d['nama_bulan']} :</label>
-                <input type="number" class="form-control" name="id_data_desawisata${i}" value="${d['id_data_desawisata']}" hidden>
+                <input type="number" class="form-control" name="id_data_transportasi${i}" value="${d['id_data_transportasi']}" hidden>
                 <input type="number" class="form-control" name="bulan${d['bulan']}" placeholder="id_bulan" value="${d['bulan']}" hidden>
                 <input type="number" class="form-control" name="tahun" placeholder="tahun" value="${d['tahun']}" hidden>
               </div>

@@ -165,7 +165,7 @@ class TransportasiController extends CI_Controller {
     }
 
  }
- public function approv(){
+ public function approvTransportasi(){
   try{
     $this->SecurityModel->userOnlyGuard(TRUE);
     $data = $this->TransportasiModel->approv($this->input->get());

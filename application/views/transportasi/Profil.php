@@ -53,14 +53,14 @@
                 <textarea class="form-control" id="deskripsi" rows="4" disabled></textarea>
               </div>
             </form>
-            <!-- <button class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button> -->
-            <button class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data</strong></button>
-            <!-- <button class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button> -->
+            <button <?php if($this->session->userdata('id_role')=='5') echo 'hidden' ?> class="btn btn-success my-1 mr-sm-2" type="" id="message_btn" onclick="MessageFunction()" data-loading-text="Loading..."><strong>Kirim Pesan</strong></button>
+            <button <?php if($this->session->userdata('id_role')!='4') echo 'hidden' ?> class="btn btn-success my-1 mr-sm-2" type="submit" id="edit_profil_btn" onclick="myFunction()" data-loading-text="Loading..."><strong>Ubah Data</strong></button>
+            <button <?php if($this->session->userdata('id_role')!='5') echo 'hidden' ?> class="btn btn-info my-1 mr-sm-2" type="submit" id="approv_profil_btn" onclick="ApprovProfil()" data-loading-text="Loading..."><strong>Approv Profil </strong></button>
             <a type="" class="btn btn-light my-1 mr-sm-2" id="export_btn" href=""><i class="fal fa-download"></i> Export PDF</a>
       </div><!-- profil -->
           </div><!-- ibox content -->
       </div> <!-- ibox -->
-      <div class="ibox">
+      <div class="ibox"<?php if($this->session->userdata('id_role')!='4') echo 'hidden' ?> >
         <div class="ibox-content">
               <label for="formGroupExampleInput">Photo </label>
               
@@ -313,8 +313,8 @@ var Photo2Modal = {
     'form': $('#message_modal').find('#user_form'),
     'sendBtn': $('#message_modal').find('#send_btn'),
     'saveEditBtn': $('#message_modal').find('#save_edit_btn'),
-    'edit_id_desawisata': $('#message_modal').find('#edit_id_desawisata'),
-    'id_data_desawisata': $('#message_modal').find('#id_data_desawisata'),
+    'edit_id_transportasi': $('#message_modal').find('#edit_id_transportasi'),
+    'id_data_transportasi': $('#message_modal').find('#id_data_transportasi'),
     'id_operator': $('#message_modal').find('#id_operator'),
     'nama_operator': $('#message_modal').find('#nama_operator'),
     'message': $('#message_modal').find('#message'),
@@ -763,18 +763,18 @@ function myFunction() {
   //   confirmButtonColor: "#18a689",
   //   confirmButtonText: "Ya, Hapus!",
   //   }
-    // function getUserApprov(id_user){    
-    //   $.ajax({
-    //     url: `<?=site_url('TransportasiController/getUser')?>`, 'type': 'GET',
-    //     data: {id_user : id_user },
-    //     success: function (data){
-    //       var json = JSON.parse(data);
-    //     data = json['data'];     
-    //     approv.value = data['nama'];      
-    //     },
-    //     error: function(e) {}
-    //     });
-    // }
+    function getUserApprov(id_user){    
+      $.ajax({
+        url: `<?=site_url('TransportasiController/getUser')?>`, 'type': 'GET',
+        data: {id_user : id_user },
+        success: function (data){
+          var json = JSON.parse(data);
+        data = json['data'];     
+        approv.value = data['nama'];      
+        },
+        error: function(e) {}
+        });
+    }
     function getUserEntry(id_user){
       $.ajax({
         url: `<?=site_url('TransportasiController/getUser')?>`, 'type': 'GET',
@@ -787,6 +787,23 @@ function myFunction() {
         error: function(e) {}
         });
     }
+
+    
+document.getElementById("approv_profil_btn").onclick = function() {ApprovProfil()};
+function ApprovProfil() {
+    swal(swalApprovConfigure).then((result) => {
+      if(!result.value){ return; }
+      $.ajax({
+        url: `<?=site_url('TransportasiController/approvTransportasi')?>`, 'type': 'get',
+        data: {id_transportasi : id_transportasi} ,
+        success: function (data){
+        getProfil();
+        },
+        error: function(e) {}
+      });
+    });
+}
+
 
   // function getTransportasi(){
   //   buttonLoading(toolbar.showBtn);

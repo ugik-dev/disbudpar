@@ -9,6 +9,7 @@ class TransportasiModel extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('transportasi as cb');
 		$this->db->where("id_operator",$iduser);
+		$this->db->or_where("id_pimpinan",$iduser);
 		//$this->db->where_or("id_pimpinan",$iduser);
 		$this->db->join("jenis_transportasi as js", "js.id_jenis_transportasi = cb.id_jenis_transportasi");
 		//$this->db->join("kabupaten as kab", "kab.id_kabupaten = cb.id_kabupaten");

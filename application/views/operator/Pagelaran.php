@@ -242,10 +242,10 @@ $(document).ready(function() {
       <a class="detail dropdown-item" href='<?=site_url()?>OperatorController/DetailPagelaran?id_pagelaran=${pagelaran['id_pagelaran']}'><i class='fa fa-share'></i> Detail </a>
       `; 
       var editButton = `
-        <a class="edit dropdown-item" data-id='${pagelaran['id_pagelaran']}'><i class='fa fa-pencil'></i> Edit Seni Budaya</a>
+        <a class="edit dropdown-item" data-id='${pagelaran['id_pagelaran']}'><i class='fa fa-pencil'></i> Edit</a>
       `;
       var deleteButton = `
-        <a class="delete dropdown-item" data-id='${pagelaran['id_pagelaran']}'><i class='fa fa-trash'></i> Hapus Seni Budaya</a>
+        <a class="delete dropdown-item" data-id='${pagelaran['id_pagelaran']}'><i class='fa fa-trash'></i> Hapus</a>
       `;
       var button = `
         <div class="btn-group" role="group">
