@@ -170,7 +170,7 @@ $(document).ready(function() {
     document.getElementById("export_pengunjung_btn").href = '<?= site_url('OperatorController/ExportPengunjung?tb=transportasi&id_data=')?>'+id_transportasi+`&tahun=`+InputModal.tahun.val();
     console.log(toolbar.form.serialize());
     $.ajax({
-      url: `<?=site_url('TransportasiController/getAllTransportasi')?>`, 'type': 'GET',
+      url: `<?=site_url('TransportasiController/getDataPengunjung')?>`, 'type': 'GET',
       data: {id_transportasi : id_transportasi, tahun: InputModal.tahun.val() },
       success: function (data){
         //buttonIdle(toolbar.showBtn);

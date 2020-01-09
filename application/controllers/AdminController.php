@@ -125,6 +125,17 @@ class AdminController extends CI_Controller {
     );
     $this->load->view('Page', $pageData);
   }
+  public function Transportasi(){
+    $this->SecurityModel->roleOnlyGuard('admin');
+		$pageData = array(
+			'title' => 'Transportasi',
+      'content' => 'admin/Transportasi',
+      'breadcrumb' => array(
+        'Home' => base_url(),
+      ),
+		);
+    $this->load->view('Page', $pageData);
+  }
 
   public function Cagarbudaya(){
     $this->SecurityModel->roleOnlyGuard('admin');
@@ -158,6 +169,18 @@ class AdminController extends CI_Controller {
         'Home' => base_url(),
       ),
       'contentData' => ['id_cagarbudaya'=> $this->input->get()['id_cagarbudaya']]
+    );
+    $this->load->view('Page', $pageData);
+  }
+  public function DetailTransportasi(){
+    $this->SecurityModel->roleOnlyGuard('admin');
+    $pageData = array(
+      'title' => $this->input->get()['nama'],
+      'content' => 'admin/DetailTransportasi',
+      'breadcrumb' => array(
+        'Home' => base_url(),
+      ),
+      'contentData' => ['id_transportasi'=> $this->input->get()['id_transportasi']]
     );
     $this->load->view('Page', $pageData);
   }

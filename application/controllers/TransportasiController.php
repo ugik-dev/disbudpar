@@ -30,6 +30,15 @@ class TransportasiController extends CI_Controller {
         ExceptionHandler::handle($e);
       }
     }
+    public function getProfil2(){
+      try{
+        $this->SecurityModel->userOnlyGuard(TRUE);
+        $data = $this->TransportasiModel->getProfil2($this->input->get());
+        echo json_encode(array('data' => $data));
+      } catch (Exception $e) {
+        ExceptionHandler::handle($e);
+      }
+    }
 
   
     public function getTahun(){
@@ -57,6 +66,15 @@ class TransportasiController extends CI_Controller {
     try{
       $this->SecurityModel->userOnlyGuard(TRUE);
       $data = $this->TransportasiModel->getAllTransportasi($this->input->get());
+      echo json_encode(array('data' => $data));
+    } catch (Exception $e) {
+      ExceptionHandler::handle($e);
+    }
+  }
+  public function getDataPengunjung(){
+    try{
+      $this->SecurityModel->userOnlyGuard(TRUE);
+      $data = $this->TransportasiModel->getDataPengunjung($this->input->get());
       echo json_encode(array('data' => $data));
     } catch (Exception $e) {
       ExceptionHandler::handle($e);

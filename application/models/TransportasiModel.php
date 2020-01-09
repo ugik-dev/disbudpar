@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class TransportasiModel extends CI_Model {
 
-	
+
+
 	public function getProfil($filter){
 		$iduser = $this->session->userdata('id_user');
 		$this->db->select('*');
@@ -18,6 +19,21 @@ class TransportasiModel extends CI_Model {
 		$res = $res->result_array();
 		return $res[0];
 		}
+	
+		public function getProfil2($filter){
+			$iduser = $this->session->userdata('id_user');
+			$this->db->select('*');
+			$this->db->from('transportasi as cb');
+			$this->db->where("id_transportasi",$filter['id_transportasi']);
+			//	$this->db->or_where("id_pimpinan",$iduser);
+			//$this->db->where_or("id_pimpinan",$iduser);
+			$this->db->join("jenis_transportasi as js", "js.id_jenis_transportasi = cb.id_jenis_transportasi");
+			//$this->db->join("kabupaten as kab", "kab.id_kabupaten = cb.id_kabupaten");
+			
+			$res = $this->db->get();
+			$res = $res->result_array();
+			return $res[0];
+			}
 
 	
 		public function approvObjek($data){
@@ -151,27 +167,25 @@ class TransportasiModel extends CI_Model {
 		}
   public function getAllTransportasi($filter){
 	
-    $this->db->select('*');
-    $this->db->from('rec_transportasi as rc');
-    $this->db->where("rc.id_transportasi",$filter['id_transportasi']);
-	if(!empty($filter['tahun'])) $this->db->where('tahun', $filter['tahun']);
+    $this->db->select('rc.*');
+	$this->db->from('transportasi as rc');
+	$this->db->join('jenis_transportasi as jt','jt.id_jenis_transportasi = rc.id_jenis_transportasi');
+   // $this->db->where("rc.id_transportasi",$filter['id_transportasi']);
+	//if(!empty($filter['tahun'])) $this->db->where('tahun', $filter['tahun']);
     $res = $this->db->get();
-    return DataStructure::keyValue($res->result_array(), 'nomor');
+    return DataStructure::keyValue($res->result_array(), 'id_transportasi');
 	}
 
-	public function getTransportasi($id){
+	public function getDataPengunjung($filter){
+	
 		$this->db->select('*');
 		$this->db->from('rec_transportasi as rc');
-		$this->db->where("rc.nomor",$id);
-		$row = $this->db->get();
-
-		if (empty($row)){
-			throw new UserException("Transportasi yang kamu cari tidak ditemukan", USER_NOT_FOUND_CODE);
+		$this->db->where("rc.id_transportasi",$filter['id_transportasi']);
+		if(!empty($filter['tahun'])) $this->db->where('tahun', $filter['tahun']);
+		$res = $this->db->get();
+		return DataStructure::keyValue($res->result_array(), 'nomor');
 		}
-		
-		$res = DataStructure::keyValue($row->result_array(), 'nomor');
-		return $res[$id];
-	}
+	
 
 
 	public function editTransportasi($data){

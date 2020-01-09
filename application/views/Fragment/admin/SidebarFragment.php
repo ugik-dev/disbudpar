@@ -19,6 +19,10 @@
       <li id="tenagakerja">
         <a href="<?=site_url('AdminController/tenagakerja')?>"><i class="fas fa-user-tie"></i><span class="nav-label">Tenaga Kerja</span></a>
       </li>
+      
+      <li id="transportasi">
+        <a href="<?=site_url('AdminController/transportasi')?>"><i class="fab fa-accusoft"></i> <span class="nav-label">Transportasi</span></a>
+      </li>
       <li id="pariwisata">
         <a href="#"><i class="fas fa-bus"></i><span class="nav-label">Pariwisata</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" aria-expanded="false">
